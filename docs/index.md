@@ -26,4 +26,4 @@ creating our line following robot. Click the Labs (insert hyperlink here)
 tab to follow our procedure.
 </h3>
 
-[!-- <img src="pic_mountain.jpg" alt="Robot" style="width:304px;height:228px;"> --!]
+<img src="Arduino.jpg" alt="Robot" style="width:304px;height:228px;">
