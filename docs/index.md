@@ -16,14 +16,13 @@
             </nav>
         </header>
 
-    </body>
+        <h3>
+            This website is designed to illustrate the steps our team took in
+            creating our line-following robot via an Arduino Uno. Click the Labs (insert hyperlink here)
+            tab to follow our procedure.
+        </h3>
+
+        <img src="https://www.flickr.com/photos/154473257@N08/36777792986/in/dateposted-public/" />
+
+ </body>
 </html>
-
-
-<h3>
-This website is designed to illustrate the steps our team took in
-creating our line-following robot via an Arduino Uno. Click the Labs (insert hyperlink here)
-tab to follow our procedure.
-</h3>
-
-<img src="https://www.flickr.com/photos/154473257@N08/36777792986/in/dateposted-public/" />
