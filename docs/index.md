@@ -26,4 +26,4 @@ creating our line-following robot via an Arduino Uno. Click the Labs (insert hyp
 tab to follow our procedure.
 </h3>
 
-<img src="https://www.flickr.com/photos/154473257@N08/36777792986/in/dateposted-public/" alt="Arduino Pic Here" style="width:304px;height:228px;">
+<img src="https://www.flickr.com/photos/154473257@N08/36777792986/in/dateposted-public/" alt="Arduino Pic Here" title="Arduino Pic" />
