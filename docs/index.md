@@ -1,4 +1,3 @@
-<!DOCTYPE HTML>
 <html>
     <head>
         <title>ECE 3400 Team 2</title>
