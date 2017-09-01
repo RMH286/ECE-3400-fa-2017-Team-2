@@ -1,1 +1,1 @@
-# ECE-3400-fa-2017-Team-2
+# ECE3400 Fall 2017: Team 2
