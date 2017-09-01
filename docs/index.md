@@ -6,7 +6,7 @@
     </head>
     <body>
         <header>
-            <h1>ECE 3400</h1>
+            <h1>ECE 3400: Welcome to our homepage!</h1>
             <nav>
                 <ul>
                     <li><a href="">Home</a></li>
@@ -19,10 +19,9 @@
     </body>
 </html>
 
-<h1> Welcome to our homepage! </h1>
 
-<h2>
+<h3>
 This website is designed to illustrate the steps our team took in
-/creating our line following robot. Click the Labs (insert hyperlink here)
-/tab to follow our procedure.
-</h2>
+creating our line following robot. Click the Labs (insert hyperlink here)
+tab to follow our procedure.
+</h3>
