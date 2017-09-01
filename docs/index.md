@@ -22,8 +22,8 @@
 
 <h3>
 This website is designed to illustrate the steps our team took in
-creating our line following robot. Click the Labs (insert hyperlink here)
+creating our line-following robot via an Arduino Uno. Click the Labs (insert hyperlink here)
 tab to follow our procedure.
 </h3>
 
-<img src="Arduino.jpg" alt="Robot" style="width:304px;height:228px;">
+<img src="https://drive.google.com/file/d/0B28iF1U2ihrqMnpmeTZGOWFvbU0/view" alt="Arduino Pic Here" style="width:304px;height:228px;">
