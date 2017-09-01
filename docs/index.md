@@ -10,8 +10,8 @@
             <nav>
                 <ul>
                     <li><a href="">Home</a></li>
-                    <li><a href="#">Team Info</a></li>
-                    <li><a href="#">Labs</a></li>
+                    <li><a href="info/info.md">Team Info</a></li>
+                    <li><a href="labs/labs.md">Labs</a></li>
                 </ul>
             </nav>
         </header>
@@ -22,7 +22,7 @@
             tab to follow our procedure.
         </h3>
 
-        <img src="https://www.flickr.com/photos/154473257@N08/36777792986/in/dateposted-public/" />
+        <img src="assets/images/arduino.jpg" />
 
  </body>
 </html>
