@@ -18,3 +18,11 @@
 
     </body>
 </html>
+
+<h1> Welcome to our homepage! </h1>
+
+<h2>
+This website is designed to illustrate the steps our team took in
+/creating our line following robot. Click the Labs (insert hyperlink here)
+/tab to follow our procedure.
+</h2>
