@@ -10,8 +10,8 @@
             <nav>
                 <ul>
                     <li><a href="">Home</a></li>
-                    <li><a href="info/info.md">Team Info</a></li>
-                    <li><a href="labs/labs.md">Labs</a></li>
+                    <li><a href="info.md">Team Info</a></li>
+                    <li><a href="labs.md">Labs</a></li>
                 </ul>
             </nav>
         </header>
