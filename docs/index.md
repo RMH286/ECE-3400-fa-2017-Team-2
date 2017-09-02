@@ -7,13 +7,8 @@
     <body>
         <header>
             <h1>ECE 3400: Welcome to our homepage!</h1>
-            <nav>
-                <ul>
-                    <li><a href="">Home</a></li>
-                    <li>[Team Info](./info.md)</li>
-                    <li>[Labs](./lab1.md)</li>
-                </ul>
-            </nav>
+            [Team Info](./info.md)
+            [Labs](./lab1.md)
         </header>
 
         <h3>
