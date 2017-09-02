@@ -1,9 +1,9 @@
-*ECE 3400: Welcome to our homepage!*</h1>*
-    [Team Info](./info.md)
-    [Labs](./lab1.md)
+# ECE 3400: Welcome to our homepage!
+    * [Team Info](./info.md)
+    * [Labs](./lab1.md)
 
-    ***This website is designed to illustrate the steps our team took in
+    This website is designed to illustrate the steps our team took in
     creating our line-following robot via an Arduino Uno. Click the Labs (insert hyperlink here)
-    tab to follow our procedure.***
+    tab to follow our procedure.
 
     ![Arduino](assets/images/arduino.jpg)
