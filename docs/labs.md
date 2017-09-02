@@ -1,9 +1,3 @@
-<html>
-    <head>
-        <title>ECE 3400 Team 2</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-    </head>
-    <body>
-    </body>
-</html>
+*ECE 3400: Welcome to our homepage!*</h1>*
+    [Team Info](./info.md)
+    [Labs](./lab1.md)
