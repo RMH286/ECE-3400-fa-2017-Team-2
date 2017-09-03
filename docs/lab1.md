@@ -40,7 +40,6 @@ We used the value of the potentiometer to vary the brightness of the LED. The LE
 
 ![LEDLight](./assets/images/LEDLight.jpg)
 
-<img id="LEDLight" src="./assets/images/LEDLight.jpg" rotate="0">
 
 #### Servos 
 
