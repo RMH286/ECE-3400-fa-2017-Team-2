@@ -40,6 +40,8 @@ We used the value of the potentiometer to vary the brightness of the LED. The LE
 
 ![LEDLight](./assets/images/LEDLight.jpg)
 
+<img id="LEDLight" src="./assets/images/LEDLight.jpg" rotate="180">
+
 #### Servos 
 
 We hooked up the servo to a digital pin that allows PWM. To use the standard servo functions, we included the Servo.h library then wrote different speeds (0-180) to the servo. We then used the potentiometer values to control the speed and direction of the servo. 
