@@ -2,6 +2,7 @@
 * ## [Home](./index.md)
 * ## [Team Info](./info.md)
 * ## [Labs](./labs.md)
+* ## [Meeting Minutes](./minutes.md)
 
 ### Lab Section
 Monday 1:24 - 4:25

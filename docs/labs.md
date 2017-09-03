@@ -2,5 +2,6 @@
 * ## [Home](./index.md)
 * ## [Team Info](./info.md)
 * ## [Labs](./labs.md)
+* ## [Meeting Minutes](./minutes.md)
 
-Coming Soon!!
+* ## [Lab 1](./lab1.md)
