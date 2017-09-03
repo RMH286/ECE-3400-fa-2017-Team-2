@@ -38,6 +38,8 @@ We wired a pontentiometer in series with a 300Ohm resistor to test the analog pi
 
 We used the value of the potentiometer to vary the brightness of the LED. The LED must be hooked up to one of the 4 pins that allow PWM. The analogwrite function allowed us to write the value of the pontentiometer to the digital pin with the LED so that the brightness changed when the potentiometer value changed.
 
+![LEDLight](./assets/images/LEDLight.jpg)
+
 #### Servos 
 
 We hooked up the servo to a digital pin that allows PWM. To use the standard servo functions, we included the Servo.h library then wrote different speeds (0-180) to the servo. We then used the potentiometer values to control the speed and direction of the servo. 
