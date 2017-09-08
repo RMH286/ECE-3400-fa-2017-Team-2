@@ -49,7 +49,7 @@ We hooked up the servo to a digital pin that allows PWM. To use the standard ser
 
 Using our new knowledge of programming servos, we attached two servos to wheels, added a chassis and placed the arduino on top as well as the breadboard containing our wiring. We hooked up a 5V battery back to the arduino and programmed our robot to move forwards, backwards or in a circle. 
 
-<iframe width="420" height="315"
+<iframe width="420" height="315">
 
 src="https://www.flickr.com/photos/154473257@N08/36820641636/in/datetaken/">
 
