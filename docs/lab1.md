@@ -33,50 +33,52 @@ lab individually.
 
 #### Blink
 
-    We began by installing the arduino IDE to be able to program the board. Once the IDE was installed,
+We began by installing the arduino IDE to be able to program the board. Once the IDE was installed,
 we opened a new sketch. Within a new sketch, there are two default functions as described below:
 
-    _**void setup() {}**_
-        Called at the start of the entire program. Used to initialize any necessary structures
-        and set up the arduino for the rest of your program. Generally used to setup I/O pins and prepare
-        for execution
-    
-    _**void loop() {}**_
-        Function which contains the main execution of your code. This function should not return, and should
-        loop forever. This is where the interesting parts of the code happen.
+#### _**void setup() {}**_
+Called at the start of the entire program. Used to initialize any necessary structures
+and set up the arduino for the rest of your program. Generally used to setup I/O pins and prepare
+for execution
 
-    In addition to these two functions, you can declare any extra helper functions you want. These can then be
+#### _**void loop() {}**_
+Function which contains the main execution of your code. This function should not return, and should
+loop forever. This is where the interesting parts of the code happen.
+
+In addition to these two functions, you can declare any extra helper functions you want. These can then be
 called from either ```c void setup()``` or ```c void loop()```.
-    To start programming, we opened one of the default examples included with the arduino IDE. Selecting the
+
+To start programming, we opened one of the default examples included with the arduino IDE. Selecting the
 Blink sketch from _File > Examples > 1.Basics > Blink_. Within the IDE, you can compile your code by clicking the
 checkmark in the topleft corner. This converts the sketch into C code, which is then compiled to assembly code to be run
 on the arduino uno. At this point, any code which contains errors will fail to compile. Once you are ready to run the program
 on the board, you can select the upload button (arrow next to compile button). This will compile the code and put the program
 on the uno.
-    The code will automatically begin running if the board is powered on. If the board loses power, the program will remain in
+
+The code will automatically begin running if the board is powered on. If the board loses power, the program will remain in
 memory, and will run again when the board is turned on. The board can either recieve power from a DC power supply (9V battery) or
 from the programing cable connected to the computer. Once the Blink sketch was downloaded onto the board, the onboard LED would
 blink every second. Looking at the code for the Blink program, we can see how it operates on the arduino uno.
 
-    ```c
-    void setup() {
-      // initialize digital pin LED_BUILTIN as an output.
-      pinMode(LED_BUILTIN, OUTPUT);
-    }
-    ```
-        This code tells the arduino that the built in LED should act as an output. This allows you to write voltage values to the LED,
-    and turn it off/on.
-    ```c
-    void loop() {
-        digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-        delay(1000);                       // wait for a second
-        digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-        delay(1000);                       // wait for a second
-    }
-    ```
-        This is the main function which blinks the LED. Because the LED was set as an output pin in the setup function, we are able to write
-    a ```HIGH``` or ```LOW``` value to it. These variables are global variable defined for the arduino. They correspond to logical high and
-    low values. In betweeen turning the LED on/off the program waits for 1 second so you can actually see the LED change.
+```c
+void setup() {
+    // initialize digital pin LED_BUILTIN as an output.
+    pinMode(LED_BUILTIN, OUTPUT);
+}
+```
+This code tells the arduino that the built in LED should act as an output. This allows you to write voltage values to the LED,
+and turn it off/on.
+```c
+void loop() {
+    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(1000);                       // wait for a second
+    digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+    delay(1000);                       // wait for a second
+}
+```
+This is the main function which blinks the LED. Because the LED was set as an output pin in the setup function, we are able to write
+a ```HIGH``` or ```LOW``` value to it. These variables are global variable defined for the arduino. They correspond to logical high and
+low values. In betweeen turning the LED on/off the program waits for 1 second so you can actually see the LED change.
 
 The exact specification for these functions can be found in the [Arduino Reference](https://www.arduino.cc/en/Reference/HomePage).
 
