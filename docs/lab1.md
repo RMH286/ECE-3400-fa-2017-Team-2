@@ -20,7 +20,7 @@ At the end of this lab we were able to put together the beginnings of our robot 
 
 We first split up into two groups of 3 people each. We ensured that each group contained someone knowledgeable
 of arduino so if the group hit any road blocks, they would be able to assist. Each group progressed through the
-lab individually.
+lab individually as described below
 
 #### Materials Used:
 * 1 Arduino Uno
@@ -31,7 +31,7 @@ lab individually.
 * Several Resistors
 * 1 breadboard
 
-#### Blink
+### Arduino Code (IDE)
 
 We began by installing the arduino IDE to be able to program the board. Once the IDE was installed,
 we opened a new sketch. Within a new sketch, there are two default functions as described below:
@@ -46,7 +46,9 @@ Function which contains the main execution of your code. This function should no
 loop forever. This is where the interesting parts of the code happen.
 
 In addition to these two functions, you can declare any extra helper functions you want. These can then be
-called from either ```c void setup()``` or ```c void loop()```.
+called from either ```void setup()``` or ```void loop()```.
+
+### Blink
 
 To start programming, we opened one of the default examples included with the arduino IDE. Selecting the
 Blink sketch from _File > Examples > 1.Basics > Blink_. Within the IDE, you can compile your code by clicking the
@@ -59,6 +61,8 @@ The code will automatically begin running if the board is powered on. If the boa
 memory, and will run again when the board is turned on. The board can either recieve power from a DC power supply (9V battery) or
 from the programing cable connected to the computer. Once the Blink sketch was downloaded onto the board, the onboard LED would
 blink every second. Looking at the code for the Blink program, we can see how it operates on the arduino uno.
+
+#### Base Code
 
 ```c
 void setup() {
@@ -82,7 +86,41 @@ low values. In betweeen turning the LED on/off the program waits for 1 second so
 
 The exact specification for these functions can be found in the [Arduino Reference](https://www.arduino.cc/en/Reference/HomePage).
 
-We pulled up the arduino sample code blink. We wired blue LED in series with a 1KOhm resistor to digital pin 13 and adjusted the code to blink the digital 13 pin instead of the on board LED. We repeated this for all digital pins to test that they functioned properly. 
+#### External LED
+
+In order to modify the code to blink an external LED, we simply have to modify the I/O pin which we write to. Rather than using
+the global variable ```LED_BUILTIN```, we passed the pin number we wanted to use to the necessary functions. Now, setup and loop
+functions looked as below:
+
+```c
+void setup() {
+    // initialize digital pin 11 as an output.
+    pinMode(11, OUTPUT);
+}
+
+void loop() {
+    digitalWrite(11, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(1000);                       // wait for a second
+    digitalWrite(11, LOW);    // turn the LED off by making the voltage LOW
+    delay(1000);                       // wait for a second
+}
+```
+
+This completed the software necessary to make the system work, but we still had to wire the external LED to the digital pin. In order to prevent the pin
+from sourcing too much current and possibly ruining the pin, we connected the LED in series with a 300 ohm resistor. The ground connection is then
+taken from the arduino's ground. This is simply another pin on the board, and is necessary for the voltage on the digital output pin to have any meaning as
+voltages are always from one location to another. Once we hooked up the entire circuit and downloaded the program to the uno, the external LED blinked every
+second just like the onboard LED in the prior section.
+
+Once we confirmed this worked, we adjusted the code and external circuit to test all of the digital pins on the board. In the code, we had to change
+the pin number that we set as a digital output and wrote to. In the circuit, we had to change the pin that the LED was connected to to match the one set
+in code.
+
+### Analog Pins and Serial Monitor
+
+While digital I/O is nice, often times analog inputs are necessary as signals in the real world are analog. The arduino has six analog input
+pins (A0 -> A5). Since these pins only serv as inputs, they do not need to be configured as an input/output pin like the digital pins in the previous section.
+In order to provide an analog signal to the arduino uno, we used a potentiometer to produce a varying voltage value.
 
 #### Analog Pins
 
@@ -93,7 +131,6 @@ We wired a pontentiometer in series with a 300Ohm resistor to test the analog pi
 We used the value of the potentiometer to vary the brightness of the LED. The LED must be hooked up to one of the 4 pins that allow PWM. The analogwrite function allowed us to write the value of the pontentiometer to the digital pin with the LED so that the brightness changed when the potentiometer value changed.
 
 ![LEDLight](./assets/images/LEDLight.jpg)
-
 
 #### Servos 
 
