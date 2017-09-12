@@ -10,9 +10,9 @@
 
 ### Purpose
 
-The main purpose of this lab was to beome familiar with the arduino architecture, and
+The main purpose of this lab was to become familiar with the arduino architecture, and
 learn basic functionality. In particular, we spent a lot of time working with various I/O ports since
-these are the main way we will send and recieve signals to sensors/motors/etc...
+these are the main way we will send and receive signals to sensors/motors/etc...
 In this lab, we learned basic functionality of arduino by writing small programs to control LEDs and servos. 
 At the end of this lab we were able to put together the beginnings of our robot which was able to autonomously move in a given direction. 
 
@@ -52,13 +52,13 @@ called from either ```void setup()``` or ```void loop()```.
 
 To start programming, we opened one of the default examples included with the arduino IDE. Selecting the
 Blink sketch from _File > Examples > 1.Basics > Blink_. Within the IDE, you can compile your code by clicking the
-checkmark in the topleft corner. This converts the sketch into C code, which is then compiled to assembly code to be run
+checkmark in the top left corner. This converts the sketch into C code, which is then compiled to assembly code to be run
 on the arduino uno. At this point, any code which contains errors will fail to compile. Once you are ready to run the program
 on the board, you can select the upload button (arrow next to compile button). This will compile the code and put the program
 on the uno.
 
 The code will automatically begin running if the board is powered on. If the board loses power, the program will remain in
-memory, and will run again when the board is turned on. The board can either recieve power from a DC power supply (9V battery) or
+memory, and will run again when the board is turned on. The board can either receive power from a DC power supply (9V battery) or
 from the programing cable connected to the computer. Once the Blink sketch was downloaded onto the board, the onboard LED would
 blink every second. Looking at the code for the Blink program, we can see how it operates on the arduino uno.
 
@@ -82,7 +82,7 @@ void loop() {
 ```
 This is the main function which blinks the LED. Because the LED was set as an output pin in the setup function, we are able to write
 a ```HIGH``` or ```LOW``` value to it. These variables are global variable defined for the arduino. They correspond to logical high and
-low values. In betweeen turning the LED on/off the program waits for 1 second so you can actually see the LED change.
+low values. In between turning the LED on/off the program waits for 1 second so you can actually see the LED change.
 
 The exact specification for these functions can be found in the [Arduino Reference](https://www.arduino.cc/en/Reference/HomePage).
 
@@ -119,16 +119,16 @@ in code.
 ### Analog Pins and Serial Monitor
 
 While digital I/O is nice, often times analog inputs are necessary as signals in the real world are analog. The arduino has six analog input
-pins (A0 -> A5). Since these pins only serv as inputs, they do not need to be configured as an input/output pin like the digital pins in the previous section.
+pins (A0 -> A5). Since these pins only serve as inputs, they do not need to be configured as an input/output pin like the digital pins in the previous section.
 In order to provide an analog signal to the arduino uno, we used a potentiometer to produce a varying voltage value.
 
 #### Analog Pins
 
-We wired a pontentiometer in series with a 300Ohm resistor to test the analog pins. We used a serial print function to display the value of the pin in mV to the serial monitor, which can be accessed under the tools bar in Arduino IDE. The max voltage we read was 1.024 V.
+We wired a potentiometer in series with a 300 Ohm resistor to test the analog pins. We used a serial print function to display the scaled input values in the serial monitor, which can be accessed under the tools bar in Arduino IDE. The serial monitor displayed values from 0 to 1023, which scaled to 0V to 5V.
 
 #### Analog Output
 
-We used the value of the potentiometer to vary the brightness of the LED. The LED must be hooked up to one of the 4 pins that allow PWM. The analogwrite function allowed us to write the value of the pontentiometer to the digital pin with the LED so that the brightness changed when the potentiometer value changed.
+We used the value of the potentiometer to vary the brightness of the LED. The LED must be hooked up to one of the 4 pins that allow PWM. The analogwrite function allowed us to write the value of the potentiometer to the digital pin with the LED so that the brightness changed when the potentiometer value changed.
 
 ![LEDLight](./assets/images/LEDLight.jpg)
 
