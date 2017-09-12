@@ -142,6 +142,6 @@ Using our new knowledge of programming servos, we attached two servos to wheels,
 
 <iframe width="420" height="315">
 
-src="https://www.flickr.com/photos/154473257@N08/36820641636/in/datetaken/">
+src="https://www.youtube.com/watch?v=onVxR9bHQKk">
 
 </iframe>
