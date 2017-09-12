@@ -134,7 +134,7 @@ We used the value of the potentiometer to vary the brightness of the LED. The LE
 
 #### Servos 
 
-We hooked up the servo to a digital pin that allows PWM. To use the standard servo functions, we included the Servo.h library then wrote different speeds (0-180) to the servo. We then used the potentiometer values to control the speed and direction of the servo. 
+We hooked up the servo to a digital pin that allows PWM. To use the standard servo functions, we included the Servo.h library and utilized myservo.write() to set different speeds varying between a range of 0-180: 0 indicated full speed in reverse, 90 is no speed, and 180 is full speed forward. We then used a screwdriver to manually alter the potentiometer values in order to control the speed and direction of the servo. 
 
 #### Robot!
 
