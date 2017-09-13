@@ -179,7 +179,9 @@ Below are three separate image captures from the oscilloscope. The value being o
 This causes the duty cycle of the wave to increase until, at its maximum value, the signal is always high.
 
 ![Duty Cycle of Approximately 0%](./assets/images/pwm_0_dc.JPG)
+
 ![Duty Cycle of 50%](./assets/images/pwm_50_dc.JPG)
+
 ![Duty Cycle of 100%](./assets/images/pwm_100_dc.JPG)
 
 ![Lab1](./assets/images/Lab1.JPG)
