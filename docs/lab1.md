@@ -172,22 +172,55 @@ While it is not necessary to use the serial monitor, we left the code in to aid 
 
 One thing to note is the value we read in from the analog pin must be divided by 4 prior to being passed to the output pin. This is becuase the
 output only takes values between 0 and 255, while the analog input can have a value up to 1023. The way the PWM works is by creating a square wave with
-varying duty cycle. If the output is 0, then the signal will be always off. If the output is 255, then the signal will be always on. To further understand the changes in the duty cycle, we used an oscilloscope to measure the voltage output.
+varying duty cycle. If the output is 0, then the signal will be always off. If the output is 255, then the signal will be always on.
+
+To further understand the changes in the duty cycle, we used an oscilloscope to measure the voltage output.
+Below are three separate image captures from the oscilloscope. The value being output to the I/O pin is increasing in value.
+This causes the duty cycle of the wave to increase until, at its maximum value, the signal is always high.
+
+![Duty Cycle of Approximately 0%](./assets/images/pwm_0_dc.JPG)
+![Duty Cycle of 50%](./assets/images/pwm_50_dc.JPG)
+![Duty Cycle of 100%](./assets/images/pwm_100_dc.JPG)
 
 ![Lab1](./assets/images/Lab1.JPG)
 
 *When the LED is at it's lowest brightness, the signal is almost always at 0V. When the LED is at it's highest brightness, the signal is almost always at maximum voltage.*
 
-
 ![LEDLight](./assets/images/LEDLight.jpg)
 
-#### Servos 
+### Servos
 
-We hooked up the servo to a digital pin that allows PWM. To use the standard servo functions, we included the Servo.h library and utilized myservo.write() to set different speeds varying between a range of 0-180: 0 indicated full speed in reverse, 90 is no speed, and 180 is full speed forward. We then used a screwdriver to manually alter the potentiometer values in order to control the speed and direction of the servo. 
+No that we understood how to use the pulse width modulation feature, we could program servos to help our robot
+move throughout the world. Again, this requires some modification to our code. In particular, we have to include a new
+library which helps us to interface with the servos.
 
-#### Robot!
+```c
+#include <Servo.h>
 
-Using our new knowledge of programming servos, we attached two servos to wheels, added a chassis and placed the arduino on top as well as the breadboard containing our wiring. We hooked up a 5V battery back to the arduino and programmed our robot to move forwards, backwards or in a circle. 
+Servo myservo;
+
+void setup() {
+    myservo.attach(3);
+}
+
+void loop() {
+    myservo.write(180);
+}
+```
+
+This would cause the servo to run at full speed forward. Because we use continuous motion servos, the parameter passed to
+the ```myservo.write()``` function is the speed of the servo. A value of 0 corresponds to full speed in reverse, 90 is stationary, and 180
+is full speed forward.
+
+We then used a screwdriver to manually alter the potentiometer values in order to control the speed and direction of the servo.
+This required a similar setup as the one used for the variable brightness LED.
+
+### Robot!
+
+Since we had time left in lab, we began to gather materials to start the building of our robot. First, we assembled the base structure
+which included a chassis to hold the arduino, and two servos connected to wheels.
+
+Using our new knowledge of programming servos, we hooked up a 5V battery back to the arduino and programmed our robot to move forwards, backwards or in a circle. 
 
 <iframe width="560" height="315"
 src="https://www.youtube.com/embed/onVxR9bHQKk?rel=0"
