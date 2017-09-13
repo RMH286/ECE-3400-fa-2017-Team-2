@@ -175,14 +175,10 @@ output only takes values between 0 and 255, while the analog input can have a va
 varying duty cycle. If the output is 0, then the signal will be always off. If the output is 255, then the signal will be always on.
 
 To further understand the changes in the duty cycle, we used an oscilloscope to measure the voltage output.
-Below are three separate image captures from the oscilloscope. The value being output to the I/O pin is increasing in value.
+Below are two separate image captures from the oscilloscope. The value being output to the I/O pin is increasing in value.
 This causes the duty cycle of the wave to increase until, at its maximum value, the signal is always high.
 
-![Duty Cycle of Approximately 0%](./assets/images/pwm_0_dc.jpg)
-
-![Duty Cycle of 50%](./assets/images/pwm_50_dc.jpg)
-
-![Duty Cycle of 100%](./assets/images/pwm_100_dc.jpg)
+![Lab1](./assets/images/Lab1.jpg)
 
 *When the LED is at it's lowest brightness, the signal is almost always at 0V. When the LED is at it's highest brightness, the signal is almost always at maximum voltage.*
 
