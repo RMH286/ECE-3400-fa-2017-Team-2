@@ -172,7 +172,14 @@ While it is not necessary to use the serial monitor, we left the code in to aid 
 
 One thing to note is the value we read in from the analog pin must be divided by 4 prior to being passed to the output pin. This is becuase the
 output only takes values between 0 and 255, while the analog input can have a value up to 1023. The way the PWM works is by creating a square wave with
-varying duty cycle. If the output is 0, then the signal will be always off. If the output is 255, then the signal will be always on.
+varying duty cycle. If the output is 0, then the signal will be always off. If the output is 255, then the signal will be always on. To further understand the changes in the duty cycle, we used an oscilloscope to measure the voltage output.
+
+![ODC](./assets/images/0DC.jpg)
+*When the LED is at it's lowest brightness, the signal is almost always at 0V.*
+
+![90DC](./assets/images/0DC.jpg)
+*When the LED is at it's highest brightness, the signal is almost always at maximum voltage.*
+
 
 ![LEDLight](./assets/images/LEDLight.jpg)
 
