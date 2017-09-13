@@ -4,8 +4,6 @@
 * ## [Labs](./labs.md)
 * ## [Meeting Minutes](./minutes.md)
 
-
-
 ## LAB 1: Microcontroller
 
 ### Purpose
@@ -118,17 +116,63 @@ in code.
 
 ### Analog Pins and Serial Monitor
 
+#### Analog Input
+
 While digital I/O is nice, often times analog inputs are necessary as signals in the real world are analog. The arduino has six analog input
 pins (A0 -> A5). Since these pins only serve as inputs, they do not need to be configured as an input/output pin like the digital pins in the previous section.
 In order to provide an analog signal to the arduino uno, we used a potentiometer to produce a varying voltage value.
+We supplied the potentiometer using Vdd and Ground from the arduino. The third pin of the potentiometer represented the output voltage
+of a voltage divider. Again, we ran this voltage through a 300 ohm resistor prior to passing it into the analog input pin. This is
+simply a saftey precaution to ensure the pin does not source too much current.
 
-#### Analog Pins
+In order to output the analog value to the serial monitor, we had to modify our code slightly as below.
 
-We wired a potentiometer in series with a 300 Ohm resistor to test the analog pins. We used a serial print function to display the scaled input values in the serial monitor, which can be accessed under the tools bar in Arduino IDE. The serial monitor displayed values from 0 to 1023, which scaled to 0V to 5V.
+```c
+void setup() {
+    Serial.begin(9600);
+}
+
+void loop() {
+    val = analogRead(A0);
+    Serial.println(val);
+}
+```
+
+In the ```setup()``` function, we have to initialize the serial monitor by calling ```Serial.begin(i)```. The value passed to this function is the baudrate
+to use for the serial monitor. In the loop, we continually read the analog value from pin A0 and print it out to the monitor
+using ```Serial.println()```. As we adjusted the potentiometer with a screwdriver, we could see the values being ouputed to the serial monitor
+change.
+
+The ```analogRead()``` function converts a voltage between 0 and 5 volts to an integer number between 0 and 1023.
+We then repeated this for all of the analog pins to ensure they worked properly.
 
 #### Analog Output
 
-We used the value of the potentiometer to vary the brightness of the LED. The LED must be hooked up to one of the 4 pins that allow PWM. The analogwrite function allowed us to write the value of the potentiometer to the digital pin with the LED so that the brightness changed when the potentiometer value changed.
+Analog output can be simulated using a pulse-width modulation. This is only possible on certain pins on the arduino uno. In particular, pins 3, 5, 6, 9, 10,
+and 11 can be used. This allows us to simulate an analog output. To demonstrate this, we used this feature to vary the brightness of
+an LED. In order to do this, we utilized aspects from the previous lab exercises.
+
+First, we used the potentiometer to provide an anolog input to the arduino, and wired an LED to one of the digital output pins which support
+PWM. Again, we had to slightly modify our code as below.
+
+```c
+void setup() {
+    Serial.begin(9600);
+    pinMode(3, OUTPUT);
+}
+
+void loop() {
+    val = analogRead(A0);
+    Serial.println(val);
+    analogWrite(3, val / 4);
+}
+```
+
+While it is not necessary to use the serial monitor, we left the code in to aid for debugging purposes.
+
+One thing to note is the value we read in from the analog pin must be divided by 4 prior to being passed to the output pin. This is becuase the
+output only takes values between 0 and 255, while the analog input can have a value up to 1023. The way the PWM works is by creating a square wave with
+varying duty cycle. If the output is 0, then the signal will be always off. If the output is 255, then the signal will be always on.
 
 ![LEDLight](./assets/images/LEDLight.jpg)
 
