@@ -174,7 +174,7 @@ One thing to note is the value we read in from the analog pin must be divided by
 output only takes values between 0 and 255, while the analog input can have a value up to 1023. The way the PWM works is by creating a square wave with
 varying duty cycle. If the output is 0, then the signal will be always off. If the output is 255, then the signal will be always on. To further understand the changes in the duty cycle, we used an oscilloscope to measure the voltage output.
 
-![Lab1](./assets/images/Lab1.jpg)
+![Lab1](./assets/images/Lab1.JPG)
 *When the LED is at it's lowest brightness, the signal is almost always at 0V. When the LED is at it's highest brightness, the signal is almost always at maximum voltage.*
 
 
