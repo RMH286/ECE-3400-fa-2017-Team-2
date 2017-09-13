@@ -178,7 +178,7 @@ To further understand the changes in the duty cycle, we used an oscilloscope to 
 Below are two separate image captures from the oscilloscope. The value being output to the I/O pin is increasing in value.
 This causes the duty cycle of the wave to increase until, at its maximum value, the signal is always high.
 
-![Lab1](./assets/images/Lab1.jpg)
+![Lab1](./assets/images/Lab1.JPG)
 
 *When the LED is at it's lowest brightness, the signal is almost always at 0V. When the LED is at it's highest brightness, the signal is almost always at maximum voltage.*
 
