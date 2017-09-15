@@ -4,8 +4,6 @@
 * ## [Labs](./labs.md)
 * ## [Meeting Minutes](./minutes.md)
 
-
-
 ## LAB 1: Microcontroller
 
 ### Purpose
@@ -118,27 +116,107 @@ in code.
 
 ### Analog Pins and Serial Monitor
 
+#### Analog Input
+
 While digital I/O is nice, often times analog inputs are necessary as signals in the real world are analog. The arduino has six analog input
 pins (A0 -> A5). Since these pins only serve as inputs, they do not need to be configured as an input/output pin like the digital pins in the previous section.
 In order to provide an analog signal to the arduino uno, we used a potentiometer to produce a varying voltage value.
+We supplied the potentiometer using Vdd and Ground from the arduino. The third pin of the potentiometer represented the output voltage
+of a voltage divider. Again, we ran this voltage through a 300 ohm resistor prior to passing it into the analog input pin. This is
+simply a saftey precaution to ensure the pin does not source too much current.
 
-#### Analog Pins
+In order to output the analog value to the serial monitor, we had to modify our code slightly as below.
 
-We wired a potentiometer in series with a 300 Ohm resistor to test the analog pins. We used a serial print function to display the scaled input values in the serial monitor, which can be accessed under the tools bar in Arduino IDE. The serial monitor displayed values from 0 to 1023, which scaled to 0V to 5V.
+```c
+void setup() {
+    Serial.begin(9600);
+}
+
+void loop() {
+    val = analogRead(A0);
+    Serial.println(val);
+}
+```
+
+In the ```setup()``` function, we have to initialize the serial monitor by calling ```Serial.begin(i)```. The value passed to this function is the baudrate
+to use for the serial monitor. In the loop, we continually read the analog value from pin A0 and print it out to the monitor
+using ```Serial.println()```. As we adjusted the potentiometer with a screwdriver, we could see the values being ouputed to the serial monitor
+change.
+
+The ```analogRead()``` function converts a voltage between 0 and 5 volts to an integer number between 0 and 1023.
+We then repeated this for all of the analog pins to ensure they worked properly.
 
 #### Analog Output
 
-We used the value of the potentiometer to vary the brightness of the LED. The LED must be hooked up to one of the 4 pins that allow PWM. The analogwrite function allowed us to write the value of the potentiometer to the digital pin with the LED so that the brightness changed when the potentiometer value changed.
+Analog output can be simulated using a pulse-width modulation. This is only possible on certain pins on the arduino uno. In particular, pins 3, 5, 6, 9, 10,
+and 11 can be used. This allows us to simulate an analog output. To demonstrate this, we used this feature to vary the brightness of
+an LED. In order to do this, we utilized aspects from the previous lab exercises.
+
+First, we used the potentiometer to provide an anolog input to the arduino, and wired an LED to one of the digital output pins which support
+PWM. Again, we had to slightly modify our code as below.
+
+```c
+void setup() {
+    Serial.begin(9600);
+    pinMode(3, OUTPUT);
+}
+
+void loop() {
+    val = analogRead(A0);
+    Serial.println(val);
+    analogWrite(3, val / 4);
+}
+```
+
+While it is not necessary to use the serial monitor, we left the code in to aid for debugging purposes.
+
+One thing to note is the value we read in from the analog pin must be divided by 4 prior to being passed to the output pin. This is becuase the
+output only takes values between 0 and 255, while the analog input can have a value up to 1023. The way the PWM works is by creating a square wave with
+varying duty cycle. If the output is 0, then the signal will be always off. If the output is 255, then the signal will be always on.
+
+To further understand the changes in the duty cycle, we used an oscilloscope to measure the voltage output.
+Below are two separate image captures from the oscilloscope. The value being output to the I/O pin is increasing in value.
+This causes the duty cycle of the wave to increase until, at its maximum value, the signal is always high.
+
+![Lab1](./assets/images/Lab1.JPG)
+
+*When the LED is at it's lowest brightness, the signal is almost always at 0V. When the LED is at it's highest brightness, the signal is almost always at maximum voltage.*
 
 ![LEDLight](./assets/images/LEDLight.jpg)
 
-#### Servos 
+### Servos
 
-We hooked up the servo to a digital pin that allows PWM. To use the standard servo functions, we included the Servo.h library and utilized myservo.write() to set different speeds varying between a range of 0-180: 0 indicated full speed in reverse, 90 is no speed, and 180 is full speed forward. We then used a screwdriver to manually alter the potentiometer values in order to control the speed and direction of the servo. 
+No that we understood how to use the pulse width modulation feature, we could program servos to help our robot
+move throughout the world. Again, this requires some modification to our code. In particular, we have to include a new
+library which helps us to interface with the servos.
 
-#### Robot!
+```c
+#include <Servo.h>
 
-Using our new knowledge of programming servos, we attached two servos to wheels, added a chassis and placed the arduino on top as well as the breadboard containing our wiring. We hooked up a 5V battery back to the arduino and programmed our robot to move forwards, backwards or in a circle. 
+Servo myservo;
+
+void setup() {
+    myservo.attach(3);
+}
+
+void loop() {
+    myservo.write(180);
+}
+```
+
+This would cause the servo to run at full speed forward. Because we use continuous motion servos, the parameter passed to
+the ```myservo.write()``` function is the speed of the servo. A value of 0 corresponds to full speed in reverse, 90 is stationary, and 180
+is full speed forward.
+
+We then used a screwdriver to manually alter the potentiometer values in order to control the speed and direction of the servo.
+This required a similar setup as the one used for the variable brightness LED.
+
+### Robot!
+
+Since we had time left in lab, we began to gather materials to start the building of our robot. First, we assembled the base structure
+which included a chassis to hold the arduino, and two servos connected to wheels.
+
+Using our new knowledge of programming servos, we hooked up a 5V battery back to the arduino and programmed our robot to move forwards, backwards or in a circle. 
 
 <iframe width="560" height="315"
 src="https://www.youtube.com/embed/onVxR9bHQKk?rel=0"
