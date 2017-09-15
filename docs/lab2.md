@@ -4,5 +4,4 @@
 * ## [Labs](./labs.md)
 * ## [Meeting Minutes](./minutes.md)
 
-### [Lab 1](./lab1.md)
-### [Lab 2](./lab2.md)
+## LAB 2: Signal Processing
