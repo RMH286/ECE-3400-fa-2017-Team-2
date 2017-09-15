@@ -1,4 +1,4 @@
-# ECE 3400: Welcome to our homepage!
+# ECE 3400 Team 2: Overbuilt & Underpaid
 * ## [Home](./index.md)
 * ## [Team Info](./info.md)
 * ## [Labs](./labs.md)
