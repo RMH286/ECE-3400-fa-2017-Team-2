@@ -12,6 +12,8 @@
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 	</head>
 	<body class="homepage">
 		<div id="page-wrapper">
@@ -140,7 +142,7 @@
                         <header class="style1">
                             <h2>Base Code</h2>
                         </header>
-                        <pre><code>
+                        <pre><code class="cpp">
                             void setup() {
                                 // initialize digital pin LED_BUILTIN as an output.
                                 pinMode(LED_BUILTIN, OUTPUT);
@@ -167,7 +169,7 @@
                         </p>
                         
                         <header class="style1">
-                            <h3>External LED</h3>
+                            <h2>External LED</h2>
                         </header>
                         <p>
                             In order to modify the code to blink an external LED, we simply have to modify the I/O pin which we write to. Rather than using
@@ -279,9 +281,7 @@
                         </p>
                         
                         <!-- Image -->
-							<a href="assets/images/Lab1.jpg" class="image featured">
-								<img src=assets/images/Lab1.jpg" alt="" />
-							</a>
+						<img src=assets/images/Lab1.jpg" alt="" />
 					</div>
 					<div id="copyright">
 						<ul>
