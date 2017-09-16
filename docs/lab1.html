@@ -115,12 +115,6 @@
                             In addition to these two functions, you can declare any extra helper functions you want. These can then be
                             called from either <code>void setup()</code> or <code>void loop()</code>.
                         </p>
-
-						<!-- Image -->
-							<a href="#" class="image featured">
-								<img src="images/pic01.jpg" alt="" />
-							</a>
-                            
 					</div>
 				</div>
 
@@ -128,7 +122,7 @@
 				<div class="wrapper style3">
 					<div class="title">Blink</div>
 					<div id="highlights" class="container">
-                        <p>
+                        <p class="style1">
                             To start programming, we opened one of the default examples included with the arduino IDE. Selecting the
                             Blink sketch from <i>File > Examples > 1.Basics > Blink</i>. Within the IDE, you can compile your code by clicking the
                             checkmark in the top left corner. This converts the sketch into C code, which is then compiled to assembly code to be run
@@ -136,7 +130,7 @@
                             on the board, you can select the upload button (arrow next to compile button). This will compile the code and put the program
                             on the uno.
                         </p>
-                        <p>
+                        <p class="style1">
                             The code will automatically begin running if the board is powered on. If the board loses power, the program will remain in
                             memory, and will run again when the board is turned on. The board can either receive power from a DC power supply (9V battery) or
                             from the programing cable connected to the computer. Once the Blink sketch was downloaded onto the board, the onboard LED would
@@ -144,7 +138,7 @@
                         </p>
                         
                         <header class="style1">
-                            <h3>Base Code</h3>
+                            <h2>Base Code</h2>
                         </header>
                         <pre><code>
                             void setup() {
@@ -214,7 +208,7 @@
 					<div class="title">Analog Pins and Serial Monitor</div>
 					<div id="footer" class="container">
 						<header class="style1">
-							<h3>Analog Input</h3>
+							<h2>Analog Input</h2>
 						</header>
                         <p>
                             While digital I/O is nice, often times analog inputs are necessary as signals in the real world are analog. The arduino has six analog input
@@ -248,7 +242,7 @@
                         </p>
                         
                         <header class="style1">
-                            <h3>Analog Output</h3>
+                            <h2>Analog Output</h2>
                         </header>
                         <p>
                             Analog output can be simulated using a pulse-width modulation. This is only possible on certain pins on the arduino uno. In particular, pins 3, 5, 6, 9, 10,
@@ -283,6 +277,11 @@
                             Below are two separate image captures from the oscilloscope. The value being output to the I/O pin is increasing in value.
                             This causes the duty cycle of the wave to increase until, at its maximum value, the signal is always high.
                         </p>
+                        
+                        <!-- Image -->
+							<a href="assets/images/Lab1.jpg" class="image featured">
+								<img src=assets/images/Lab1.jpg" alt="" />
+							</a>
 					</div>
 					<div id="copyright">
 						<ul>
