@@ -12,8 +12,9 @@
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="assets/highlight/styles/monokai.css">
+        <script src="assets/highlight/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
 	</head>
 	<body class="homepage">
 		<div id="page-wrapper">
@@ -147,7 +148,7 @@
                                 // initialize digital pin LED_BUILTIN as an output.
                                 pinMode(LED_BUILTIN, OUTPUT);
                             }
-                        </code></pre>
+                        </code></pre><br />
                         <p>
                             This code tells the arduino that the built in LED should act as an output. This allows you to write voltage values to the LED,
                             and turn it off/on.
@@ -159,7 +160,7 @@
                                 digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
                                 delay(1000);                       // wait for a second
                             }
-                        </code></pre>
+                        </code></pre><br />
                         <p>
                             This is the main function which blinks the LED. Because the LED was set as an output pin in the setup function, we are able to write
                             a <code>HIGH</code> or <code>LOW</<code> value to it. These variables are global variable defined for the arduino. They correspond to logical high and
@@ -189,7 +190,7 @@
                                 digitalWrite(11, LOW);    // turn the LED off by making the voltage LOW
                                 delay(1000);                       // wait for a second
                             }
-                        </code></pre>
+                        </code></pre><br />
                         <p>
                             This completed the software necessary to make the system work, but we still had to wire the external LED to the digital pin. In order to prevent the pin
                             from sourcing too much current and possibly ruining the pin, we connected the LED in series with a 300 ohm resistor. The ground connection is then
@@ -232,7 +233,7 @@
                                 val = analogRead(A0);
                                 Serial.println(val);
                             }
-                        </code></pre>
+                        </code></pre><br />
                         <p>
                             In the <code>setup()</code> function, we have to initialize the serial monitor by calling <code>Serial.begin(i)</code>. The value passed to this function is the baudrate
                             to use for the serial monitor. In the loop, we continually read the analog value from pin A0 and print it out to the monitor
@@ -265,7 +266,7 @@
                                 Serial.println(val);
                                 analogWrite(3, val / 4);
                             }
-                        </code></pre>
+                        </code></pre><br />
                         <p>
                             While it is not necessary to use the serial monitor, we left the code in to aid for debugging purposes.
                         </p>
@@ -283,12 +284,57 @@
                         <!-- Image -->
 						<img src=assets/images/Lab1.jpg" alt="" />
 					</div>
-					<div id="copyright">
-						<ul>
-							<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-						</ul>
-					</div>
 				</div>
+                
+                <!-- Main -->
+				<div class="wrapper style2">
+					<div class="title">Servos</div>
+					<div id="main" class="container">
+                        Now that we understood how to use the pulse width modulation feature, we could program servos to help our robot
+                        move throughout the world. Again, this requires some modification to our code. In particular, we have to include a new
+                        library which helps us to interface with the servos.<br />
+                        <pre><code class="cpp">
+                            #include <Servo.h>
+
+                            Servo myservo;
+
+                            void setup() {
+                                myservo.attach(3);
+                            }
+
+                            void loop() {
+                                myservo.write(180);
+                            }
+                        </code></pre><br />
+                        <p>
+                            This would cause the servo to run at full speed forward. Because we use continuous motion servos, the parameter passed to
+                            the <code>myservo.write()</code> function is the speed of the servo. A value of 0 corresponds to full speed in reverse, 90 is stationary, and 180
+                            is full speed forward.
+                        </p>
+                        <p>
+                            We then used a screwdriver to manually alter the potentiometer values in order to control the speed and direction of the servo.
+                            This required a similar setup as the one used for the variable brightness LED.
+                        </p>
+                        <p>
+                            Since we had time left in lab, we began to gather materials to start the building of our robot. First, we assembled the base structure
+                            which included a chassis to hold the arduino, and two servos connected to wheels.
+                        </p>
+                        <p>
+                            Using our new knowledge of programming servos, we hooked up a 5V battery back to the arduino and programmed our robot to move forwards, backwards or in a circle.
+                        </p>
+
+                        <iframe width="560" height="315"
+                            src="https://www.youtube.com/embed/onVxR9bHQKk?rel=0"
+                            frameborder="0" allowfullscreen>
+                        </iframe>
+                        
+                        <div id="copyright">
+                        	<ul>
+                        		<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                        	</ul>
+                        </div>
+                    </div>
+                </div>
 
 		</div>
 
