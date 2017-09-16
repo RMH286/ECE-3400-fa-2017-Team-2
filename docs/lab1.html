@@ -49,7 +49,9 @@
                 <div id="intro-wrapper" class="wrapper style1">
                     <div class="title">Introduction</div>
                     <section id="intro" class="container">
-                        <h2>Goal</h2>
+                        <header class="style1">
+                            <h2>Goal</h2>
+                        </header>
                         <p>
                             The main purpose of this lab was to become familiar with the arduino architecture, and
                             learn basic functionality. In particular, we spent a lot of time working with various I/O ports since
@@ -58,13 +60,17 @@
                             At the end of this lab we were able to put together the beginnings of our robot which was able to autonomously move in a given direction.</p>
                         <!--<p class="style2"></p>-->
                         <!--<p class="style3"></p>-->
-                        <h2>Procedure</h2>
+                        <header class="style1">
+                            <h2>Procedure</h2>
+                        </header>
                         <p>
                             We first split up into two groups of 3 people each. We ensured that each group contained someone knowledgeable
                             of arduino so if the group hit any road blocks, they would be able to assist. Each group progressed through the
                             lab individually as described below
                         </p>
-                        <h2>Materials Used</h2>
+                        <header class="style1">
+                            <h2>Materials Used</h2>
+                        </header>
                         <p>
                             <ul>
                                 <li>1 Arduino Uno</li>
@@ -81,10 +87,8 @@
 
 			<!-- Main -->
 				<div class="wrapper style2">
-					<div class="title">Documentation</div>
+					<div class="title">Arduino Code (IDE)</div>
 					<div id="main" class="container">
-                        
-                        <h2>Arduino Code (IDE)</h2>
                         <p>
                             We began by installing the arduino IDE to be able to program the board. Once the IDE was installed,
                             we opened a new sketch. Within a new sketch, there are two default functions as described below:
@@ -138,7 +142,9 @@
                             blink every second. Looking at the code for the Blink program, we can see how it operates on the arduino uno.
                         </p>
                         
-                        <h2>Base Code</h2>
+                        <header class="style1">
+                            <h2>Base Code</h2>
+                        </header>
                         <pre><code>
                             void setup() {
                                 // initialize digital pin LED_BUILTIN as an output.
@@ -165,10 +171,14 @@
                             The exact specification for these functions can be found in the <a href="https://www.arduino.cc/en/Reference/HomePage">Arduino Reference</a>.
                         </p>
                         
-                        <h2>External LED</h2>
-                        In order to modify the code to blink an external LED, we simply have to modify the I/O pin which we write to. Rather than using
-                        the global variable <code>LED_BUILTIN</code>, we passed the pin number we wanted to use to the necessary functions. Now, setup and loop
-                        functions looked as below:
+                        <header class="style1">
+                            <h2>External LED</h2>
+                        </header>
+                        <p>
+                            In order to modify the code to blink an external LED, we simply have to modify the I/O pin which we write to. Rather than using
+                            the global variable <code>LED_BUILTIN</code>, we passed the pin number we wanted to use to the necessary functions. Now, setup and loop
+                            functions looked as below:
+                        </p>
                         
                         <pre><code>
                             void setup() {
@@ -183,17 +193,18 @@
                                 delay(1000);                       // wait for a second
                             }
                         </code></pre>
-
-                        This completed the software necessary to make the system work, but we still had to wire the external LED to the digital pin. In order to prevent the pin
-                        from sourcing too much current and possibly ruining the pin, we connected the LED in series with a 300 ohm resistor. The ground connection is then
-                        taken from the arduino's ground. This is simply another pin on the board, and is necessary for the voltage on the digital output pin to have any meaning as
-                        voltages are always from one location to another. Once we hooked up the entire circuit and downloaded the program to the uno, the external LED blinked every
-                        second just like the onboard LED in the prior section.
-                        
-                        Once we confirmed this worked, we adjusted the code and external circuit to test all of the digital pins on the board. In the code, we had to change
-                        the pin number that we set as a digital output and wrote to. In the circuit, we had to change the pin that the LED was connected to to match the one set
-                        in code.
-                        
+                        <p>
+                            This completed the software necessary to make the system work, but we still had to wire the external LED to the digital pin. In order to prevent the pin
+                            from sourcing too much current and possibly ruining the pin, we connected the LED in series with a 300 ohm resistor. The ground connection is then
+                            taken from the arduino's ground. This is simply another pin on the board, and is necessary for the voltage on the digital output pin to have any meaning as
+                            voltages are always from one location to another. Once we hooked up the entire circuit and downloaded the program to the uno, the external LED blinked every
+                            second just like the onboard LED in the prior section.
+                        </p>
+                        <p>
+                            Once we confirmed this worked, we adjusted the code and external circuit to test all of the digital pins on the board. In the code, we had to change
+                            the pin number that we set as a digital output and wrote to. In the circuit, we had to change the pin that the LED was connected to to match the one set
+                            in code.
+                        </p>
                     </div>
                 </div>
 
