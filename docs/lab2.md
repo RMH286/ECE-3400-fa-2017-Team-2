@@ -9,11 +9,11 @@
 ### Overall Goal
 
 The next step in developing our robot is to allow it to sense the world around it. Our
-robot can currently move throughout its environment, but has no knowledge about where it is,
-or what is around it. For this lab, we developed two different sensors to be used on our robot.
-First, we used a microphone circuit to detect a 660Hz whistle blow. This is used to signal
-our robot to begin exploring the maze. The second sensor was an IR sensore to detect various
-treasures which blink at varying frequencies.
+robot can currently move throughout its environment, but has no knowledge about where it is or what is around it. For this lab, we developed two different sensors to be used on our robot. First, we used a microphone circuit to detect a 660Hz whistle blow. This tone is used to signal our robot to begin exploring the maze. The second sensor was an IR sensor to detect various treasures which blink at varying frequencies.
+
+## Open Music Labs FFT Library
+
+We began by downloading the Open Music Labs’ FFT library so it was available for use in the Arduino IDE. We then opened an example sketch from this library that reads in values through analog pin A0 and outputs the FFT data via the serial monitor. In order to see how this code runs, we used a signal generator to create a signal similar to what we expected from the output of our microphone circuit. We set up the generator to deliver a 660 Hz signal at 1.65 Vpp with a 0.825 V offset. We first confirmed these output values using an oscilloscope. We then moved the signal input to analog pin A0 on the Arduino and used the serial monitor to view the data values.
 
 ## Acoustics Subteam
 
