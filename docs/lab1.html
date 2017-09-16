@@ -30,14 +30,14 @@
 							<nav id="nav">
 								<ul>
 									<li class="current"><a href="index.html">Home</a></li>
-                                    <li><a href="info.html">Team Info<a></li>
 									<li>
 										<a href="#">Labs</a>
 										<ul>
-											<li><a href="lab1.html">Lab 1</a></li>
-											<li><a href="lab2.html">Lab 2</a></li>
+											<li><a href="#">Lab 1</a></li>
+											<li><a href="#">Lab 2</a></li>
 										</ul>
 									</li>
+									<li><a href="info.html">Team Info</a></li>
 									<li><a href="minutes.html">Meeting Minutes</a></li>
 								</ul>
 							</nav>
@@ -50,7 +50,7 @@
                     <div class="title">Introduction</div>
                     <section id="intro" class="container">
                         <header class="style1">
-                            <h2>Goal</h2>
+                            <h3>Goal</h3>
                         </header>
                         <p>
                             The main purpose of this lab was to become familiar with the arduino architecture, and
@@ -61,7 +61,7 @@
                         <!--<p class="style2"></p>-->
                         <!--<p class="style3"></p>-->
                         <header class="style1">
-                            <h2>Procedure</h2>
+                            <h3>Procedure</h3>
                         </header>
                         <p>
                             We first split up into two groups of 3 people each. We ensured that each group contained someone knowledgeable
@@ -69,7 +69,7 @@
                             lab individually as described below
                         </p>
                         <header class="style1">
-                            <h2>Materials Used</h2>
+                            <h3>Materials Used</h3>
                         </header>
                         <p>
                             <ul>
@@ -143,7 +143,7 @@
                         </p>
                         
                         <header class="style1">
-                            <h2>Base Code</h2>
+                            <h3>Base Code</h3>
                         </header>
                         <pre><code>
                             void setup() {
@@ -172,7 +172,7 @@
                         </p>
                         
                         <header class="style1">
-                            <h2>External LED</h2>
+                            <h3>External LED</h3>
                         </header>
                         <p>
                             In order to modify the code to blink an external LED, we simply have to modify the I/O pin which we write to. Rather than using
@@ -210,96 +210,78 @@
 
 			<!-- Footer -->
 				<div id="footer-wrapper" class="wrapper">
-					<div class="title">The Rest Of It</div>
+					<div class="title">Analog Pins and Serial Monitor</div>
 					<div id="footer" class="container">
 						<header class="style1">
-							<h2>Ipsum sapien elementum portitor?</h2>
-							<p>
-								Sed turpis tortor, tincidunt sed ornare in metus porttitor mollis nunc in aliquet.<br />
-								Nam pharetra laoreet imperdiet volutpat etiam consequat feugiat.
-							</p>
+							<h3>Analog Input</h3>
 						</header>
-						<hr />
-						<div class="row 150%">
-							<div class="6u 12u(mobile)">
+                        <p>
+                            While digital I/O is nice, often times analog inputs are necessary as signals in the real world are analog. The arduino has six analog input
+                            pins (A0 -> A5). Since these pins only serve as inputs, they do not need to be configured as an input/output pin like the digital pins in the previous section.
+                            In order to provide an analog signal to the arduino uno, we used a potentiometer to produce a varying voltage value.
+                            We supplied the potentiometer using Vdd and Ground from the arduino. The third pin of the potentiometer represented the output voltage
+                            of a voltage divider. Again, we ran this voltage through a 300 ohm resistor prior to passing it into the analog input pin. This is
+                            simply a saftey precaution to ensure the pin does not source too much current.
+                        </p>
+                        <p>
+                            In order to output the analog value to the serial monitor, we had to modify our code slightly as below.
+                        </p>
+                        <pre><code>
+                            void setup() {
+                                Serial.begin(9600);
+                            }
 
-								<!-- Contact Form -->
-									<section>
-										<form method="post" action="#">
-											<div class="row 50%">
-												<div class="6u 12u(mobile)">
-													<input type="text" name="name" id="contact-name" placeholder="Name" />
-												</div>
-												<div class="6u 12u(mobile)">
-													<input type="text" name="email" id="contact-email" placeholder="Email" />
-												</div>
-											</div>
-											<div class="row 50%">
-												<div class="12u">
-													<textarea name="message" id="contact-message" placeholder="Message" rows="4"></textarea>
-												</div>
-											</div>
-											<div class="row">
-												<div class="12u">
-													<ul class="actions">
-														<li><input type="submit" class="style1" value="Send" /></li>
-														<li><input type="reset" class="style2" value="Reset" /></li>
-													</ul>
-												</div>
-											</div>
-										</form>
-									</section>
+                            void loop() {
+                                val = analogRead(A0);
+                                Serial.println(val);
+                            }
+                        </code></pre>
+                        <p>
+                            In the <code>setup()</code> function, we have to initialize the serial monitor by calling <code>Serial.begin(i)</code>. The value passed to this function is the baudrate
+                            to use for the serial monitor. In the loop, we continually read the analog value from pin A0 and print it out to the monitor
+                            using <code>Serial.println()</code>. As we adjusted the potentiometer with a screwdriver, we could see the values being ouputed to the serial monitor
+                            change.
 
-							</div>
-							<div class="6u 12u(mobile)">
+                            The <code>analogRead()</code> function converts a voltage between 0 and 5 volts to an integer number between 0 and 1023.
+                            We then repeated this for all of the analog pins to ensure they worked properly.
+                        </p>
+                        
+                        <header class="style1">
+                            <h3>Analog Output</h3>
+                        </header>
+                        <p>
+                            Analog output can be simulated using a pulse-width modulation. This is only possible on certain pins on the arduino uno. In particular, pins 3, 5, 6, 9, 10,
+                            and 11 can be used. This allows us to simulate an analog output. To demonstrate this, we used this feature to vary the brightness of
+                            an LED. In order to do this, we utilized aspects from the previous lab exercises.
 
-								<!-- Contact -->
-									<section class="feature-list small">
-										<div class="row">
-											<div class="6u 12u(mobile)">
-												<section>
-													<h3 class="icon fa-home">Mailing Address</h3>
-													<p>
-														Untitled Corporation<br />
-														1234 Somewhere Rd #987<br />
-														Nashville, TN 00000-0000
-													</p>
-												</section>
-											</div>
-											<div class="6u 12u(mobile)">
-												<section>
-													<h3 class="icon fa-comment">Social</h3>
-													<p>
-														<a href="#">@untitled-corp</a><br />
-														<a href="#">linkedin.com/untitled</a><br />
-														<a href="#">facebook.com/untitled</a>
-													</p>
-												</section>
-											</div>
-										</div>
-										<div class="row">
-											<div class="6u 12u(mobile)">
-												<section>
-													<h3 class="icon fa-envelope">Email</h3>
-													<p>
-														<a href="#">info@untitled.tld</a>
-													</p>
-												</section>
-											</div>
-											<div class="6u 12u(mobile)">
-												<section>
-													<h3 class="icon fa-phone">Phone</h3>
-													<p>
-														(000) 555-0000
-													</p>
-												</section>
-											</div>
-										</div>
-									</section>
+                            First, we used the potentiometer to provide an anolog input to the arduino, and wired an LED to one of the digital output pins which support
+                            PWM. Again, we had to slightly modify our code as below.
+                        </p>
+                        <pre><code>
+                            void setup() {
+                                Serial.begin(9600);
+                                pinMode(3, OUTPUT);
+                            }
 
-							</div>
-						</div>
-						<hr />
+                            void loop() {
+                                val = analogRead(A0);
+                                Serial.println(val);
+                                analogWrite(3, val / 4);
+                            }
+                        </code></pre>
+                        <p>
+                            While it is not necessary to use the serial monitor, we left the code in to aid for debugging purposes.
+                        </p>
+                        <p>
+                            One thing to note is the value we read in from the analog pin must be divided by 4 prior to being passed to the output pin. This is becuase the
+                            output only takes values between 0 and 255, while the analog input can have a value up to 1023. The way the PWM works is by creating a square wave with
+                            varying duty cycle. If the output is 0, then the signal will be always off. If the output is 255, then the signal will be always on.
+                        </p>
+                        <p>
+                            To further understand the changes in the duty cycle, we used an oscilloscope to measure the voltage output.
+                            Below are two separate image captures from the oscilloscope. The value being output to the I/O pin is increasing in value.
+                            This causes the duty cycle of the wave to increase until, at its maximum value, the signal is always high.
+                        </p>
 					</div>
 					<div id="copyright">
 						<ul>
