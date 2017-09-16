@@ -4,16 +4,20 @@
 * ## [Labs](./labs.md)
 * ## [Meeting Minutes](./minutes.md)
 
-## LAB 2: Signal Processing
+## LAB 2: Analog Circuitry and FFT
 
 ### Overall Goal
 
-The purpose of this lab was to add the first sensors to the robot. One is an electret microphone that will be used to detect the 660 Hz whistle blow, the signal indicating that the robot needs to start mapping the maze. The other is an IR sensor that will be used to detect an IR treasure blinking at 7 kHz.
+The next step in developing our robot is to allow it to sense the world around it. Our
+robot can currently move throughout its environment, but has no knowledge about where it is,
+or what is around it. For this lab, we developed two different sensors to be used on our robot.
+First, we used a microphone circuit to detect a 660Hz whistle blow. This is used to signal
+our robot to begin exploring the maze. The second sensor was an IR sensore to detect various
+treasures which blink at varying frequencies.
 
 ## Acoustics Subteam
 
-Team Members: Nicolas Casazzone, Ben Roberge 
-
+Team Members: Nicolas Casazzone, Ben Roberge
 
 ### Purpose
 
@@ -32,13 +36,14 @@ Monitor. Once the frequency bin for the 660Hz was located, we modeled our code t
 
 ### Procedure
 
-
-
-
 ## Optics Subteam
+
+Team Members: Ryan Hornung, Alicia Coto, Raul Pacheco
 
 ### Purpose
 
+The goal of the Optics Subteam was to develop IR sensors to detect and distinguish various treasures
+around the map. These treasures simply output a varying IR signal at a specific frequency.
 
 ### Procedure
 
