@@ -22,7 +22,7 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="index.html">Overbuilt and Underpaid</a></h1>
+								<h1><a href="index.html">Lab 1: Microcontrollers</a></h1>
 								<p>ECE 3400 Team 2 Fall 2017</p>
 							</div>
 
@@ -45,28 +45,71 @@
 					</div>
 				</div>
 
-			<!-- Intro -->
-				<div id="intro-wrapper" class="wrapper style1">
-					<div class="title">The Introduction</div>
-					<section id="intro" class="container">
-						<p class="style1">So in case you were wondering what this is all about ...</p>
-						<p class="style2">
-							Escape Velocity is a free responsive<br class="mobile-hide" />
-							site template by <a href="http://html5up.net" class="nobr">HTML5 UP</a>
-						</p>
-						<p class="style3">It's <strong>responsive</strong>, built on <strong>HTML5</strong> and <strong>CSS3</strong>, and released for
-						free under the <a href="http://html5up.net/license">Creative Commons Attribution 3.0 license</a>, so use it for any of
-						your personal or commercial projects &ndash; just be sure to credit us!</p>
-						<ul class="actions">
-							<li><a href="#" class="button style3 big">Proceed</a></li>
-						</ul>
-					</section>
-				</div>
+            <!-- Intro -->
+                <div id="intro-wrapper" class="wrapper style1">
+                    <div class="title">Introduction</div>
+                    <section id="intro" class="container">
+                        <h1>Goal</h1>
+                        <p class="style1">
+                            The main purpose of this lab was to become familiar with the arduino architecture, and
+                            learn basic functionality. In particular, we spent a lot of time working with various I/O ports since
+                            these are the main way we will send and receive signals to sensors/motors/etc...
+                            In this lab, we learned basic functionality of arduino by writing small programs to control LEDs and servos. 
+                            At the end of this lab we were able to put together the beginnings of our robot which was able to autonomously move in a given direction.</p>
+                        <!--<p class="style2"></p>-->
+                        <!--<p class="style3"></p>-->
+                        <h1>Procedure</h1>
+                        <p class="style1">
+                            We first split up into two groups of 3 people each. We ensured that each group contained someone knowledgeable
+                            of arduino so if the group hit any road blocks, they would be able to assist. Each group progressed through the
+                            lab individually as described below
+                        </p>
+                        <h1>Materials Used</h1>
+                        <p class="style1">
+                            <ul>
+                                <li>1 Arduino Uno</li>
+                                <li>1 USB A/B Cable</li>
+                                <li>2 Continuous Rotation Servo</li>
+                                <li>LED</li>
+                                <li>1 Potentiometer</li>
+                                <li>Several Resistors of Varying Resistances</li>
+                                <li>1 Breadboard</li>
+                            </ul>
+                        </p>
+                    </section>
+                </div>
 
 			<!-- Main -->
 				<div class="wrapper style2">
-					<div class="title">The Details</div>
+					<div class="title">Documentation</div>
 					<div id="main" class="container">
+                        
+                        <h1>Arduino Code (IDE)</h1>
+                        <p>
+                            We began by installing the arduino IDE to be able to program the board. Once the IDE was installed,
+                            we opened a new sketch. Within a new sketch, there are two default functions as described below:
+                        </p>
+                        <ul>
+                            <li>
+                                <h4><code>void setup() {}</code></h4>
+                                <p>
+                                    Called at the start of the entire program. Used to initialize any necessary structures
+                                    and set up the arduino for the rest of your program. Generally used to setup I/O pins and prepare
+                                    for execution
+                                </p>
+                            </li>
+                            <li>
+                                <h4><code>void loop() {}</code></h4>
+                                <p>
+                                    Function which contains the main execution of your code. This function should not return, and should
+                                    loop forever. This is where the interesting parts of the code happen.
+                                </p>
+                            </li>
+                        </ul>
+                        <p>
+                            In addition to these two functions, you can declare any extra helper functions you want. These can then be
+                            called from either <code>void setup()</code> or <code>void loop()</code>.
+                        </p>
 
 						<!-- Image -->
 							<a href="#" class="image featured">
@@ -134,42 +177,51 @@
 
 			<!-- Highlights -->
 				<div class="wrapper style3">
-					<div class="title">The Endorsements</div>
+					<div class="title">Blink</div>
 					<div id="highlights" class="container">
-						<div class="row 150%">
-							<div class="4u 12u(mobile)">
-								<section class="highlight">
-									<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
-									<h3><a href="#">Aliquam diam consequat</a></h3>
-									<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
-									<ul class="actions">
-										<li><a href="#" class="button style1">Learn More</a></li>
-									</ul>
-								</section>
-							</div>
-							<div class="4u 12u(mobile)">
-								<section class="highlight">
-									<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-									<h3><a href="#">Nisl adipiscing sed lorem</a></h3>
-									<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
-									<ul class="actions">
-										<li><a href="#" class="button style1">Learn More</a></li>
-									</ul>
-								</section>
-							</div>
-							<div class="4u 12u(mobile)">
-								<section class="highlight">
-									<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
-									<h3><a href="#">Mattis tempus lorem</a></h3>
-									<p>Eget mattis at, laoreet vel amet sed velit aliquam diam ante, dolor aliquet sit amet vulputate mattis amet laoreet lorem.</p>
-									<ul class="actions">
-										<li><a href="#" class="button style1">Learn More</a></li>
-									</ul>
-								</section>
-							</div>
-						</div>
-					</div>
-				</div>
+                        <p>
+                            To start programming, we opened one of the default examples included with the arduino IDE. Selecting the
+                            Blink sketch from <i>File > Examples > 1.Basics > Blink_</i>. Within the IDE, you can compile your code by clicking the
+                            checkmark in the top left corner. This converts the sketch into C code, which is then compiled to assembly code to be run
+                            on the arduino uno. At this point, any code which contains errors will fail to compile. Once you are ready to run the program
+                            on the board, you can select the upload button (arrow next to compile button). This will compile the code and put the program
+                            on the uno.
+                        </p>
+                        <p>
+                            The code will automatically begin running if the board is powered on. If the board loses power, the program will remain in
+                            memory, and will run again when the board is turned on. The board can either receive power from a DC power supply (9V battery) or
+                            from the programing cable connected to the computer. Once the Blink sketch was downloaded onto the board, the onboard LED would
+                            blink every second. Looking at the code for the Blink program, we can see how it operates on the arduino uno.
+                        </p>
+                        
+                        <h1>Base Code</h1>
+                        <pre><code>
+                            void setup() {
+                                // initialize digital pin LED_BUILTIN as an output.
+                                pinMode(LED_BUILTIN, OUTPUT);
+                            }
+                        </code></pre>
+                        <p>
+                            This code tells the arduino that the built in LED should act as an output. This allows you to write voltage values to the LED,
+                            and turn it off/on.
+                        </p>
+                        <pre><code>
+                            void loop() {
+                                digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+                                delay(1000);                       // wait for a second
+                                digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+                                delay(1000);                       // wait for a second
+                            }
+                        </code></pre>
+                        <p>
+                            This is the main function which blinks the LED. Because the LED was set as an output pin in the setup function, we are able to write
+                            a <code>HIGH</code> or <code>LOW</<code> value to it. These variables are global variable defined for the arduino. They correspond to logical high and
+                            low values. In between turning the LED on/off the program waits for 1 second so you can actually see the LED change.
+
+                            The exact specification for these functions can be found in the <a href="https://www.arduino.cc/en/Reference/HomePage">Arduino Reference</a>.
+                        </p>
+                    </div>
+                </div>
 
 			<!-- Footer -->
 				<div id="footer-wrapper" class="wrapper">
