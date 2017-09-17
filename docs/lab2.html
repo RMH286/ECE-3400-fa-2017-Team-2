@@ -1,0 +1,478 @@
+<!DOCTYPE HTML>
+<!--
+    Escape Velocity by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+    <head>
+        <title>Overbuilt and Underpaid</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+        <link rel="stylesheet" href="assets/highlight/styles/atelier-forest-dark.css">
+        <script src="assets/highlight/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body class="homepage">
+        <div id="page-wrapper">
+
+            <!-- Header -->
+                <div id="header-wrapper" class="wrapper">
+                    <div id="header">
+
+                        <!-- Logo -->
+                            <div id="logo">
+                                <h1><a href="index.html">Lab 2: Analog Circuitry and Fast Fourier Transform</a></h1>
+                                <p>ECE 3400 Team 2 Fall 2017</p>
+                            </div>
+
+                        <!-- Nav -->
+                            <nav id="nav">
+                                <ul>
+                                    <li class="current"><a href="index.html">Home</a></li>
+                                    <li>
+                                        <a href="#">Labs</a>
+                                        <ul>
+                                            <li><a href="lab1.html">Lab 1</a></li>
+                                            <li><a href="lab2.html">Lab 2</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="info.html">Team Info</a></li>
+                                    <li><a href="minutes.html">Meeting Minutes</a></li>
+                                </ul>
+                            </nav>
+
+                    </div>
+                </div>
+
+            <!-- Intro -->
+                <div id="intro-wrapper" class="wrapper style1">
+                    <div class="title">Introduction</div>
+                    <section id="intro" class="container">
+                        <header class="style1">
+                            <h2>Goal</h2>
+                        </header>
+                        <p>
+                            The next step in developing our robot is to allow it to sense the world around it.
+                            Our robot can currently move throughout its environment, but has no knowledge about
+                            where it is or what is around it. For this lab, we developed two different sensors to be used on our robot.
+                            First, we used a microphone circuit to detect a 660Hz whistle blow.
+                            This tone is used to signal our robot to begin exploring the maze.
+                            The second sensor was an IR sensor to detect various treasures which blink at varying frequencies.
+                        </p>
+                        <!--<p class="style2"></p>-->
+                        <!--<p class="style3"></p>-->
+                        <header class="style1">
+                            <h2>Open Music Labs FFT</h2>
+                        </header>
+                        <p>
+                            In order to analyze analog signals, it is often easy and useful to tranform them into the frequency
+                            domain from the time domain. This then allows us to examine the dominate frequencies contributing to
+                            a particular signal.
+                        </p>
+                        <p>
+                            Luckily the arduino architecture has a large amount of open source third party code available for use.
+                            For this lab, we used Open Music Labs' FFT library to perform fourier transforms on our sensor data.
+                            Because this library is from a third party and is not included with the Arduino IDE download, we had
+                            to download the source code and place it in our libraries directory. Code and documentation of Open
+                            Music Labs FFT can be found <a href="http://wiki.openmusiclabs.com/wiki/ArduinoFFT">here</a>. Below is
+                            a command prompt showing the tree structure of the FFT library we downloaded.
+                        </p>
+                        <center>
+                            <a href="#" class="image featured">
+                                <img src="assets/images/fft_library_tree.jpg" alt="" style="width:512px;"/>
+                            </a>
+                        </center>
+                        <p>
+                            Once we successfully downloaded the FFT library, we began using the example code provided to learn
+                            how to use the fourier transform to analyze analog signals. Below is the example code along with an
+                            explanation of what is being done.
+                        </p>
+                        <pre><code class="cpp">
+                            /*
+                            fft_adc_serial.pde
+                            guest openmusiclabs.com 7.7.14
+                            example sketch for testing the fft library.
+                            it takes in data on ADC0 (Analog0) and processes them
+                            with the fft. the data is sent out over the serial
+                            port at 115.2kb.
+                            */
+
+                            #define LOG_OUT 1 // use the log output function
+                            #define FFT_N 256 // set to 256 point fft
+
+                            #include &ltFFT.h&gt // include the library
+
+                            void setup() {
+                                Serial.begin(115200); // use the serial port
+                                TIMSK0 = 0; // turn off timer0 for lower jitter
+                                ADCSRA = 0xe5; // set the adc to free running mode
+                                ADMUX = 0x40; // use adc0
+                                DIDR0 = 0x01; // turn off the digital input for adc0
+                            }
+
+                            void loop() {
+                                while(1) { // reduces jitter
+                                    cli();  // UDRE interrupt slows this way down on arduino1.0
+                                    for (int i = 0 ; i < 512 ; i += 2) { // save 256 samples
+                                        while(!(ADCSRA & 0x10)); // wait for adc to be ready
+                                        ADCSRA = 0xf5; // restart adc
+                                        byte m = ADCL; // fetch adc data
+                                        byte j = ADCH;
+                                        int k = (j << 8) | m; // form into an int
+                                        k -= 0x0200; // form into a signed int
+                                        k <<= 6; // form into a 16b signed int
+                                        fft_input[i] = k; // put real data into even bins
+                                        fft_input[i+1] = 0; // set odd bins to 0
+                                    }
+                                    fft_window(); // window the data for better frequency response
+                                    fft_reorder(); // reorder the data before doing the fft
+                                    fft_run(); // process the data in the fft
+                                    fft_mag_log(); // take the output of the fft
+                                    sei();
+                                    Serial.println("start");
+                                    for (byte i = 0 ; i < FFT_N/2 ; i++) { 
+                                        Serial.println(fft_log_out[i]); // send out the data
+                                    }
+                                }
+                            }
+                        </code></pre><br />
+                        <p>
+                            The setup function for this code mainly deals with setting up the analog to digital converter.
+                            In the last lab, we used the provided function <code class="cpp">analogRead()</code> to get an
+                            analog value from an analog input pin. However, the documentation for this function state that
+                            the execution time is approximately 100 microseconds (.0001 s). Therefore, the maximum sampling
+                            rate is approximately 10,000 Hz. Because we are trying to detect infrared signals up to 14 kHz,
+                            this is simply not fast enough. Therefore, we have to read the value directly from the analog to
+                            digital converter.
+                        </p>
+                        <p>
+                            Within the loop function above, 256 samples are fetched from the ADC, and placed into even bins.
+                            When computing a fourier transform, there will be real and imaginary components. For the FFT library,
+                            even bins correspond to the real part, and odd bins correspond to the imaginary part. Since we are
+                            dealing with real signals, we will only write to and read from the even bins. Once all of the bins have
+                            been filled, You must process the data using <code class="cpp">fft_run()</code>. For the purposes of
+                            this example, the bins are then outputted to the serial monitor. This code served as the basis
+                            for the development of both the acoustic and optic sensors.
+                        </p>
+                    </section>
+                </div>
+
+                <div class="wrapper style2">
+                    <div class="title">Acoustic Subteam</div>
+                    <div id="main" class="container">
+                        
+                    </div>
+                </div>
+
+                <div class="wrapper style3">
+                    <div class="title">Optics Subteam</div>
+                    <div id="highlights" class="container">
+                        <header class="style1">
+                            <h2>Materials</h2>
+                        </header>
+                        <ul>
+                            <li>Arduino Uno</li>
+                            <li>IR Reciever</li>
+                            <li>300 Ohm Resistor</li>
+                            <li>Treasure Board (Borrowed from TA)</li>
+                            <li>Miscellaneous Components (wires, screwdriver, etc)</li>
+                        </ul>
+                        <header class="style1">
+                            <h2>PhotoTransistor Circuit</h2>
+                        </header>
+                        <p>
+                            We began by wiring together a circuit to detect varying levels of
+                            infrared light. The sensor in this circuit is a photoresistor which will
+                            pass varying amounts of current through it depending on the amount of infrared
+                            light hitting it. We convert this variable current to a variable voltage by passing
+                            it through a resistor. Below is a simple schematic diagraming the basic circuit
+                            setup. Vout is them used as the analog input for the Arduino.
+                        </p>
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/optic_circuit.png" alt="" style="width:256px;"/>
+                            </a>
+                        </center>
+                        Once we had our circuit built, we began testing using the treasures. Borrowing a treasure from on of
+                        the TA's, we began by measuring the signal directly using the oscilloscope. By adjusting the
+                        pontentiometers on the treasure board, we were able to change the frequency and intensity of the
+                        infrared signal. Below is a screen capture of the oscilloscope. Note that the signal resembles the
+                        charge and discharge of a capacitor more than a standard sine wave. Because of this, the signal will
+                        contain a range of frequency components, however, the one we are interested in is the main tone. In this case,
+                        the treasure is tuned to about 7.4 kHz.
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/7khz_treasure_signal.jpg" alt="" style="width:512px;" />
+                            </a>
+                        </center>
+                        <p>
+                            Now that we had our circuit built and tested the treasure board, we were ready to begin processing the
+                            signals using the Arduino. First, we passed the output of our sensor circuit through a 300 Ohm resistor,
+                            and into an analog input pin on the Arduino. We then wrote a program to read in the data, and perform a
+                            fourier transform to determine the dominant frequency components.
+                        </p>
+                        <p>
+                            In order to analyze the data from the FFT, you need to know what each bin corresponds to.
+                            This depends on the sampling frequency. In order to spped up the sampling frequency, you
+                            must read the value directly from the ADC. The sampling frequency can then be changed by
+                            changing the clock prescalar for the ADC clock. By default, the ADC clock is 16 MHz with
+                            a default prescalar of 128. Therefore, the ADC clock is 16 MHz/128 = 125 KHz. Since a
+                            conversion takes 13 ADC clock cycles, the default sample rate is 125 KHz/13 = 9600 Hz.
+                            This sampling rate is not quite fast enough for our purpose, so we adjusted the prescalar
+                            to 64 to produce a sampling frequency of approximmately 19.2 KHz. In order to do this, we
+                            set the ADPS register to 110. Note, the below code adjusts the ADC clock prescalar as described,
+                            but we also generate a square wave with half this frequency on I/O pin 11. This was done to check
+                            the sampling frequency since at the time of the lab we were unable to find good documentation on
+                            the ADC clock and sampling frequencies.
+                        </p>
+                        <pre><code class="cpp">
+                            /*
+                            Infrared Sensor FFT
+                            */
+
+                            #define LOG_OUT 1 // use the log output function
+                            #define FFT_N 256 // set to 256 point fft
+
+                            #include &ltFFT.h&gt // include the library
+
+                            bool high = true;
+
+                            void setup() {
+                                Serial.begin(9600); // use the serial port
+                                TIMSK0 = 0; // turn off timer0 for lower jitter
+                                ADCSRA = 0xe5; // set the adc to free running mode
+                                ADCSRA &= ~(bit (ADPS0) | bit (ADPS1) | bit (ADPS2)); // clear prescaler bits
+                                ADCSRA |= bit (ADPS1) | bit (ADPS2); // set prescalar to 64
+                                ADMUX = 0x40; // use adc0
+                                DIDR0 = 0x01; // turn off the digital input for adc0
+                                pinMode(11, OUTPUT);
+                            }
+
+                            void loop() {
+                                while(1) { // reduces jitter
+                                    cli();  // UDRE interrupt slows this way down on arduino1.0
+                                    for (int i = 0 ; i < 512 ; i += 2) { // save 256 samples
+                                        // debugging purposes
+                                        // outputs square wave with f = 1/2 sampling frequency
+                                        if (high) {
+                                            digitalWrite(11, LOW);
+                                            high = false;
+                                        }
+                                        else {
+                                            digitalWrite(11, HIGH);
+                                            high = true;
+                                        }
+                                        while(!(ADCSRA & 0x10)); // wait for adc to be ready
+                                        ADCSRA = 0xf5; // restart adc
+                                        byte m = ADCL; // fetch adc data
+                                        byte j = ADCH;
+                                        int k = (j << 8) | m; // form into an int
+                                        k -= 0x0200; // form into a signed int
+                                        k <<= 6; // form into a 16b signed int
+                                        fft_input[i] = k; // put real data into even bins
+                                        fft_input[i+1] = 0; // set odd bins to 0
+                                    }
+                                    fft_window(); // window the data for better frequency response
+                                    fft_reorder(); // reorder the data before doing the fft
+                                    fft_run(); // process the data in the fft
+                                    fft_mag_log(); // take the output of the fft
+                                    sei();
+                                    Serial.println("start");
+                                    for (byte i = 0 ; i < FFT_N/2 ; i++) { 
+                                        Serial.println(fft_log_out[i]); // send out the data
+                                    }
+                                }
+                            }
+                        </code></pre><br />
+                        <p>
+                            This code simply dumps the data from all of the even bins to the serial monitor.
+                            We then took this data, and graphed it to see the various frequency components.
+                            Below is the oscilloscope waveform for two different frequencies from the treasure board.
+                            The voltage for these waveforms is taken at the anolog input to the arduino, therefore, it
+                            represents the voltage across the resistor in our infrared sensor circuit.
+                        </p>
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/ir_signals.jpg" alt="" style="width:1024px;" />
+                            </a>
+                        </center>
+                        <p>
+                            Below is a graph of the corresponding frequency components for each signal. We included an FFT
+                            for data which was recorded with no treasure signal. This is useful to tell what the background IR
+                            signal is like.
+                        </p>
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/ir_signals_fft.jpg" alt="" style="width:1024px;" />
+                            </a>
+                        </center>
+                        <p>
+                            From these FFT's, it is easy to distinguish which signal corresponds to the 7 KHz treasure, and which
+                            one corresponds to the 12 KHz signal. For all signals, there is a large DC component, while most of
+                            the higher frequency components remain under 50. The two larger peaks at 7 KHz and 12 KHz shows that these
+                            two signals have a large contribution from these frequencies.
+                        </p>
+                        <p>
+                            Once we were able to see the effect of varying signal frequencies on the FFT, we decided to investigate
+                            how the distance to the treasure affected the FFT. Below is another FFT graph showing two separate signals.
+                            The first signal was taken with the treasure approximately 2 inches from the sensor while the second signal was
+                            taken with the treasure approximately 7 inches from the sensor.
+                        </p>
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/ir_signals_fft_distance.jpg" alt="" style="width:1024px;" />
+                            </a>
+                        </center>
+                    </div>
+                </div>
+
+			<!-- Footer -->
+				<div id="footer-wrapper" class="wrapper">
+					<div class="title">Analog Pins and Serial Monitor</div>
+					<div id="footer" class="container">
+						<header class="style1">
+							<h2>Analog Input</h2>
+						</header>
+                        <p>
+                            While digital I/O is nice, often times analog inputs are necessary as signals in the real world are analog. The arduino has six analog input
+                            pins (A0 -> A5). Since these pins only serve as inputs, they do not need to be configured as an input/output pin like the digital pins in the previous section.
+                            In order to provide an analog signal to the arduino uno, we used a potentiometer to produce a varying voltage value.
+                            We supplied the potentiometer using Vdd and Ground from the arduino. The third pin of the potentiometer represented the output voltage
+                            of a voltage divider. Again, we ran this voltage through a 300 ohm resistor prior to passing it into the analog input pin. This is
+                            simply a saftey precaution to ensure the pin does not source too much current.
+                        </p>
+                        <p>
+                            In order to output the analog value to the serial monitor, we had to modify our code slightly as below.
+                        </p>
+                        <pre><code>
+                            void setup() {
+                                Serial.begin(9600);
+                            }
+
+                            void loop() {
+                                val = analogRead(A0);
+                                Serial.println(val);
+                            }
+                        </code></pre><br />
+                        <p>
+                            In the <code>setup()</code> function, we have to initialize the serial monitor by calling <code>Serial.begin(i)</code>. The value passed to this function is the baudrate
+                            to use for the serial monitor. In the loop, we continually read the analog value from pin A0 and print it out to the monitor
+                            using <code>Serial.println()</code>. As we adjusted the potentiometer with a screwdriver, we could see the values being ouputed to the serial monitor
+                            change.
+
+                            The <code>analogRead()</code> function converts a voltage between 0 and 5 volts to an integer number between 0 and 1023.
+                            We then repeated this for all of the analog pins to ensure they worked properly.
+                        </p>
+                        
+                        <header class="style1">
+                            <h2>Analog Output</h2>
+                        </header>
+                        <p>
+                            Analog output can be simulated using a pulse-width modulation. This is only possible on certain pins on the arduino uno. In particular, pins 3, 5, 6, 9, 10,
+                            and 11 can be used. This allows us to simulate an analog output. To demonstrate this, we used this feature to vary the brightness of
+                            an LED. In order to do this, we utilized aspects from the previous lab exercises.
+
+                            First, we used the potentiometer to provide an anolog input to the arduino, and wired an LED to one of the digital output pins which support
+                            PWM. Again, we had to slightly modify our code as below.
+                        </p>
+                        <pre><code>
+                            void setup() {
+                                Serial.begin(9600);
+                                pinMode(3, OUTPUT);
+                            }
+
+                            void loop() {
+                                val = analogRead(A0);
+                                Serial.println(val);
+                                analogWrite(3, val / 4);
+                            }
+                        </code></pre><br />
+                        <p>
+                            While it is not necessary to use the serial monitor, we left the code in to aid for debugging purposes.
+                        </p>
+                        <p>
+                            One thing to note is the value we read in from the analog pin must be divided by 4 prior to being passed to the output pin. This is becuase the
+                            output only takes values between 0 and 255, while the analog input can have a value up to 1023. The way the PWM works is by creating a square wave with
+                            varying duty cycle. If the output is 0, then the signal will be always off. If the output is 255, then the signal will be always on.
+                        </p>
+                        <p>
+                            To further understand the changes in the duty cycle, we used an oscilloscope to measure the voltage output.
+                            Below are two separate image captures from the oscilloscope. The value being output to the I/O pin is increasing in value.
+                            This causes the duty cycle of the wave to increase until, at its maximum value, the signal is always high.
+                        </p>
+                        
+                        <!-- Image -->
+						<a href="#" class="image featured">
+								<img src="assets/images/Lab1.jpg" alt="" />
+						</a>
+					</div>
+				</div>
+                
+                <!-- Main -->
+				<div class="wrapper style2">
+					<div class="title">Servos</div>
+					<div id="main" class="container">
+                        Now that we understood how to use the pulse width modulation feature, we could program servos to help our robot
+                        move throughout the world. Again, this requires some modification to our code. In particular, we have to include a new
+                        library which helps us to interface with the servos.<br />
+                        <pre><code class="cpp">
+                            #include &ltServo.h&gt
+
+                            Servo myservo;
+
+                            void setup() {
+                                myservo.attach(3);
+                            }
+
+                            void loop() {
+                                myservo.write(180);
+                            }
+                        </code></pre><br />
+                        <p>
+                            This would cause the servo to run at full speed forward. Because we use continuous motion servos, the parameter passed to
+                            the <code>myservo.write()</code> function is the speed of the servo. A value of 0 corresponds to full speed in reverse, 90 is stationary, and 180
+                            is full speed forward.
+                        </p>
+                        <p>
+                            We then used a screwdriver to manually alter the potentiometer values in order to control the speed and direction of the servo.
+                            This required a similar setup as the one used for the variable brightness LED.
+                        </p>
+                        <p>
+                            Since we had time left in lab, we began to gather materials to start the building of our robot. First, we assembled the base structure
+                            which included a chassis to hold the arduino, and two servos connected to wheels.
+                        </p>
+                        <p>
+                            Using our new knowledge of programming servos, we hooked up a 5V battery back to the arduino and programmed our robot to move forwards, backwards or in a circle.
+                        </p>
+
+                        <iframe width="560" height="315"
+                            src="https://www.youtube.com/embed/onVxR9bHQKk?rel=0"
+                            frameborder="0" allowfullscreen>
+                        </iframe>
+                        
+                        <div id="copyright">
+                        	<ul>
+                        		<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                        	</ul>
+                        </div>
+                    </div>
+                </div>
+
+		</div>
+
+		<!-- Scripts -->
+
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/skel-viewport.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
