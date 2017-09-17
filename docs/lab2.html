@@ -327,152 +327,29 @@
                                 <img src="assets/images/ir_signals_fft_distance.jpg" alt="" style="width:1024px;" />
                             </a>
                         </center>
+                        <p>
+                            While there is still a peak at 7 KHz, the farther signal is much weaker, and the peak is harder to distinguish.
+                        </p>
                     </div>
                 </div>
 
-			<!-- Footer -->
-				<div id="footer-wrapper" class="wrapper">
-					<div class="title">Analog Pins and Serial Monitor</div>
-					<div id="footer" class="container">
-						<header class="style1">
-							<h2>Analog Input</h2>
-						</header>
-                        <p>
-                            While digital I/O is nice, often times analog inputs are necessary as signals in the real world are analog. The arduino has six analog input
-                            pins (A0 -> A5). Since these pins only serve as inputs, they do not need to be configured as an input/output pin like the digital pins in the previous section.
-                            In order to provide an analog signal to the arduino uno, we used a potentiometer to produce a varying voltage value.
-                            We supplied the potentiometer using Vdd and Ground from the arduino. The third pin of the potentiometer represented the output voltage
-                            of a voltage divider. Again, we ran this voltage through a 300 ohm resistor prior to passing it into the analog input pin. This is
-                            simply a saftey precaution to ensure the pin does not source too much current.
-                        </p>
-                        <p>
-                            In order to output the analog value to the serial monitor, we had to modify our code slightly as below.
-                        </p>
-                        <pre><code>
-                            void setup() {
-                                Serial.begin(9600);
-                            }
-
-                            void loop() {
-                                val = analogRead(A0);
-                                Serial.println(val);
-                            }
-                        </code></pre><br />
-                        <p>
-                            In the <code>setup()</code> function, we have to initialize the serial monitor by calling <code>Serial.begin(i)</code>. The value passed to this function is the baudrate
-                            to use for the serial monitor. In the loop, we continually read the analog value from pin A0 and print it out to the monitor
-                            using <code>Serial.println()</code>. As we adjusted the potentiometer with a screwdriver, we could see the values being ouputed to the serial monitor
-                            change.
-
-                            The <code>analogRead()</code> function converts a voltage between 0 and 5 volts to an integer number between 0 and 1023.
-                            We then repeated this for all of the analog pins to ensure they worked properly.
-                        </p>
-                        
-                        <header class="style1">
-                            <h2>Analog Output</h2>
-                        </header>
-                        <p>
-                            Analog output can be simulated using a pulse-width modulation. This is only possible on certain pins on the arduino uno. In particular, pins 3, 5, 6, 9, 10,
-                            and 11 can be used. This allows us to simulate an analog output. To demonstrate this, we used this feature to vary the brightness of
-                            an LED. In order to do this, we utilized aspects from the previous lab exercises.
-
-                            First, we used the potentiometer to provide an anolog input to the arduino, and wired an LED to one of the digital output pins which support
-                            PWM. Again, we had to slightly modify our code as below.
-                        </p>
-                        <pre><code>
-                            void setup() {
-                                Serial.begin(9600);
-                                pinMode(3, OUTPUT);
-                            }
-
-                            void loop() {
-                                val = analogRead(A0);
-                                Serial.println(val);
-                                analogWrite(3, val / 4);
-                            }
-                        </code></pre><br />
-                        <p>
-                            While it is not necessary to use the serial monitor, we left the code in to aid for debugging purposes.
-                        </p>
-                        <p>
-                            One thing to note is the value we read in from the analog pin must be divided by 4 prior to being passed to the output pin. This is becuase the
-                            output only takes values between 0 and 255, while the analog input can have a value up to 1023. The way the PWM works is by creating a square wave with
-                            varying duty cycle. If the output is 0, then the signal will be always off. If the output is 255, then the signal will be always on.
-                        </p>
-                        <p>
-                            To further understand the changes in the duty cycle, we used an oscilloscope to measure the voltage output.
-                            Below are two separate image captures from the oscilloscope. The value being output to the I/O pin is increasing in value.
-                            This causes the duty cycle of the wave to increase until, at its maximum value, the signal is always high.
-                        </p>
-                        
-                        <!-- Image -->
-						<a href="#" class="image featured">
-								<img src="assets/images/Lab1.jpg" alt="" />
-						</a>
-					</div>
-				</div>
-                
-                <!-- Main -->
-				<div class="wrapper style2">
-					<div class="title">Servos</div>
-					<div id="main" class="container">
-                        Now that we understood how to use the pulse width modulation feature, we could program servos to help our robot
-                        move throughout the world. Again, this requires some modification to our code. In particular, we have to include a new
-                        library which helps us to interface with the servos.<br />
-                        <pre><code class="cpp">
-                            #include &ltServo.h&gt
-
-                            Servo myservo;
-
-                            void setup() {
-                                myservo.attach(3);
-                            }
-
-                            void loop() {
-                                myservo.write(180);
-                            }
-                        </code></pre><br />
-                        <p>
-                            This would cause the servo to run at full speed forward. Because we use continuous motion servos, the parameter passed to
-                            the <code>myservo.write()</code> function is the speed of the servo. A value of 0 corresponds to full speed in reverse, 90 is stationary, and 180
-                            is full speed forward.
-                        </p>
-                        <p>
-                            We then used a screwdriver to manually alter the potentiometer values in order to control the speed and direction of the servo.
-                            This required a similar setup as the one used for the variable brightness LED.
-                        </p>
-                        <p>
-                            Since we had time left in lab, we began to gather materials to start the building of our robot. First, we assembled the base structure
-                            which included a chassis to hold the arduino, and two servos connected to wheels.
-                        </p>
-                        <p>
-                            Using our new knowledge of programming servos, we hooked up a 5V battery back to the arduino and programmed our robot to move forwards, backwards or in a circle.
-                        </p>
-
-                        <iframe width="560" height="315"
-                            src="https://www.youtube.com/embed/onVxR9bHQKk?rel=0"
-                            frameborder="0" allowfullscreen>
-                        </iframe>
-                        
-                        <div id="copyright">
-                        	<ul>
-                        		<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-                        	</ul>
-                        </div>
+                <div id="footer-wrapper" class="wrapper">
+                    <div class="title"></div>
+                    <div id="footer" class="container">
                     </div>
                 </div>
 
-		</div>
+        </div>
 
-		<!-- Scripts -->
+        <!-- Scripts -->
 
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/skel-viewport.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/jquery.dropotron.min.js"></script>
+            <script src="assets/js/skel.min.js"></script>
+            <script src="assets/js/skel-viewport.min.js"></script>
+            <script src="assets/js/util.js"></script>
+            <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+            <script src="assets/js/main.js"></script>
 
-	</body>
+    </body>
 </html>
