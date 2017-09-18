@@ -139,73 +139,44 @@
                             <h2>Turning</h2>
                         </header>
                         <p>
-                            The turn left and turn right functions are written the same way. They set the wheels going in opposite dirctions, then delay for an appropriate
-                            amount of time to turn 90 degrees. Since the two servos are mounted opposite each other, we actually need to set them to the same value in order 
-                            for the wheels to move in opposite directions. To turn left, they are set to 0, to turn right they are set to 180.
+                            Describe turn code
                         <pre><code class="cpp">
-                            //Turn Left 90 degrees
-                            void turnLeft(){
-                                leftWheel.write(0);
-                                rightWheel.write(0);
-                                delay(630);
-                            }
+                            Turn code
                         </code></pre><br />
                         </p>
                         <header class="style1">
                             <h2>Detect Junctions</h2>
                         </header>
                         <p>
-                            This fucntion returns true if a junction is detected and false otherwise. The line sensors output values from 0 to around 1000, representing a
-                            grey scale. Numbers closer to 0 are registerring white while numbers closer to 1000 are registerring black. Whenever the two outer sensors both
-                            register a high enough value, they are over a black line and a junction is detected.
+                            Describe juction code
                         </p>
                         <pre><code class="cpp">
-                            //check the line sensors for junctions.
-                            bool detectJunction(){
-                                //check the Back Right line sensor
-                                int BR = analogRead(BRlinepin);
-                                //Check the Back Left line sensor
-                                int BL = analogRead(BLlinepin);
-                                //If they both produce values over 800, return true.
-                                if (BL>800 && BR>800){
-                                    return true;
-                                }
-                                else{
-                                    return false;
-                                }
-                            }
+                            Junction code
                         </code></pre><br />
                         <header class="style1">
                             <h2>Moving Forward</h2>
                         </header>
                         <p>
-                            This function moves forward and follows a black line of tape. First the servos are written to their forward moving values (180 for the left wheel and 0 for the right wheel)
-                             To do this, if either the middle left or right line sensor shows a value lower than that of a black line, new values are written to the servos. For example, 
-                             if the left sensor is too low, then we are vearing to the left. We write 90 to the right wheel (stopping it) so that we turn back towards the right. This function 
-                             repeates through the use a while loop until a junction is found, so the servos are rewritten to forward at the beginning of each loop iteration.
+                            Describe forward code
                         </p>
                         <pre><code class="cpp">
-                            //check sensors to properly follow the line (DOES NOT WORK YET)
-                            void moveForward(){
-                                leftWheel.write(180);
-                                rightWheel.write(0);
-                                //Front Right Line Sensor Value
-                                int FR = analogRead(FRlinepin);
-                                //Front Left Line Sensor Value
-                                int FL = analogRead(FLlinepin);
-
-                                Serial.println(FR);
-                                //Turn back the other way if either sensor is off the line.
-                                if(FL < 750){
-                                    right = 90;
-                                }
-                                else if(FR < 750){
-                                    left = 90;
-                                }
-                                leftWheel.write(left);
-                                rightWheel.write(right);
-                            }
+                            Forward Code
                         </code></pre><br />
+                        
+                        <iframe width="560" height="315"
+                            src="https://youtu.be/fSBjJimdxRE"
+                            frameborder="0" allowfullscreen>
+                        </iframe>
+                        
+                        <iframe width="560" height="315"
+                            src="https://youtu.be/rmGsWfQhRnk"
+                            frameborder="0" allowfullscreen>
+                        </iframe>
+                        
+                        <iframe width="560" height="315"
+                            src="https://youtu.be/S-rvwFlB9s0"
+                            frameborder="0" allowfullscreen>
+                        </iframe>
                     </div>
                 </div>
 
