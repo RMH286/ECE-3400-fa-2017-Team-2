@@ -1732,7 +1732,7 @@
 /* Highlights */
 
 	#highlights .highlight {
-		text-align: center;
+		text-align: left;
 	}
 
 		#highlights .highlight h3 {
