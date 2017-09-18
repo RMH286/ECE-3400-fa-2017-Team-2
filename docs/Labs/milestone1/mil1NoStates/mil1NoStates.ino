@@ -88,42 +88,36 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  moveForward();
-    if(detectJunction()==true){
-      turnLeft();
-      moveForward();
-      if(detectJunction()==true){
-        turnRight();
-        moveForward();
-        if(detectJunction()==true){
-          turnRight();
-          moveForward();
-          if(detectJunction()==true){
-            turnRight();
-            moveForward();
-            if(detectJunction()==true){
-              turnRight();
-              moveForward();
-              if(detectJunction()==true){
-                turnLeft();
-                moveForward();
-                if(detectJunction()==true){
-                  turnLeft();
-                  moveForward();
-                  if(detectJunction()==true){
-                    turnLeft();
-                    moveForward();
-                    if(detectJunction()==true){
-                      turnLeft();
-                      moveForward();
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
+  while (detectJunction()==false){
+    moveForward();
+  }
+  turnLeft();
+  while (detectJunction()==false){
+    moveForward();
+  }
+  turnRight();
+  while (detectJunction()==false){
+    moveForward();
+  }
+  turnRight();
+  while (detectJunction()==false){
+    moveForward();
+  }
+  turnRight();
+  while (detectJunction()==false){
+    moveForward();
+  }
+  turnRight();
+  while (detectJunction()==false){
+    moveForward();
+  }
+  turnLeft();
+  while (detectJunction()==false){
+    moveForward();
+  }
+  turnLeft();
+  while (detectJunction()==false){
+    moveForward();
+  }
+  turnLeft();
 }
