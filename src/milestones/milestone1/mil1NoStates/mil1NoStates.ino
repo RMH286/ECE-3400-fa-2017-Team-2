@@ -24,8 +24,18 @@ int left = 180;
 void turnLeft(){
   leftWheel.write(0);
   rightWheel.write(0);
-  delay(630);
-  
+  int FR = analogRead(FRlinepin);
+  int FL = analogRead(FLlinepin);
+  while(FR > 800 || FL > 800) {
+    FR = analogRead(FRlinepin);
+    FL = analogRead(FLlinepin);
+  }
+  while(FR < 800 || FL < 800) {
+    FR = analogRead(FRlinepin);
+    FL = analogRead(FLlinepin);
+  }
+  leftWheel.write(90);
+  rightWheel.write(90); 
 }
 
 
@@ -33,28 +43,39 @@ void turnLeft(){
 void turnRight(){
   leftWheel.write(180);
   rightWheel.write(180);
-  delay(640);
-  
+  int FR = analogRead(FRlinepin);
+  int FL = analogRead(FLlinepin);
+  while(FR > 800 || FL > 800) {
+    FR = analogRead(FRlinepin);
+    FL = analogRead(FLlinepin);
+  }
+  while(FR < 800 || FL < 800) {
+    FR = analogRead(FRlinepin);
+    FL = analogRead(FLlinepin);
+  }
+  leftWheel.write(90);
+  rightWheel.write(90); 
 }
 
 
 //check sensors to properly follow the line (DOES NOT WORK YET)
 void moveForward(){
-  leftWheel.write(180);
-  rightWheel.write(0);
   //Front Right Line Sensor Value
   int FR = analogRead(FRlinepin);
   //Front Left Line Sensor Value
   int FL = analogRead(FLlinepin);
 
-  Serial.println(FR);
-  //after looking at serial monitor values, chose a value to initiate when adjustments need to be made.
-  if(FL<750){
+  if (FR > 800 && FL < 800) {
     right = 90;
   }
-  else if(FR<750){
+  else if (FR < 800 && FL > 800) {
     left = 90;
   }
+  else {
+    right = 0;
+    left = 180;
+  }
+  Serial.println(FR);
   leftWheel.write(left);
   rightWheel.write(right);
 }
@@ -69,9 +90,19 @@ bool detectJunction(){
   else{
     return false;
   }
-    
-
 }
+
+void stepPastJunction() {
+  leftWheel.write(180);
+  rightWheel.write(0);
+  int BR = analogRead(BRlinepin);
+  int BL = analogRead(BLlinepin);
+  while(BR > 800 || BL > 800) {
+    BR = analogRead(BRlinepin);
+    BL = analogRead(BLlinepin);
+  }
+}
+
 void setup() {
   // put your setup code here, to run once:
   pinMode(FRlinepin, INPUT);
@@ -91,33 +122,41 @@ void loop() {
   while (detectJunction()==false){
     moveForward();
   }
+  stepPastJunction();
   turnLeft();
   while (detectJunction()==false){
     moveForward();
   }
+  stepPastJunction();
   turnRight();
   while (detectJunction()==false){
     moveForward();
   }
+  stepPastJunction();
   turnRight();
   while (detectJunction()==false){
     moveForward();
   }
+  stepPastJunction();
   turnRight();
   while (detectJunction()==false){
     moveForward();
   }
+  stepPastJunction();
   turnRight();
   while (detectJunction()==false){
     moveForward();
   }
+  stepPastJunction();
   turnLeft();
   while (detectJunction()==false){
     moveForward();
   }
+  stepPastJunction();
   turnLeft();
   while (detectJunction()==false){
     moveForward();
   }
+  stepPastJunction();
   turnLeft();
 }
