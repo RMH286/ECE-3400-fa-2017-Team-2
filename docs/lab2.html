@@ -351,7 +351,9 @@
                             <h2>Design</h2>
                         </header>
                         <p>
-                            Talk about the design of the amplifer
+                            The Acoustic Team recognized the need to amplify the signal after the microphone, and therefore proposed the idea
+                            of integrating an operational amplifier (op-amp). The op-amp was designed to be a band-pass filter with a gain to
+                            acheive the goal of amplifying the microphone signal for more effective FFT analysis.
                         </p>
                         <center>
                             <a href="#">
@@ -362,7 +364,16 @@
                             <h2>Implementation</h2>
                         </header>
                         <p>
-                            Talk about the implementation of the amplifer
+                            The band-pass filter would have to reject 585Hz and 735Hz frequencies, while allowing the start signal of 660Hz to
+                             pass. By using the equation f= 1/(2πRC), where R and C refer to the resistance and capacitance respectively, one could
+                             mathematically solve for the needed resistance and capacitance for the cutoff frequency. R1 and C1 are used to solve for the high pass
+                             cutoff frequency, while R2 and C2 will solve for the low pass frequency cutoff. f1 was set equal to 600Hz and f2 was set equal to
+                             700 to give the appropriate biunds for the 660Hz signal to pass. The components were solved and selected as follows:
+                                    
+                                    *R1 = ~12KΩ
+                                    *C1 = .022μF
+                                    *R2 = ~68KΩ
+                                    *C2 = 3.3nF
                         </p>
                         <center>
                             <a href="#">
@@ -373,13 +384,18 @@
                             <h2>Testing</h2>
                         </header>
                         <p>
-                            Talk about how the amp was tested. What was the acutal gain?
+                            The amplifying property of the op-amp was tested by using an oscilloscope to read the output of only the microphone compared
+                            to the output signal of the microphone after passing through the op-amp. Gain = -R2/R1 therefore we expect the gain to be 68KΩ/12KΩ = ~5.
                         </p>
                         <center>
                             <a href="#">
                                 <img src="assets/images/amp_test.jpg" alt="" style="width:512px;" />
                             </a>
                         </center>
+                        <p>
+                            As seen by the images above, the initial amplitude of the microphone signal is ~250mV, while the amplitude of the signal after the op-amp
+                            is ~750mV. This suggests the actual gain is 750mV/250mV = ~3 instead of 5, but either way the signal was still amplified. 
+                        </p>
                     </div>
                 </div>
 
