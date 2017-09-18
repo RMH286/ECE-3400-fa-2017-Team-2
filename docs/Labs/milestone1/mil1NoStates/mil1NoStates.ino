@@ -1,5 +1,4 @@
 
-
 #include <Servo.h>
 
 Servo leftWheel;
@@ -15,30 +14,11 @@ int BLlinepin = A1;
 int leftWheelpin = 3;
 int rightWheelpin = 5;
 
-
-enum State {
-  Start,
-  Junction,
-  Forward
-};
-
-
-//State variable 
-enum State state = Start;
-
-//Keeps Track of where in the figure 8 we are
-int turnCount = 0;
-
-//If true, we are making right turns, if false we make left turns
-bool rightTurn = true;
-
 //Used to line follow, number to be written to right wheel servo.
 int right = 0;
 
 //Used to line follow, number to be written to left wheel servo.
 int left = 180;
-
-
 
 //turn left (still need to adjust the delay)
 void turnLeft(){
@@ -92,13 +72,8 @@ bool detectJunction(){
     
 
 }
-
-
-
-
-// the setup function runs once when you press reset or power the board
 void setup() {
-  // initialize inputs
+  // put your setup code here, to run once:
   pinMode(FRlinepin, INPUT);
   pinMode(FLlinepin, INPUT);
   pinMode(BRlinepin, INPUT);
@@ -108,59 +83,47 @@ void setup() {
 
   leftWheel.attach(leftWheelpin);
   rightWheel.attach(rightWheelpin);
+
 }
 
-
-
-
-// the loop function runs over and over again forever
 void loop() {
-  Serial.print(state);
-//the first turn in the figure 8 should be a left turn. 
-  if (state==Start){
-    moveForward();
+  // put your main code here, to run repeatedly:
+  moveForward();
     if(detectJunction()==true){
       turnLeft();
-      state = Forward;
-    }
-    
-  }
-//turn at a junction
-  else if (state==Junction){
-    //turn right or left depending on the turn count, a figure 8 is 4 right turns followed by 4 left turns.
-    if(turnCount<4){
-      if(rightTurn==true){
+      moveForward();
+      if(detectJunction()==true){
         turnRight();
-        turnCount = turnCount + 1;
-      }
-      else{
-        turnLeft();
-        turnCount = turnCount +1;
+        moveForward();
+        if(detectJunction()==true){
+          turnRight();
+          moveForward();
+          if(detectJunction()==true){
+            turnRight();
+            moveForward();
+            if(detectJunction()==true){
+              turnRight();
+              moveForward();
+              if(detectJunction()==true){
+                turnLeft();
+                moveForward();
+                if(detectJunction()==true){
+                  turnLeft();
+                  moveForward();
+                  if(detectJunction()==true){
+                    turnLeft();
+                    moveForward();
+                    if(detectJunction()==true){
+                      turnLeft();
+                      moveForward();
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
-    //if 4 left or right turns have been completed, turn the other way next time.
-    else{
-      if(rightTurn==true){
-        turnRight();
-        rightTurn = false;
-        turnCount = 0;
-      }
-      else{
-        turnLeft();
-        rightTurn = true;
-        turnCount = 0;
-      }
-    }
-    
-  }
-//move forward unless a junction is detected.
-  else if (state==Forward){
-    moveForward();
-    delay(500);
-    if(detectJunction()==true){
-      state = Junction;
-    }
-    
-  }
-  
+
 }
