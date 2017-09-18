@@ -155,7 +155,7 @@
                                 This function moves forward and follows a black line of tape. First the servos are written to their forward moving values (180 for the left wheel and 0 for the right wheel)
                                  To do this, if either the middle left or right line sensor shows a value lower than that of a black line, new values are written to the servos. For example, 
                                  if the left sensor is too low, then we are vearing to the left. We write 90 to the right wheel (stopping it) so that we turn back towards the right. This function 
-                                 repeatedly through a while loop until a junction is found, so the servos are rewritten to forward at the beginning of each loop iteration.
+                                 repeates through the use a while loop until a junction is found, so the servos are rewritten to forward at the beginning of each loop iteration.
                             </p>
                             <pre><code class="cpp">
                                 //check sensors to properly follow the line (DOES NOT WORK YET)
