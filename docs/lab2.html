@@ -173,14 +173,17 @@
                         <header class="style1">
                             <h2>Materials</h2>
                         </header>
-                        <ul>
-                            <li>Arduino Uno</li>
-                            <li>Electret microphone</li>
-                            <li>300 Ohm Resistors</li>
-                            <li>1 μF Capacitor</li>
-                            <li>~3 kOhm Resistor</li>
-                            <li>Various other components (breadboard, wiring, etc.)</li>
-                        </ul>
+                        <center>
+                            <ul>
+                                <li>Arduino Uno</li>
+                                <li>Electret microphone</li>
+                                <li>300 Ohm Resistors</li>
+                                <li>1 μF Capacitor</li>
+                                <li>~3 kOhm Resistor</li>
+                                <li>Various other components (breadboard, wiring, etc.)</li>
+                            </ul>
+                        </center>
+<<<<<<< HEAD
                         <header class="style1">
                             <h2>Microphone Circuit</h2>
                         </header>
@@ -188,65 +191,36 @@
                             We began by assembling the basic circuit for the microphone shown on the lab handout.
                             We used the 1 μF capacitor and a 2.7 kOhm resistor.
                         </p>
-                        <center>
-                            <a href="#">
-                                <img src="assets/images/microphone_schematic.jpg" alt="" style="width:256px;" />
-                            </a>
-                        </center>
+                        
                         <p>
                             We then used a free internet application to generate a sustained 660 Hz
                             tone for the microphone to pick up. We fed the output from the microphone
-                            into an oscilloscope to visualize the output. The output had a peak-to-peak
-                            amplitude of about 500 mV, and it did not have a great sinusoidal shape.
+                            into an oscilloscope to visualize the output. The output was generally
+                            sinusoidal with some noise and peak-to-peak amplitude of just under 1 V
                         </p>
+                        
+=======
                         <center>
                             <a href="#">
-                                <img src="assets/images/microphone_circuit.JPG" alt="" style="width:512px;" />
+                                <img src="assets/images/microphone_schematic.jpg" alt="" style="width:512px;" />
                             </a>
                         </center>
-                        <p>
-                            After playing around with our circuit, we realized that removing the resistor
-                            before the high voltage input to the microphone greatly increased the quality of
-                            our signal. While the resistor was initially in place to protect the microphone
-                            from too large a current, we realized that since the input voltage was only 5 V,
-                            the resistor was not completely necessary to protect the microphone itself.
-                            After making this change, the output from the microphone had a much
-                            better sinusoidal shape and a peak-to-peak amplitude of about 1 V.
-                        </p>
                         <center>
                             <a href="#">
-                                <img src="assets/images/acoustic_signal.JPG" alt="" style="width:512px;" />
+                                <img src="assets/images/microphone_circuit.jpg" alt="" style="width:512px;" />
                             </a>
                         </center>
-                        <p>
-                            In order to increase the amplitude of the signal to better distinguish
-                            it, we decided to add an amplifier. You can see the documentation for the
-                            amplifier circuit that we built below. We fed the output from our basic
-                            microphone circuit into our amplifier. We then took the output from our
-                            amplifier and connected it to analog pin A0 on our arduino.
-                        </p>
-                        <p>
-                            The purpose of connecting the output from the amplifier to analog pin A0 was
-                            to allow us to view our signal data in the serial monitor and to enable us to
-                            use the arduino fft functionality. In order to test that we could distinguish
-                            between different frequency tones, we used the tone generator to create a
-                            585 Hz tone, a 660 Hz tone, and a 735 Hz tone, one at a time. For each tone, we
-                            used the serial monitor to display the bin magnitude data. If each tone produced
-                            a peak magnitude in a different bin, then we would be able to distinguish
-                            between the tones relatively easily. As it turned out, they did. The 585 Hz tone
-                            produced a peak in bin 17. The 660 Hz tone produced a peak in bin 19. The 735 Hz
-                            tone produced a peak in bin 21.
-                        </p>
                         <center>
                             <a href="#">
-                                <img src="assets/images/acoustic_fft.jpg" alt="" style="width:1024px;" />
+                                <img src="assets/images/acoustic_signal.jpg" alt="" style="width:512px;" />
                             </a>
                         </center>
-                        <p>
-                            These results demonstrate that we are indeed able to distiguish the 660 Hz start
-                            tone from similar frequency tones, which will be critical during the competition
-                            given the amount of background noise that will be in the Duffield atrium.
-                        </p>
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/acoustic_fft.png" alt="" style="width:1024px;" />
+                            </a>
+                        </center>
+>>>>>>> f910cb0d08cfbc4f0aa74f4171bdd5bca5eb5b81
                     </div>
                 </div>
 
@@ -457,7 +431,7 @@
                         </p>
                         <center>
                             <a href="#">
-                                <img src="assets/images/amp_circuit.JPG" alt="" style="width:512px;" />
+                                <img src="assets/images/amp_circuit.jpg" alt="" style="width:512px;" />
                             </a>
                         </center>
                         <header class="style1">
@@ -473,8 +447,8 @@
                             </a>
                         </center>
                         <p>
-                            As seen by the images above, the peak-to-peak amplitude of the microphone signal is ~860mV, while the peak-to-peak amplitude of the signal after the op-amp
-                            is ~2.34V. This suggests the actual gain is the ratio of the peak-to-peak voltages 2.34V/.860V = ~2.7 instead of 5, but either way the signal was still amplified. 
+                            As seen by the images above, the peak-to-peak amplitude of the microphone signal is ~2.34V, while the peak-to-peak amplitude of the signal after the op-amp
+                            is ~860mV. This suggests the actual gain is the ratio of the peak-to-peak voltages 2.34V/.860V = ~2.7 instead of 5, but either way the signal was still amplified. 
                         </p>
                     </div>
                 </div>
