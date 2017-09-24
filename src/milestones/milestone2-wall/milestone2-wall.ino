@@ -6,7 +6,7 @@ Servo rightWheel;
 //Front Right Line Sensor
 int FRlinepin = A5;
 //Front Left Line Sensor
-int FLlinepin = A0;
+int FLlinepin = A4;
 //Back Right Line Sensor
 int BRlinepin = A2;
 //Back Left Line Sensor
@@ -15,6 +15,7 @@ int leftWheelpin = 3;
 int rightWheelpin = 5;
 //Front Wall Sensor
 int wallpin = A3;
+
 
 //Used to line follow, number to be written to right wheel servo.
 int right = 0;
@@ -114,6 +115,8 @@ bool detectWall() {
     return false;
   }
 }
+
+
 
 void setup() {
   // put your setup code here, to run once:
