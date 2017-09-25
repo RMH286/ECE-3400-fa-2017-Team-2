@@ -199,6 +199,64 @@
                             bin 80. For the 17 kHz IR signal, the peak amplitude was in bin 113.
                         </p>
                         
+                        <p>
+                            After observing the fft data values for each treasure frequency, we noticed that monitoring
+                            just the peak amplitude bin for each frequency was not the most accurate way to detect the
+                            treasures. Instead, we found that monitoring the peak amplitude bin along with the bins
+                            immediately before and after it, and then taking a summation of the three, allowed us to
+                            more accurately distinguish when the sensor was actually detecting a treasure. We found that
+                            if the sum of these three bins exceeded a magnitude of 300, then we could be confident that
+                            a treasure was being detected.
+                        </p>
+                        
+                        <p>
+                            To test our robot's treasure detection, we then wrote the following segment of code:
+                        </p>
+                        <pre><code class="cpp">
+                            int seven = fft_log_out[46] + fft_log_out[47] + fft_log_out[48];
+                            int twelve = fft_log_out[79] + fft_log_out[80] + fft_log_out[81];
+                            int seventeen = fft_log_out[112] + fft_log_out[113] + fft_log_out[114];
+                              
+                            if (seven > 300){
+                                digitalWrite(2,HIGH); //7kHz detected
+                                delay(2000);
+                                digitalWrite(2,LOW);
+                            }
+                        
+                            if (twelve > 300){
+                                digitalWrite(4,HIGH); //12kHz detected
+                                delay(2000);
+                                digitalWrite(4,LOW);
+                            }
+                        
+                            if (seventeen > 300){
+                                digitalWrite(7,HIGH); //17kHz detected
+                                delay(2000);
+                                digitalWrite(7,LOW);
+                            }
+                        </code></pre><br />
+                        
+                        <p>
+                            The bin magnitude summations for the 7 kHz, 12 kHz, and 17 kHz signals were assigned to the
+                            variables "seven", "twelve", and "seventeen", respectively. We connected a green LED to digital
+                            pin 2, a blue LED to digial pin 4, and a red LED to digital pin 7. In our setup code, we
+                            initialized these three pins to act as outputs.
+                        </p>
+                        <pre><code class="cpp">
+                            //Treasure Sensors
+                            pinMode(2, OUTPUT); //7kHz
+                            pinMode(4, OUTPUT); //12kHz
+                            pinMode(7, OUTPUT); //17kHz
+                        </code></pre><br />
+                        
+                        <p>
+                            If "seven", "twelve", or "seventeen" ever exceeded a magnitude of 300, then we assigned its
+                            corresponding digital output to HIGH for two-second flashes: "seven" corresponded to pin 2,
+                            "twelve" to pin 4, and "seventeen" to pin 7. With this set up, the 7 kHz treasure caused the
+                            green LED to flash, the 12 kHz treasure caused the blue LED to flash, and the 17 kHz treasure
+                            flashed the red LED, as can be seen below.
+                        </p>
+                        
                         <header class="style1">
                             <h2>Treasure Detection</h2>
                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/hEoG6qI17jE?rel=0" frameborder="0" allowfullscreen></iframe>
