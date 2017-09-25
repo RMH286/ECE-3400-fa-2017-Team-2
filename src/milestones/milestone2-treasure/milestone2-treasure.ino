@@ -23,6 +23,8 @@ void setup() {
   Serial.begin(9600); // use the serial port
   TIMSK0 = 0; // turn off timer0 for lower jitter
   ADCSRA = 0xe5; // set the adc to free running mode
+  ADCSRA &= ~(bit (ADPS0) | bit (ADPS1) | bit (ADPS2)); // clear prescaler bits
+  ADCSRA |= bit (ADPS0) | bit (ADPS2);
   ADMUX = 0x40; // use adc0
   DIDR0 = 0x01; // turn off the digital input for adc0
 
@@ -49,27 +51,29 @@ void loop() {
     fft_mag_log(); // take the output of the fft
     sei();
     
+    int seven = fft_log_out[46] + fft_log_out[47] + fft_log_out[48];
+    int twelve = fft_log_out[79] + fft_log_out[80] + fft_log_out[81];
+    int seventeen = fft_log_out[112] + fft_log_out[113] + fft_log_out[114];
+      
+    if (seven > 300){
+       digitalWrite(2,HIGH); //7kHz detected
+       delay(2000);
+       digitalWrite(2,LOW);
+    }
+
+    if (twelve > 300){
+       digitalWrite(4,HIGH); //12kHz detected
+       delay(2000);
+       digitalWrite(4,LOW);
+    }
+
+    if (seventeen > 300){
+       digitalWrite(7,HIGH); //17kHz detected
+       delay(2000);
+       digitalWrite(7,LOW);
+    }
     Serial.println("start");
     for (byte i = 0 ; i < FFT_N/2 ; i++) { 
-      
-     if (i == 47 && fft_log_out[i] >150){
-        digitalWrite(2,HIGH); //7kHz detected
-        delay(1000);
-        digitalWrite(2,LOW);
-     }
-
-     if (i == 80 && fft_log_out[i] >150){
-        digitalWrite(4,HIGH); //12kHz detected
-        delay(1000);
-        digitalWrite(4,LOW);
-     }
-
-     if (i == 115 && fft_log_out[i] >150){
-        digitalWrite(7,HIGH); //17kHz detected
-        delay(1000);
-        digitalWrite(7,LOW);
-     }
-      
       Serial.println(fft_log_out[i]); // send out the data
     }
   }
