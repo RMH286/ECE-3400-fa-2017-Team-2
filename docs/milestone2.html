@@ -88,6 +88,38 @@
                 <div class="wrapper style2">
                     <div class="title">Wall Detection</div>
                     <div id="highlights" class="container">
+                        <p>
+                            For this milestone, we only needed to implement the basic functionality of wall
+                            detection. We mounted one wall detection sensor onto the front of our robot in
+                            order to detect walls directly in the robot's path.
+                        </p>
+                        
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/" alt="" style="width:512px;" />
+                            </a>
+                        </center>
+                        
+                        <p>
+                            In order to allow the robot to navigate with this new sensor on, we kept the
+                            same turning, line-following, junction detection, and step-past-junction functions
+                            that we used for Milestone 1. However, we needed to add a new function for wall
+                            detection. To meet this need, we added this function:
+                        </p>
+                        <pre><code class="cpp">
+                            bool detectWall() {
+                                int wall = analogRead(wallpin);
+                                if (wall>400) {
+                                    return true;
+                                }
+                                else {
+                                    return false;
+                                }
+                            }
+                        </code></pre><br />
+                        <p>
+                            
+                        </p>
                         
                     <header class="style1">
                             <h2>Wall Detection</h2>
