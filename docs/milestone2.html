@@ -96,7 +96,7 @@
                         
                         <center>
                             <a href="#">
-                                <img src="assets/images/" alt="" style="width:512px;" />
+                                <img src="assets/images/milestone_2_front.JPG" alt="" style="width:512px;" />
                             </a>
                         </center>
                         
@@ -118,7 +118,42 @@
                             }
                         </code></pre><br />
                         <p>
-                            
+                            We connected the output from the wall sensor to analog pin A3, which we assigned
+                            the name "wallpin". We then viewed the input data using the serial monitor to
+                            observe how the values changed as we varied the distance from the sensor to a
+                            wood block. We decided that as soon as the input value surpassed 400, the boolean
+                            detectWall() should be set to true, indicating our robot is approaching a wall.
+                        </p>
+                        
+                        <p>
+                            For this milestone, our algorithm for handling a detected wall was very simple.
+                            If our robot detected a wall in front of it, we wanted it to turn left at the next
+                            junction. We wrote the following code to accomplish this:
+                        </p>
+                        <pre><code class="cpp">
+                            void loop() {
+                                // put your main code here, to run repeatedly:
+                                moveForward();
+                                while (detectJunction()==false){
+                                    moveForward();
+                                }
+                                if (detectWall() == true){
+                                    stepPastJunction();
+                                    turnLeft();
+                                    if (detectWall() == true){
+                                        stepPastJunction();
+                                        turnLeft();
+                                    }
+                                }
+                                else {
+                                  moveForward();
+                                }
+                            }
+                        </code></pre><br />
+                        
+                        <p>
+                            Finally, we set up a small course for our robot to navigate in order to verify that
+                            our wall detection code was running the way we intended.
                         </p>
                         
                     <header class="style1">
@@ -138,7 +173,7 @@
                         
                         <center>
                             <a href="#">
-                                <img src="assets/images/" alt="" style="width:512px;" />
+                                <img src="assets/images/milestone_2_front.JPG" alt="" style="width:512px;" />
                             </a>
                         </center>
                         
