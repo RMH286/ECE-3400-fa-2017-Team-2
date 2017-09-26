@@ -128,7 +128,9 @@
                         <p>
                             For this milestone, our algorithm for handling a detected wall was very simple.
                             If our robot detected a wall in front of it, we wanted it to turn left at the next
-                            junction. We wrote the following code to accomplish this:
+                            junction. We also added in a second left turn in the case that after the first,
+                            there was still a wall in our path. In this case, the robot would simply turn back
+                            and move in the direction it came from. We wrote the following code to accomplish this:
                         </p>
                         <pre><code class="cpp">
                             void loop() {
@@ -194,7 +196,12 @@
                             monitor. In particular, we wanted to see which bins in the fft data had peak amplitude for each
                             signal frequency. Using the adjustable treasure board, we were able to create the 7 kHz, 12 kHz,
                             and 17 kHz IR treasure signals. At each frequency, we held the treasure board up in front of the
-                            treasure sensor on the robot and observed the fft data on the serial monitor. For the 7 kHz IR
+                            treasure sensor on the robot and observed the fft data on the serial monitor. So that we detected the 
+                            proper frequncies, we needed to adjust the 'prescaler' which adjusts the sampling rate for the IR sensor. 
+                            We set the prescaler to 32, which results in a 38.4 kHz sampling frequency and 128 bins with widths of 150 Hz. We chose this prescaler because
+                            we needed to detect a signal up to 17 kHz and with a prescaler of 32 the max frequency we can detect is 19.2 KHz. 
+                            (In lab 2, we set the prescaler to 64 because we only needed to detect 7kHz.)
+                            For the 7 kHz IR
                             signal, the peak amplitude was in bin 47. For the 12 kHz IR signal, the peak amplitude was in
                             bin 80. For the 17 kHz IR signal, the peak amplitude was in bin 113.
                         </p>
