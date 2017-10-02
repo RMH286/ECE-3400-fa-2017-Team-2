@@ -90,7 +90,7 @@ module DE0_NANO(
 			.RESET(reset),
 			.CLK(CLOCK_25),
 			.FREQUENCY(1000),
-			.AUDIO(GPIO_1_D[10])
+			.AUDIO({GPIO_1_D[18],GPIO_1_D[110],GPIO_1_D[112],GPIO_1_D[114],GPIO_1_D[116],GPIO_1_D[118],GPIO_1_D[120],GPIO_1_D[122]})
 	 );
 	 
 	 assign reset = ~KEY[0]; // reset when KEY0 is pressed
