@@ -36,6 +36,7 @@ module DE0_NANO(
 	 //=======================================================
 
 	 localparam ONE_SEC = 25000000; // one second in 25MHz clock cycles
+	 localparam HALF_CYLCE = (25000000/1000)/2;
 	 
 	 //=======================================================
 	 //  PORT declarations
@@ -73,6 +74,10 @@ module DE0_NANO(
 	 
 	 reg [24:0] led_counter; // timer to keep track of when to toggle LED
 	 reg 			led_state;   // 1 is on, 0 is off
+	 
+	 reg tone_1000;
+	 reg [15:0] counter;
+	 assign GPIO_0_D[0] = tone_1000;
 	 
     // Module outputs coordinates of next pixel to be written onto screen
     VGA_DRIVER driver(
@@ -123,6 +128,17 @@ module DE0_NANO(
 				led_counter <= led_counter + 25'b1;
 		  end // always @ (posedge CLOCK_25)
 	 end
+	 
+	 always @ (posedge CLOCK_25) begin
+		if (counter == 0) begin
+			tone_1000 <= ~tone_1000;
+			counter <= HALF_CYCLE - 1;
+		end
+		else begin
+			tone_1000 <= tone_1000;
+			counter <= counter - 1;
+		end
+	end
 	 
 
 endmodule
