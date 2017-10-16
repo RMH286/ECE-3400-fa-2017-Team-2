@@ -1,1 +1,1 @@
-Warning (10268): Verilog HDL information at audio.v(36): always construct contains both blocking and non-blocking assignments
+Info (10281): Verilog HDL Declaration information at AUDIO.v(10): object "FREQUENCY" differs only in case from object "frequency" in the same scope File: C:/Users/labuser/Desktop/Lab3_template/AUDIO.v Line: 10

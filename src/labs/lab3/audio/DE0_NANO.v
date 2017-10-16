@@ -36,7 +36,7 @@ module DE0_NANO(
 	 //=======================================================
 
 	 localparam ONE_SEC = 25000000; // one second in 25MHz clock cycles
-	 localparam HALF_CYLCE = (25000000/1000)/2;
+	 localparam HALF_CYCLE = (25000000/1000)/2;
 	 
 	 //=======================================================
 	 //  PORT declarations
@@ -79,6 +79,29 @@ module DE0_NANO(
 	 reg [15:0] counter;
 	 assign GPIO_0_D[0] = tone_1000;
 	 
+	 reg [7:0] tri_1000;     // 1 kHz triangle wave
+	 reg [5:0] tri_counter;
+	 reg Incr;					 // Increasing/decresing state variable
+	 //assign GPIO_0_D[22] = tri_1000[0];
+	 //assign GPIO_0_D[20] = tri_1000[1];
+	 //assign GPIO_0_D[18] = tri_1000[2];
+	 //assign GPIO_0_D[16] = tri_1000[3];
+	 //assign GPIO_0_D[14] = tri_1000[4];
+	 //assign GPIO_0_D[12] = tri_1000[5];
+	 //assign GPIO_0_D[10] = tri_1000[6];
+	 //assign GPIO_0_D[8] = tri_1000[7];
+	 
+	 reg [7:0] sound;
+	 //assign GPIO_0_D[22] = sound[0];
+	 //assign GPIO_0_D[20] = sound[1];
+	 //assign GPIO_0_D[18] = sound[2];
+	 //assign GPIO_0_D[16] = sound[3];
+	 //assign GPIO_0_D[14] = sound[4];
+	 //assign GPIO_0_D[12] = sound[5];
+	 //assign GPIO_0_D[10] = sound[6];
+	 //assign GPIO_0_D[8] = sound[7];
+	 
+	 
     // Module outputs coordinates of next pixel to be written onto screen
     VGA_DRIVER driver(
 		  .RESET(reset),
@@ -94,8 +117,8 @@ module DE0_NANO(
 	 AUDIO audio(
 			.RESET(reset),
 			.CLK(CLOCK_25),
-			.FREQUENCY(1000),
-			.AUDIO({GPIO_1_D[18],GPIO_1_D[110],GPIO_1_D[112],GPIO_1_D[114],GPIO_1_D[116],GPIO_1_D[118],GPIO_1_D[120],GPIO_1_D[122]})
+			.SW(SW),
+			.SOUND({GPIO_0_D[8],GPIO_0_D[10],GPIO_0_D[12],GPIO_0_D[14],GPIO_0_D[16],GPIO_0_D[18],GPIO_0_D[20],GPIO_0_D[22]})
 	 );
 	 
 	 assign reset = ~KEY[0]; // reset when KEY0 is pressed
@@ -129,7 +152,12 @@ module DE0_NANO(
 		  end // always @ (posedge CLOCK_25)
 	 end
 	 
+	 // State machine for 1 kHz square wave output
 	 always @ (posedge CLOCK_25) begin
+	   if (reset) begin
+			tone_1000 <= 0;
+			counter <= 0;
+		end
 		if (counter == 0) begin
 			tone_1000 <= ~tone_1000;
 			counter <= HALF_CYCLE - 1;
@@ -139,6 +167,40 @@ module DE0_NANO(
 			counter <= counter - 1;
 		end
 	end
-	 
+	
+	//State machine for 1 kHz triangle wave output
+	always @ (posedge CLOCK_25) begin
+		if (reset) begin
+			Incr <= 1;
+			tri_1000 <= 0;
+			tri_counter <= 0;
+		end
+		if (tri_counter == 0) begin
+			if ((Incr == 1) && (tri_1000 < 254)) begin
+				Incr <= Incr;
+				tri_1000 <= tri_1000 + 1;
+				tri_counter <= 48;
+			end
+			else if ((Incr == 1) && (tri_1000 == 254)) begin
+				Incr <= ~Incr;
+				tri_1000 <= tri_1000 + 1;
+				tri_counter <= 48;
+			end
+			else if ((Incr == 0) && (tri_1000 > 1)) begin
+				Incr <= Incr;
+				tri_1000 <= tri_1000 - 1;
+				tri_counter <= 48;
+			end
+			else begin
+				Incr <= ~Incr;
+				tri_1000 <= tri_1000 - 1;
+				tri_counter <= 48;
+			end
+		end
+		else begin
+			tri_1000 <= tri_1000;
+			tri_counter <= tri_counter - 1;
+		end
+	end
 
 endmodule
