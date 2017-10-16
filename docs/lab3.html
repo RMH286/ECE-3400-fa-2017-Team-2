@@ -107,26 +107,66 @@
                             <h2>Team Members</h2>
                         </header>
                         <ul>
-                            <li></li>
+                            <li>Ben Roberge</li>
+                            <li>Ryan Hornung</li>
                         </ul>
                         <header class="style1">
                             <h2>Materials</h2>
                         </header>
                         <ul>
-                            <li></li>
+                            <li>Arduino Uno</li>
+                            <li>FPGA DE0_nano</li>
+                            <li>Lab Speaker</li>
+                            <li>8-bit R2R DAC</li>
                         </ul>
                         <header class="style1">
-                            <h2></h2>
+                            <h2>Square Wave</h2>
                         </header>
                         <p>
+                            We began by synthesizing a simple square wave using the FPGA board. 
+                            Because the signal is either high (3.3 V) or low (0 V), we can simply toggle the value of a GPIO pin.
+                            Below are the lines of code which we added to DEO_NANO.v.
                         </p>
                         <center>
                             <a href="#">
                                 <img src="" alt="" style="width:256px;"/>
                             </a>
                         </center>
-                        <pre><code class="cpp">
+                        <pre><code>
+                            localparam HALF_CYLCE = (25000000/1000)/2;
+
+                            reg tone_1000;
+                            reg [15:0] counter;
+                            assign GPIO_0_D[0] = tone_1000;
+
+                            always @ (posedge CLOCK_25) begin
+                                if (reset) begin
+                                    counter == 0
+                                if (counter == 0) begin
+                                    tone_1000 <= ~tone_1000;
+                                    counter <= HALF_CYCLE - 1;
+                                end
+                                else begin
+                                    tone_1000 <= tone_1000;
+                                    counter <= counter - 1;
+                                end
+                            end
                         </code></pre><br />
+                        <p>
+                            First, we began by defining a local parameter called HALF_CYCLE. This parameter represents
+                            the number of clock cycles in a halve cycle of our square wave. In order to synthesize a 1000 kHz
+                            square wave, the HALF_CYCLE will be the clock frequency divided by the desired frequency, and
+                            lastly divided by two (half).
+                            We also defined a couple of registers. First, counter is a 16-bit counter used to keep track
+                            of the number of clock cycles since the last signal edge. The register tone_1000 holds the output 
+                            value of the square wave. Lastly, for the setup, we assigned the output pin GPIO_0_D[0] to the tone_1000
+                            register.
+                        </p>
+                        <p>
+                            Next, on each positive edge of the clock tick, we check the value of the counter. If the counter has reached
+                            zero, which negate the value in the tone_1000 register, and reset the clock to HALF_CYCLE - 1. Otherwise, the
+                            tone_1000 register is kept at its current value, and the counter is decremented.
+                        </p>
                     </div>
                 </div>
         
