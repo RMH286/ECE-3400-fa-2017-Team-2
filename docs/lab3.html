@@ -174,11 +174,6 @@
                             Because the signal is either high (3.3 V) or low (0 V), we can simply toggle the value of a GPIO pin.
                             Below are the lines of code which we added to DEO_NANO.v.
                         </p>
-                        <center>
-                            <a href="#">
-                                <img src="" alt="" style="width:256px;"/>
-                            </a>
-                        </center>
                         <pre><code>
                             localparam HALF_CYLCE = (25000000/1000)/2;
 
@@ -212,15 +207,158 @@
                         <p>
                             Next, on each positive edge of the clock tick, we check the value of the counter. If the counter has reached
                             zero, which negate the value in the tone_1000 register, and reset the clock to HALF_CYCLE - 1. Otherwise, the
-                            tone_1000 register is kept at its current value, and the counter is decremented.
+                            tone_1000 register is kept at its current value, and the counter is decremented. Below is the waveform of the
+                            square wave we generated.
                         </p>
-                        
-                        <center>  
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/um3aPuPj-6c" frameborder="0" allowfullscreen></iframe>
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/1000Hz_square.jpg" alt="" style="width:512px;"/>
+                            </a>
                         </center>
-                        
+
+                        <header class="style1">
+                            <h2>Triangle Wave</h2>
+                        </header>
+
+                        <header class="style1">
+                            <h2>Sine Wave</h2>
+                        </header>
+                        <p>
+                            In order to generate a sine wave, we used a technique called direct digital synthesis (DDS). Prior to the program
+                            execution, a series of sine values are stored in memory which is then used as a lookup table for the output
+                            register. We began by generating 256 sine values using a simple python script. The below code creates a text file
+                            containing 256 sine values, spread over one period, each separated by a newline.
+                        </p>
+                        <pre><code class='python'>
+                            import math
+
+                            def main():
+                                values = []
+                                for i in range(256):
+                                    rad = 2.0 * math.pi * i / 256
+                                    val = int(math.sin(rad) * 127) + 127
+                                    values.append(val)
+                                with open('sin_init.txt', 'w') as f:
+                                    for val in values:
+                                        f.write('{0:08b}\n'.format(val))
+                                return
+
+                            if __name__ == '__main__':
+                                main()
+                        </code></pre><br />
+                        <p>
+                            In order to store these values on the FPGA, we used the readmemb() function which takes in the text file and places the data
+                            memory. In order to actually step through the sine table, we utilized a 32 bit accumulator. The top 8 bits of this accumulator
+                            where used as an index into the sine table. How fast we increment the accumulator is dependant on the frequency of the sine
+                            wave. The increment is calculated by taking the maximum 32 bit number (2^32), dividing by the clock frequency and multiplying
+                            by the frequency of the sine wave. On each positive edge of the clock, we increment the accumulator by the calculated amount,
+                            and output the value from the sine table. When the accumulator overflows, it will simply roll over to 0 and begin stepping 
+                            through the sine table again. Below is the code we used to generate a 1 kHz sine wave along with the corresponding waveform.
+                        </p>
+                        <pre><code>
+                            input CLK;
+                            input RESET;
+
+                            reg  [31:0] phase_accumulator;
+                            reg  [31:0] phase_increment;
+
+                            output reg [7:0] SOUND;
+
+                            reg [7:0] rom[7:0];
+
+                            initial
+                            begin
+                                $readmemb("sin_init.txt", rom);
+                            end
+                                
+                            always @(posedge CLK) begin
+                                if (RESET) begin
+                                    phase_accumulator = 0;
+                                    phase_increment = (2**32 / 25000000) * 1000;
+                                end
+                                else begin
+                                    phase_accumulator = phase_accumulator + phase_increment;
+                                    SOUND = rom[phase_accumulator[31:24]];
+                                end
+                            end
+                        </code></pre><br />
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/1000Hz_sin.jpg" alt="" style="width:512px;"/>
+                            </a>
+                        </center>
+
+                        <header class="style1">
+                            <h2>Multiple Tones</h2>
+                        </header>
+                        <p>
+                            In order to generate a signal with multiple tones, we created another array in memory to keep the increment variables
+                            for various frequencies. On each positive edge of the clock tick, we increment a counter. Once this counter reaches the number
+                            of cycles which equal one second, we move to the next tone in the array. All we have to do to move to the next tone is update
+                            the current phase_increment variable and reset the counter and accumulator. In addition to the multiple tones, you can toggle
+                            the playing of the sound using switch 1 on the FPGA board. Below is the code we added to generate multiple tones.
+                        </p>
+                        <pre><code>
+                            localparam ONE_SEC = 25000000; // one second in 25MHz clock cycles
+
+                            input [1:0] SW;
+
+                            reg [32:0] tones[3:0];
+                            reg [24:0] time_counter;
+                            reg [1:0] tone_counter;
+
+                            reg [7:0] rom[2**8-1:0];
+
+                            initial
+                            begin
+                                $readmemb("sin_init.txt", rom);
+                                tones[0] <= 75591; // 440 Hz
+                                tones[1] <= 151182; // 880 Hz
+                                tones[2] <= 302365; // 1760 Hz
+                                tones[3] <= 151182; // 880 Hz
+                            end
+                                
+                            always @(posedge CLK) begin
+                                if (RESET) begin
+                                    time_counter = 0;
+                                    tone_counter = 0;
+                                    phase_accumulator = 0;
+                                    phase_increment = tones[tone_counter]; // 1 kHz
+                                end
+                                if (~SW[1]) begin
+                                    if (time_counter == ONE_SEC) begin
+                                        time_counter = 0;
+                                        tone_counter = tone_counter + 1;
+                                        phase_accumulator = 0;
+                                        phase_increment = tones[tone_counter];
+                                        phase_accumulator = phase_accumulator + phase_increment;
+                                        SOUND = rom[phase_accumulator[31:24]];
+                                    end
+                                    else begin
+                                        phase_accumulator = phase_accumulator + phase_increment;
+                                        SOUND = rom[phase_accumulator[31:24]];
+                                        time_counter = time_counter + 1;
+                                    end
+                                end
+                                else begin
+                                    time_counter = 0;
+                                    tone_counter = 0;
+                                    phase_accumulator = 0;
+                                    phase_increment = tones[tone_counter]; // 1 kHz
+                                end
+                            end
+                        </code></pre><br />
+                        <p>
+                            Below are two videos showing the functionality of our code. The first video is simply our three tone signal playing
+                            continuously. The second video shows the signal being toggled on and off using switch 1 on the FPGA board.
+                        </p>
+
                         <center>  
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/8fsSY6-rIdw" frameborder="0" allowfullscreen></iframe>
+                        </center>
+
+                        <center>  
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/um3aPuPj-6c" frameborder="0" allowfullscreen></iframe>
                         </center>
                     </div>
                 </div>
