@@ -275,7 +275,7 @@
                         </code></pre><br />
                         <p>
                             First, we began by defining a local parameter called HALF_CYCLE. This parameter represents
-                            the number of clock cycles in a halve cycle of our square wave. In order to synthesize a 1000 kHz
+                            the number of clock cycles in a halve cycle of our square wave. In order to synthesize a 1 kHz
                             square wave, the HALF_CYCLE will be the clock frequency divided by the desired frequency, and
                             lastly divided by two (half).
                             We also defined a couple of registers. First, counter is a 16-bit counter used to keep track
@@ -285,7 +285,7 @@
                         </p>
                         <p>
                             Next, on each positive edge of the clock tick, we check the value of the counter. If the counter has reached
-                            zero, which negate the value in the tone_1000 register, and reset the clock to HALF_CYCLE - 1. Otherwise, the
+                            zero, we negate the value in the tone_1000 register, and reset the clock to HALF_CYCLE - 1. Otherwise, the
                             tone_1000 register is kept at its current value, and the counter is decremented. Below is the waveform of the
                             square wave we generated.
                         </p>
@@ -302,7 +302,7 @@
                             Now, we wanted to generate a slightly more complicated waveform, and we decided to make a 1 kHz
                             triangle wave. In order to accomplish this, we added the following code to DEO_NANO.v:
                         </p>
-                        <pre><code>
+                        <pre><code class="cpp">
                             reg [7:0] tri_1000;     // 1 kHz triangle wave
                             reg [5:0] tri_counter;
                             reg Incr;                // Increasing/decresing state variable
