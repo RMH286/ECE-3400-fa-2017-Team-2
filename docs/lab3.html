@@ -108,7 +108,10 @@
                         </header>
                         <p> To encode colors to the screen, we needed to use an 8-bit DAC (Digital to Analog Converter), which is shown in the image below. This DAC uses 3 of the bits to encode the
                         values for the color red, 3 bits to encode green, and 2 bits to encode blue. This DAC connects to 8 pins on the FPGA that then feeds through
-                        8 different resistors. From there, the group of wires for each color combine to produce a voltage between 0 and 1 V.
+                        8 different resistors. From there, the group of wires for each color combine to produce a voltage between 0 and 1 V. The resistors step down the voltage from 3.3 volts
+                        to different voltages. The resistor values for each resistor in a color group must correspond with different voltage step downs so that a range of out voltages can be 
+                        attained. For red and green, since they are comprised of 3 bits, 8 different colors should be producible. This means that 8 different voltages between 0 and 1V should 
+                        be achieved, each 1/7 of a volt apart. 
                         </p>
                         <center>
                             <a href="#">
@@ -140,7 +143,9 @@
                         <p> Before using external imputs we first wanted to create a 2x2 grid on the screen. The code below shows the logic that we used. We used a 2x2 matrix, my_grid
                         of 8 bit values to store the colors of each sqare in the grid. The 1 bit regs, newx and newy, convert PIXEL_COORD_X and PIXEL_COORD_Y into values that correspond
                         to each box in the 2x2 grid. If x is 0, we are assigning to the column on the left; if x is 1, we are assigning to the column on the right. If y is 0 we are assigning
-                        to the top row, if y is 1, we are assigning to the bottom row. This allows us to assign PIXEL_COLOR to the value stored in my_grid[x][y]. The always block used with
+                        to the top row, if y is 1, we are assigning to the bottom row. We made our grid 200 pixels by 200 pixels so we added a case for if the pixel was located beyond our grid.
+                        If it was, it was simply assigned the color black, which is 8 zeros. 
+                         This allows us to assign PIXEL_COLOR to the value stored in my_grid[x][y]. The always block used with
                         an asterix ensures that the block runs whenever any input signal changes.
                         
                         </p>
@@ -159,7 +164,7 @@
      
                             newx = PIXEL_COORD_X/10'd100;
                             newy = PIXEL_COORD_Y/10'd100;
-                            if (newx > 1 | newy > 1) begin
+                            if (PIXEL_COORD_X > 199 | PIXEL_COORD_Y > 199) begin
                                 PIXEL_COLOR = 8'd0;
                             end
                             else begin
@@ -175,7 +180,7 @@
                         </p>
                         <center>
                             <a href="#">
-                                <img src="assets/images/switches.jpeg" alt="" style="width:512px;" />
+                                <img src="assets/images/switches.jpg" alt="" style="width:512px;" />
                             </a>
                         </center>
 
@@ -184,8 +189,20 @@
                         Each different switch position combination corresponds with a blue box being in one of the 4 quadrants of our grid. The table below shows the different 
                         outputs based on the switch position.
                         </p>
+                        <style>
+                        table {
+                            border-collapse: collapse;
+                            width: 50%;
+                        }
+
+                        td, th {
+                            border: 1px solid #dddddd;
+                            text-align: center;
+                            padding: 8px;
+                        }
+                        </style>
                         <center>
-                            <table style= "width:50%"">
+                            <table>
                                 <tr>
                                     <th>Switch One</th>
                                     <th> Switch Two</th>
@@ -213,6 +230,53 @@
                                 </tr>
                             </table>
                         </center>
+
+                        <p> Below is our code which uses the switch inputs to determine the color of each quadrant of my grid. Pin1 and pin2 
+                        were assigned to the GPIO pin that the switch signal was plugged into on the FPGA.
+                        </p>
+                        <pre><code class="cpp">
+                         always @ (*) begin 
+                            if(pin1 == 0 & pin2 == 0)begin
+                                 my_grid[0][0] <= 8'b000_000_11;
+                                 my_grid[1][0] <= 8'b111_111_11;
+                                 my_grid[0][1] <= 8'b111_111_11;
+                                 my_grid[1][1] <= 8'b111_111_11;
+                             end 
+                             else if(pin1 == 1 & pin2 == 0)begin
+                                 my_grid[0][0] <= 8'b111_111_11;
+                                 my_grid[1][0] <= 8'b000_000_11;
+                                 my_grid[0][1] <= 8'b111_111_11;
+                                 my_grid[1][1] <= 8'b111_111_11;
+                             end
+                             else if(pin1 == 0 & pin2 == 1)begin
+                                 my_grid[0][0] <= 8'b111_111_11;
+                                 my_grid[1][0] <= 8'b111_111_11;
+                                 my_grid[0][1] <= 8'b000_000_11;
+                                 my_grid[1][1] <= 8'b111_111_11;
+                             end
+                             else begin
+                                 my_grid[0][0] <= 8'b111_111_11;
+                                 my_grid[1][0] <= 8'b111_111_11;
+                                 my_grid[0][1] <= 8'b111_111_11;
+                                 my_grid[1][1] <= 8'b000_000_11;
+                             end
+                             
+                             
+                            newx = PIXEL_COORD_X/10'd100;
+                            newy = PIXEL_COORD_Y/10'd100;
+                            if (PIXEL_COORD_X > 199 | PIXEL_COORD_Y > 199) begin
+                                PIXEL_COLOR = 8'd0;
+                            end
+                            else begin
+                                
+                                PIXEL_COLOR = my_grid[newx][newy];
+                            end
+                        end
+                        </code></pre><br />
+
+                        <p>
+                        Below is a video of our switches in action!
+                        </p>
                         
                         <center>  
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/_x_U0irmvRo" frameborder="0" allowfullscreen></iframe>
@@ -233,6 +297,18 @@
                             <li>Ryan Hornung</li>
                         </ul>
                         </center>
+                        <header class="style1">
+
+                        <h2>Goal</h2>
+                        </header>
+                        <p>
+                            Our task was to first generate two or three different waveforms in Verilog and play them
+                            on the lab speakers via the stereo phone jack socket and the 8-bit R2R DAC. We chose to
+                            generate a 1 kHz square wave, a 1 kHz triangle wave, and a 1 kHz sine wave. After deciding
+                            which of the three sounded the best, we needed to create a short tune of at least three
+                            different frequencies, using our chosen waveform. Finally, we had to ensure we could turn
+                            our sound on or off using an enable signal.
+                        </p>
                         
                         <header class="style1">
                             <h2>Materials</h2>
@@ -243,6 +319,7 @@
                             <li>FPGA DE0_nano</li>
                             <li>Lab Speaker</li>
                             <li>8-bit R2R DAC</li>
+                            <li>Stereo phone jack socket</li>
                         </ul>
                         </center>
                         <header class="style1">
@@ -275,7 +352,7 @@
                         </code></pre><br />
                         <p>
                             First, we began by defining a local parameter called HALF_CYCLE. This parameter represents
-                            the number of clock cycles in a halve cycle of our square wave. In order to synthesize a 1000 kHz
+                            the number of clock cycles in a halve cycle of our square wave. In order to synthesize a 1 kHz
                             square wave, the HALF_CYCLE will be the clock frequency divided by the desired frequency, and
                             lastly divided by two (half).
                             We also defined a couple of registers. First, counter is a 16-bit counter used to keep track
@@ -285,8 +362,9 @@
                         </p>
                         <p>
                             Next, on each positive edge of the clock tick, we check the value of the counter. If the counter has reached
-                            zero, which negate the value in the tone_1000 register, and reset the clock to HALF_CYCLE - 1. Otherwise, the
-                            tone_1000 register is kept at its current value, and the counter is decremented. Below is the waveform of the
+                            zero, we negate the value in the tone_1000 register, and reset the clock to HALF_CYCLE - 1. Otherwise, the
+                            tone_1000 register is kept at its current value, and the counter is decremented. Toggling the tone_1000
+                            output in this fashion allows us to create the 1 kHz square waveform. Below is the waveform of the
                             square wave we generated.
                         </p>
                         <center>
