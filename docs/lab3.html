@@ -363,8 +363,12 @@
                         <p>
                             Next, on each positive edge of the clock tick, we check the value of the counter. If the counter has reached
                             zero, we negate the value in the tone_1000 register, and reset the clock to HALF_CYCLE - 1. Otherwise, the
+<<<<<<< HEAD
                             tone_1000 register is kept at its current value, and the counter is decremented. Toggling the tone_1000
                             output in this fashion allows us to create the 1 kHz square waveform. Below is the waveform of the
+=======
+                            tone_1000 register is kept at its current value, and the counter is decremented. Below is the waveform of the
+>>>>>>> 16ee76fa0a96638f375a1c9048255bd69148ae2f
                             square wave we generated.
                         </p>
                         <center>
@@ -376,6 +380,98 @@
                         <header class="style1">
                             <h2>Triangle Wave</h2>
                         </header>
+                        <p>
+                            Now, we wanted to generate a slightly more complicated waveform, and we decided to make a 1 kHz
+                            triangle wave. In order to accomplish this, we added the following code to DEO_NANO.v:
+                        </p>
+                        <pre><code class="cpp">
+                            reg [7:0] tri_1000;     // 1 kHz triangle wave
+                            reg [5:0] tri_counter;
+                            reg Incr;                // Increasing/decresing state variable
+                            
+                            assign GPIO_0_D[22] = tri_1000[0];
+                            assign GPIO_0_D[20] = tri_1000[1];
+                            assign GPIO_0_D[18] = tri_1000[2];
+                            assign GPIO_0_D[16] = tri_1000[3];
+                            assign GPIO_0_D[14] = tri_1000[4];
+                            assign GPIO_0_D[12] = tri_1000[5];
+                            assign GPIO_0_D[10] = tri_1000[6];
+                            assign GPIO_0_D[8] = tri_1000[7];
+                            
+                            //State machine for 1 kHz triangle wave output
+                            always @ (posedge CLOCK_25) begin
+                                if (reset) begin
+                                    Incr <= 1;
+                                    tri_1000 <= 0;
+                                    tri_counter <= 0;
+                                end
+                                if (tri_counter == 0) begin
+                                    if ((Incr == 1) && (tri_1000 < 254)) begin
+                                        Incr <= Incr;
+                                        tri_1000 <= tri_1000 + 1;
+                                        tri_counter <= 48;
+                                    end
+                                    else if ((Incr == 1) && (tri_1000 == 254)) begin
+                                        Incr <= ~Incr;
+                                        tri_1000 <= tri_1000 + 1;
+                                        tri_counter <= 48;
+                                    end
+                                    else if ((Incr == 0) && (tri_1000 > 1)) begin
+                                        Incr <= Incr;
+                                        tri_1000 <= tri_1000 - 1;
+                                        tri_counter <= 48;
+                                    end
+                                    else begin
+                                        Incr <= ~Incr;
+                                        tri_1000 <= tri_1000 - 1;
+                                        tri_counter <= 48;
+                                    end
+                                end
+                                else begin
+                                    tri_1000 <= tri_1000;
+                                    tri_counter <= tri_counter - 1;
+                                end
+                            end
+                        </code></pre><br />
+                        <p>
+                            First, we declared an 8-bit register called tri_1000 to store the value of our triangle wave.
+                            Since it's 8-bits, tri_1000 can hold any value from 0 to 255. We once again made use of a
+                            decrementing counter, storing its value in the register tri_counter. The register Incr is used
+                            to keep track of whether the triangle wave's value is in an increasing or decreasing state. We
+                            then assigned the 8 bits of tri_1000 to output on 8 adjacent GPIO pins on the FPGA DE0_nano.
+                        </p>
+                        <p>
+                            To actually create the triangle wave, we implemented a state machine. At each positive edge of
+                            the 25 MHz clock, we check the value of tri_counter. If tri-counter equals 0, there are four
+                            possible sets of commands. First, if tri_1000 < 254 and Incr equals 1 (indicating the increasing
+                            state), Incr needs to stay at 1, tri_1000 needs to increment, and tri_counter needs to be reset
+                            up to its maximum value. Second, if tri_1000 equals 254 and Incr equals 1, tri_1000 needs to
+                            increment up to 255 (its maximum value), Incr needs to flip to 0 (to start decreasing tri_1000's
+                            value when the counter next hits 0), and tri_counter needs to be reset up to its maximum value.
+                            Third, if tri_1000 > 1 and Incr equals 0 (indicating the decreasing state), Incr needs to stay
+                            at 0, tri_1000 needs to decrement, and tri_counter needs to be reset up to its maximum value.
+                            Fourth, if tri_1000 equals 1 and Incr equals 0, tri_1000 needs to decrement down to 0 (its minimum
+                            value), Incr needs to flip to 1 (to start increasing tri_1000's value when the counter next hits 0),
+                            and tri_counter needs to be reset up to its maximum value. Finally, if tri_counter does not yet
+                            equal 0, we simply keep the value of tri_1000 the same and decrement tri_counter.
+                        </p>
+                        <p>
+                            It is important to note that we reset the value of tri_counter to 48 in order to achieve the proper
+                            wave frequency. For a 1 kHz wave, (25 MHz)/(1 kHz) = 25,000 clock cycles per wave period. For every
+                            wave period, the value of tri_1000 increments up 255 steps and decrements down 255 steps. Therefore,
+                            there are 510 steps per wave period. (25,000 cycles/period)/(510 steps/period) = 49 clock cycles per
+                            step. Setting tri_counter to 48 on the first clock cycle ensures that its value will be 0 on the 49th
+                            clock cycle. This is how we settled on the reset value of 48.
+                        </p>
+                        <p>
+                            Before playing our triangle wave on our speaker, we checked the waveform using an oscilloscope. The
+                            output was exactly as we expected:
+                        </p>
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/1000Hz_triangle.jpg" alt="" style="width:512px;"/>
+                            </a>
+                        </center>
 
                         <header class="style1">
                             <h2>Sine Wave</h2>
