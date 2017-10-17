@@ -169,8 +169,50 @@
                         </code></pre><br />
                         <p>
                         In order to demonstrate an external input controlling our 2x2 grid, we implemented two switches to provide combinations for our four possible
-                        grid outcomes.
+                        grid outcomes. The switch has 3 pins, only two of which are connected at a time. We made the middle pin the signal pin with the two other pins
+                        being 3.3 volts and ground. When the switch is flipped, the signal pin flips between 0 and 3.3 volts. This is read as a 0 or 1 by the FPGA. The following
+                        image shows how we wired the switches to pins on the FPGA. 
                         </p>
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/switches.jpeg" alt="" style="width:512px;" />
+                            </a>
+                        </center>
+
+                        <p>
+
+                        Each different switch position combination corresponds with a blue box being in one of the 4 quadrants of our grid. The table below shows the different 
+                        outputs based on the switch position.
+                        </p>
+                        <center>
+                            <table style= "width:50%"">
+                                <tr>
+                                    <th>Switch One</th>
+                                    <th> Switch Two</th>
+                                    <th>Blue Quadrant</th>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>Top Left</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>Top Right</td>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td>1</td>
+                                    <td>Bottom Left</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>Bottom Right</td>
+                                </tr>
+                            </table>
+                        </center>
                         
                         <center>  
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/_x_U0irmvRo" frameborder="0" allowfullscreen></iframe>
