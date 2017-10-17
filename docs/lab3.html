@@ -122,8 +122,14 @@
                         <p>
                             From the picture above, each color indicated by R, G, B has resistors in parallel along with the VGA cable having a 50Ω resistance in series. The voltage of each color pin needs to sum
                             to a total of 1V with each pin representing a bit. The most significant bit is twice the voltage of the second most significant bit, four times the voltage of the third most significant
-                            bit, and so on. The voltage of each color branch is 4/7V, 2/7V, and 1/7V respectively to the most significant bit order. 
+                            bit, and so on. The voltage of each color branch is 4/7V, 2/7V, and 1/7V respectively to the most significant bit order. Below is our worked out solution to finding the resistor values 
+                            for the DAC. To keep the current across the resistors the same, the resistor for the most significant bit would be have twice the resistance of the second significant bit, and so on, just like the voltages. Hence the assumption of 2R1=R2, and 2R2=R3.
                         </p>
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/resistors.jpg" alt="" style="width:512px;" />
+                            </a>
+                        </center>
                         
                         <header class="style1">
                             <h2>Drawing to the Screen</h2>
