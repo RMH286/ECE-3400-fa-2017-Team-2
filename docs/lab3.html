@@ -557,11 +557,17 @@
                                 <img src="assets/images/1000Hz_sin.jpg" alt="" style="width:512px;"/>
                             </a>
                         </center>
+                        <p>
+                            In the same manner as for the triangle wave, we connected this sine wave output to the speaker
+                            via the 8-bit R2R DAC and the stereo phone jack socket.
+                        </p>
 
                         <header class="style1">
                             <h2>Multiple Tones</h2>
                         </header>
                         <p>
+                            After listening to our square wave, triangle wave, and sine wave tones, we decided to make the multiple-
+                            frequency tone using different frequency sine waves because the sine wave sounded the best of the three.
                             In order to generate a signal with multiple tones, we created another array in memory to keep the increment variables
                             for various frequencies. On each positive edge of the clock tick, we increment a counter. Once this counter reaches the number
                             of cycles which equal one second, we move to the next tone in the array. All we have to do to move to the next tone is update
