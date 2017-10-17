@@ -466,11 +466,22 @@
                         </p>
                         <p>
                             Before playing our triangle wave on our speaker, we checked the waveform using an oscilloscope. The
-                            output was exactly as we expected:
+                            output was exactly as we expected, a 1 kHz triangle wave with peak-to-peak voltage of 3.3V:
                         </p>
                         <center>
                             <a href="#">
                                 <img src="assets/images/1000Hz_triangle.jpg" alt="" style="width:512px;"/>
+                            </a>
+                        </center>
+                        <p>
+                            The picture below shows how we then connected the output from the FPGA to the speaker. The 8 GPIO
+                            pins that the 8 bits of tri_1000 are output on are connected to the 8 input pins on the 8-bit R2R
+                            DAC. The output pin on the R2R DAC then connects to one of the input pins on the stereo phone jack
+                            socket, which directly connects to the speaker.
+                        </p>
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/FPGA_to_Speaker.jpg" alt="" style="width:512px;"/>
                             </a>
                         </center>
 
