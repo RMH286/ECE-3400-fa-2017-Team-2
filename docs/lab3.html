@@ -168,6 +168,18 @@
                         </center>
                         
                         <header class="style1">
+                            <h2>Goal</h2>
+                        </header>
+                        <p>
+                            Our task was to first generate two or three different waveforms in Verilog and play them
+                            on the lab speakers via the stereo phone jack socket and the 8-bit R2R DAC. We chose to
+                            generate a 1 kHz square wave, a 1 kHz triangle wave, and a 1 kHz sine wave. After deciding
+                            which of the three sounded the best, we needed to create a short tune of at least three
+                            different frequencies, using our chosen waveform. Finally, we had to ensure we could turn
+                            our sound on or off using an enable signal.
+                        </p>
+                        
+                        <header class="style1">
                             <h2>Materials</h2>
                         </header>
                         <center>
@@ -176,6 +188,7 @@
                             <li>FPGA DE0_nano</li>
                             <li>Lab Speaker</li>
                             <li>8-bit R2R DAC</li>
+                            <li>Stereo phone jack socket</li>
                         </ul>
                         </center>
                         <header class="style1">
@@ -208,7 +221,7 @@
                         </code></pre><br />
                         <p>
                             First, we began by defining a local parameter called HALF_CYCLE. This parameter represents
-                            the number of clock cycles in a halve cycle of our square wave. In order to synthesize a 1000 kHz
+                            the number of clock cycles in a halve cycle of our square wave. In order to synthesize a 1 kHz
                             square wave, the HALF_CYCLE will be the clock frequency divided by the desired frequency, and
                             lastly divided by two (half).
                             We also defined a couple of registers. First, counter is a 16-bit counter used to keep track
@@ -218,8 +231,9 @@
                         </p>
                         <p>
                             Next, on each positive edge of the clock tick, we check the value of the counter. If the counter has reached
-                            zero, which negate the value in the tone_1000 register, and reset the clock to HALF_CYCLE - 1. Otherwise, the
-                            tone_1000 register is kept at its current value, and the counter is decremented. Below is the waveform of the
+                            zero, we negate the value in the tone_1000 register, and reset the clock to HALF_CYCLE - 1. Otherwise, the
+                            tone_1000 register is kept at its current value, and the counter is decremented. Toggling the tone_1000
+                            output in this fashion allows us to create the 1 kHz square waveform. Below is the waveform of the
                             square wave we generated.
                         </p>
                         <center>
