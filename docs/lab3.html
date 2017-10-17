@@ -106,20 +106,26 @@
                         <header class="style1">
                             <h2>Deciding Resistor Values for the 8-bit DAC</h2>
                         </header>
-                        <p>
+                        <p> To encode colors to the screen, we needed to use an 8-bit DAC (Digital to Analog Converter), which is shown in the image below. This DAC uses 3 of the bits to encode the
+                        values for the color red, 3 bits to encode green, and 2 bits to encode blue. This DAC connects to 8 pins on the FPGA that then feeds through
+                        8 different resistors. From there, the group of wires for each color combine to produce a voltage between 0 and 1 V.
                         </p>
                         <center>
                             <a href="#">
                                 <img src="assets/images/DAC.jpeg" alt="" style="width:512px;" />
                             </a>
                         </center>
-                        <pre><code class="cpp">
-                        </code></pre><br />
+                        
                         
                         <header class="style1">
                             <h2>Drawing to the Screen</h2>
                         </header>
                         <p>
+                            We were given a VGA module written in verilog that is used to write values to the pixels on our screen. The module works with our main module
+                            by giving it an x and y coordinate (PIXEL_COORD_X and PIXEL_COORD_) that correspond to the position of a pixel on the screen. In the main module, we write a color to the pixel in
+                            an 8 bit variable, PIXEL_COLOR, which is then sent by the VGA driver to the DAC and eventually displays the color on the screen. The first 3 bits of PIXEL_COLOR coorespond to red, the next 
+                            3 to green and the last two to blue. The VGA module incrememnts through each pixel on the screen by continuously outputting the next pixel coordinates. In the image below, every pixel
+                            was assigned to green (8'b000_111_00).
                         </p>
                         
                         <center>
@@ -131,9 +137,82 @@
                         <header class="style1">
                             <h2>External Inputs to the Screen</h2>
                         </header>
-                        <p> In order to demonstrate an external input to our 2x2 grid, we implemented two switches to provide combinations for our four possible
-                        grid outcomes.
+                        <p> Before using external imputs we first wanted to create a 2x2 grid on the screen. The code below shows the logic that we used. We used a 2x2 matrix, my_grid
+                        of 8 bit values to store the colors of each sqare in the grid. The 1 bit regs, newx and newy, convert PIXEL_COORD_X and PIXEL_COORD_Y into values that correspond
+                        to each box in the 2x2 grid. If x is 0, we are assigning to the column on the left; if x is 1, we are assigning to the column on the right. If y is 0 we are assigning
+                        to the top row, if y is 1, we are assigning to the bottom row. This allows us to assign PIXEL_COLOR to the value stored in my_grid[x][y]. The always block used with
+                        an asterix ensures that the block runs whenever any input signal changes.
+                        
                         </p>
+                        <pre><code class="cpp">
+                         wire[7:0] my_grid[1:0][1:0];
+ 
+                         reg newx;
+                         reg newy;
+                         
+                         assign my_grid[0][0] = 8'b000_000_11;
+                         assign my_grid[1][0] = 8'b111_111_11;
+                         assign my_grid[0][1] = 8'b111_111_11;
+                         assign my_grid[1][1] = 8'b000_000_11;
+
+                        always @ (*) begin 
+     
+                            newx = PIXEL_COORD_X/10'd100;
+                            newy = PIXEL_COORD_Y/10'd100;
+                            if (newx > 1 | newy > 1) begin
+                                PIXEL_COLOR = 8'd0;
+                            end
+                            else begin
+                                PIXEL_COLOR = my_grid[newx][newy];
+                            end
+                        end
+                        </code></pre><br />
+                        <p>
+                        In order to demonstrate an external input controlling our 2x2 grid, we implemented two switches to provide combinations for our four possible
+                        grid outcomes. The switch has 3 pins, only two of which are connected at a time. We made the middle pin the signal pin with the two other pins
+                        being 3.3 volts and ground. When the switch is flipped, the signal pin flips between 0 and 3.3 volts. This is read as a 0 or 1 by the FPGA. The following
+                        image shows how we wired the switches to pins on the FPGA. 
+                        </p>
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/switches.jpeg" alt="" style="width:512px;" />
+                            </a>
+                        </center>
+
+                        <p>
+
+                        Each different switch position combination corresponds with a blue box being in one of the 4 quadrants of our grid. The table below shows the different 
+                        outputs based on the switch position.
+                        </p>
+                        <center>
+                            <table style= "width:50%"">
+                                <tr>
+                                    <th>Switch One</th>
+                                    <th> Switch Two</th>
+                                    <th>Blue Quadrant</th>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>Top Left</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>Top Right</td>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td>1</td>
+                                    <td>Bottom Left</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>Bottom Right</td>
+                                </tr>
+                            </table>
+                        </center>
                         
                         <center>  
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/_x_U0irmvRo" frameborder="0" allowfullscreen></iframe>
@@ -156,18 +235,6 @@
                         </center>
                         
                         <header class="style1">
-                            <h2>Goal</h2>
-                        </header>
-                        <p>
-                            Our task was to first generate two or three different waveforms in Verilog and play them
-                            on the lab speakers via the stereo phone jack socket and the 8-bit R2R DAC. We chose to
-                            generate a 1 kHz square wave, a 1 kHz triangle wave, and a 1 kHz sine wave. After deciding
-                            which of the three sounded the best, we needed to create a short tune of at least three
-                            different frequencies, using our chosen waveform. Finally, we had to ensure we could turn
-                            our sound on or off using an enable signal.
-                        </p>
-                        
-                        <header class="style1">
                             <h2>Materials</h2>
                         </header>
                         <center>
@@ -176,7 +243,6 @@
                             <li>FPGA DE0_nano</li>
                             <li>Lab Speaker</li>
                             <li>8-bit R2R DAC</li>
-                            <li>Stereo phone jack socket</li>
                         </ul>
                         </center>
                         <header class="style1">
@@ -209,7 +275,7 @@
                         </code></pre><br />
                         <p>
                             First, we began by defining a local parameter called HALF_CYCLE. This parameter represents
-                            the number of clock cycles in a halve cycle of our square wave. In order to synthesize a 1 kHz
+                            the number of clock cycles in a halve cycle of our square wave. In order to synthesize a 1000 kHz
                             square wave, the HALF_CYCLE will be the clock frequency divided by the desired frequency, and
                             lastly divided by two (half).
                             We also defined a couple of registers. First, counter is a 16-bit counter used to keep track
@@ -219,9 +285,8 @@
                         </p>
                         <p>
                             Next, on each positive edge of the clock tick, we check the value of the counter. If the counter has reached
-                            zero, we negate the value in the tone_1000 register, and reset the clock to HALF_CYCLE - 1. Otherwise, the
-                            tone_1000 register is kept at its current value, and the counter is decremented. Toggling the tone_1000
-                            output in this fashion allows us to create the 1 kHz square waveform. Below is the waveform of the
+                            zero, which negate the value in the tone_1000 register, and reset the clock to HALF_CYCLE - 1. Otherwise, the
+                            tone_1000 register is kept at its current value, and the counter is decremented. Below is the waveform of the
                             square wave we generated.
                         </p>
                         <center>
