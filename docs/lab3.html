@@ -106,7 +106,9 @@
                         <header class="style1">
                             <h2>Deciding Resistor Values for the 8-bit DAC</h2>
                         </header>
-                        <p>
+                        <p> To encode colors to the screen, we needed to use an 8-bit DAC (Digital to Analog Converter), which is shown in the image below. This DAC uses 3 of the bits to encode the
+                        values for the color red, 3 bits to encode green, and 2 bits to encode blue. This DAC connects to 8 pins on the FPGA that then feeds through
+                        8 different resistors. From there, the group of wires for each color combine to produce a voltage between 0 and 1 V.
                         </p>
                         <center>
                             <a href="#">
@@ -118,6 +120,12 @@
                         
                         <header class="style1">
                             <h2>Drawing to the Screen</h2>
+                            We were given a VGA module written in verilog that is used to write values to the pixels on our screen. The module works with our main module
+                            by giving it an x and y coordinate (PIXEL_COORD_X and PIXEL_COORD_) that correspond to the position of a pixel on the screen. In the main module, we write a color to the pixel in
+                            an 8 bit variable, PIXEL_COLOR, which is then sent by the VGA driver to the DAC and eventually displays the color on the screen. The first 3 bits of PIXEL_COLOR coorespond to red, the next 
+                            3 to green and the last two to blue. The VGA module incrememnts through each pixel on the screen by continuously outputting the next pixel coordinates. In the image below, every pixel
+                            was assigned to green (8'b000_111_00).
+
                         </header>
                         <p>
                         </p>
@@ -131,7 +139,11 @@
                         <header class="style1">
                             <h2>External Inputs to the Screen</h2>
                         </header>
-                        <p> In order to demonstrate an external input to our 2x2 grid, we implemented two switches to provide combinations for our four possible
+                        <p> Before using external imputs we first wanted to create a 2x2 grid on the screen. The code below shows the logic that we used. We used a 2x2 matrix, my_grid
+                        of 8 bit values to store the colors of each sqare in the grid. The 1 bit regs, newx and newy, convert PIXEL_COORD_X and PIXEL_COORD_Y into values that correspond
+                        to each box in the 2x2 grid. If x is 0, we are assigning to the column on the left; if x is 1, we are assigning to the column on the right. If y is 0 we are assigning
+                        to the top row, if y is 1, we are assigning to the bottom row. This allows us to assign PIXEL_COLOR to the 
+                        In order to demonstrate an external input controlling our 2x2 grid, we implemented two switches to provide combinations for our four possible
                         grid outcomes.
                         </p>
                         
