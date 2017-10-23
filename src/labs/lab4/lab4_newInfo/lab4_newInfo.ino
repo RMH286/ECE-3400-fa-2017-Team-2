@@ -129,16 +129,14 @@ void loop(void)
     radio.stopListening();
 
     // Take the time, and send it.  This will block until complete
-    unsigned char maze[4][5] = 
-      { 0, 1, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-      };
+    unsigned char x_coord = 2;
+    unsigned char y_coord = 4;
+    unsigned char pos_data = 3;
+
+    unsigned char new_data = x_coord << 6 | y_coord << 3 | pos_data;
       
-    printf("Now sending the Maze! %lu...",maze);
-    bool ok = radio.write( &maze, sizeof(unsigned long) );
+    printf("Now sending map data! %lu...",new_data);
+    bool ok = radio.write( &new_data, sizeof(unsigned char) );
 
     if (ok)
       printf("ok...");
@@ -184,20 +182,15 @@ void loop(void)
     if ( radio.available() )
     {
       // Dump the payloads until we've gotten everything
-      unsigned char got_maze[4][5];
+      unsigned char got_data;
       bool done = false;
       while (!done)
       {
         // Fetch the payload, and see if this was the last one.
-        done = radio.read(got_maze, sizeof(got_maze) );
+        done = radio.read(&got_data, sizeof(unsigned char) );
 
-        // Print Maze
-        for (int i=0; i<4; i++){
-          for(int j=0; j<5; j++) {
-            printf("%d", got_maze[i][j]);
-          }
-          printf("\n");
-        }
+        // Print data
+        printf("Got payload %d...", got_data);
         // Delay just a little bit to let the other unit
         // make the transition to receiver
         delay(20);
@@ -208,7 +201,7 @@ void loop(void)
       radio.stopListening();
 
       // Send the final one back.
-      radio.write( got_maze, sizeof(got_maze) );
+      radio.write(&got_data, sizeof(unsigned char) );
       printf("Sent response.\n\r");
 
       // Now, resume listening so we catch the next packets.
