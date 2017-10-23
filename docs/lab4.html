@@ -106,13 +106,33 @@
                         <header class="style1">
                             <h2>Establishing Wireless Communication</h2>
                         </header>
+                        <p>
+                            The Nordic nRF24L01 + tranceivers have been already printed as a single circuit board. We plugged this radio into the 13-9 digital pins
+                            of the Arduino and connected the red cable to the 3.3V Arduino power supply pin. 
+                            
+                        </p>
+                        
                         <center>
                             <a href="#">
                                 <img src="assets/images/RXTX.jpeg" alt="" style="width:512px;" />
                             </a>
                         </center>
                         
-                        
+                        <p>
+                            After properly connecting the radios to the Arduino boards, we downloaded the RF24 Arduino Library and added it to our Arduino directory. To code our
+                            radio communication scheme, we modified the "Getting Started" sketch included in the R24 Library. In order to designate the receiving and transmitting channels
+                            for our Arduinos, we used the formula :
+                            
+                            <center>
+                                <p>
+                                    2(3D + N) + X
+                                    Where D is our lab data (Monday = 0), N is our team number (Team 2 = 2), and X is either 0 or 1 to identify
+                                    the two radios.
+                                </p>
+                            </center>
+                            
+                            
+                        </p>
                         
                         
                         
