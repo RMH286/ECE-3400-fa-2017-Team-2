@@ -71,10 +71,8 @@
                         </header>
                     </section>
                 </div>
-        
-            </div>
-        
-         <div class="wrapper style2">
+
+                <div class="wrapper style2">
                     <div class="title">Radio Communications Subteam</div>
                     <div id="main" class="container">
                         <header class="style1">
@@ -146,22 +144,18 @@
                         const uint64_t pipes[2] = { 0x0000000004LL, 0x0000000005LL };
 
                         </code></pre><br />
-                        	Once both Arduinos were programmed with the GettingStarted code, in order to observe the data being transmitted and recieved,
-                        	we had to open the serial monitors (set to a baud rate of 57600). To chose which radio will tranmit, we needed to type a 
-                        	"T" into one serial monitor, and then an "R" into the serial monitor corresponding with the radio we wanted to recieve data. 
-                            
+                        Once both Arduinos were programmed with the GettingStarted code, in order to observe the data being transmitted and recieved,
+                        we had to open the serial monitors (set to a baud rate of 57600). To chose which radio will transmit, we needed to type a 
+                        "T" into one serial monitor, and then an "R" into the serial monitor corresponding with the radio we wanted to recieve data. 
                         </p>
+                        
                         <p>
                         Another thing to note is that the RF24 library contains a feature called Auto-ACK which ensures that the correct amount of bytes
                         are recived in a single payload. For example if a byte is not recieved, the transmitter will be aware of that instead of thinking
                         the first byte in the next payload belongs to the previous payload. The feature automatically sends an acknowledgment packet once
                         the transmitter has recieved and validated a packet sent from the reciever. If this were to be turned off, our data could be 
                         wrong if a byte is lost in communication. 
-
                         </p>
-
-                        
-                        
                         
                         <header class="style1">
                             <h2>Communicating the Entire Maze</h2>
@@ -186,10 +180,12 @@
                         We then used the command radio.write(&maze, sizeof(unsigned long)) to send the maze information. When the second radio 
                         recieved the maze, which was done using the radio.read command, the maze would be printed to the serial monitor and then
                         sent back to the transmitting radio in order for the transmitter to know the payload sent successfully.
+                        </p>
                         
                         <header class="style1">
                             <h2>Updating New Maze Data</h2>
                         </header>
+                        
                         <p>
                         Always sending the entire maze can be taxing. In order to improve efficiency, we can simply update one sqare of the maze
                         at a time when our robot discovers something new. We divised a way to send this 
@@ -197,25 +193,62 @@
                         correspond to the y coordinate (rows 0, 1, 2, 3, or 4). The last 3 bits can be used to define the type of sqare is at these
                         coordinates. Previously we only used 2 bits to determine this information, but we decided in the future we may want to 
                         add more states. Below is an example of a square being updated.
+                        </p>
 
                         <pre><code class="cpp">
 
-                         unsigned char x_coord = 2;
-			    unsigned char y_coord = 4;
-			    unsigned char pos_data = 3;
+                        unsigned char x_coord = 2;
+                        unsigned char y_coord = 4;
+                        unsigned char pos_data = 3;
 
-			    unsigned char new_data = x_coord << 6 | y_coord << 3 | pos_data;
+                        unsigned char new_data = x_coord << 6 | y_coord << 3 | pos_data;
 
                         </code></pre><br />
-
+                        
+                        <p>
                         The byte is constructed by shifting each portion of data into the correct bit position using the bitwise shifting operator ("<<"). Then
                         we concatenated the three pieces of data by useing the bitwise or operator ("|"). In this example, the byte to be sent is 10100011. 
-                        Once this data is read by the reciever, the reciever prints out the decimal value (163 in this case) and sends back the byte. 
-
-                <center>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/lwh7SBlz-oM" frameborder="0" allowfullscreen></iframe>
-                </center>
-
+                        Once this data is read by the reciever, the reciever prints out the decimal value (163 in this case) and sends back the byte.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="wrapper style1">
+                    <div class="title">FPGA Subteam</div>
+                    <div id="main" class="container">
+                        <header class="style1">
+                            <h2>Team Members</h2>
+                        </header>
+                        <center>
+                         <p>
+                                <ul>
+                                <li>Ryan Hornung</li>
+                                <li>Ben Roberge</li>
+                                </ul>
+                        </p>
+                        </center>
+                        <header class="style1">
+                            <h2>Materials</h2>
+                        </header>
+                        <center>
+                        <p>
+                            <ul>
+                                <li>1 Arduino Uno</li>
+                                <li>1 FPGA</li>
+                                <li>1 VGA cable</li>
+                                <li>1 VGA connector</li>
+                                <li>1 VGA switch</li>
+                                <li>Various resistors (for voltage divider)</li>
+                            </ul>
+                        </p>
+                        </center>
+                        
+                        <center>
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/lwh7SBlz-oM" frameborder="0" allowfullscreen></iframe>
+                        </center>
+                    </div>
+                </div>
+                
         <!-- Scripts -->
 
             <script src="assets/js/jquery.min.js"></script>
