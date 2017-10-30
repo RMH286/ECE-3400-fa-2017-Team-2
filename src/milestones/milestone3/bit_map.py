@@ -5,6 +5,9 @@
 1st bit represents the south wall
 2nd bit represents the east wall
 3rd bit represents the west wall
+4th bit represents that the node is unreachable
+5th bit represents that the node has been visited
+6th bit represents that robot is currently at the node
 
 A 1 in the bit location denotes a wall is present
 
@@ -20,10 +23,8 @@ def parse_map(seedfile):
 	map_array = []
 	with open(seedfile) as f:
 		for line in f.readlines():
-			if (line.find('//')):
-				continue
 			row = []
-			for node in line.split(',').trim():
-				row.append(int(node))
+			for node in line.split(','):
+				row.append(int(node, base=2))
 			map_array.append(row)
 	return map_array
