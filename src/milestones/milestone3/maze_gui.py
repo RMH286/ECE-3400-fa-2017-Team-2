@@ -9,25 +9,24 @@ NUM_ROWS = 4
 NUM_COLUMNS = 5
 
 class MazeGUI(tkinter.Frame):
-	def __init__(self, maze):
+	def __init__(self):
 		tkinter.Frame.__init__(self)
-		self.maze = maze
+		self.num_seeds = 5 
+		self.seed = 0
+		self.maze = bit_map.parse_map('seed{}.txt'.format(self.seed))
 		self.grid()
 		self.create_widgets()
 		self.init_maze()
-		self.create_events()
-		#self.canvas = tkinter.Canvas(self, width=NUM_COLUMNS*NODE_WIDTH, height=NUM_ROWS*NODE_HEIGHT)
-		#self.canvas.pack
-
-		#for row in range(NUM_ROWS):
-		#	for column in range(NUM_COLUMNS):
-		#		self.canvas.create_rectangle(column*NODE_WIDTH, row*NODE_HEIGHT, (column+1)*NODE_WIDTH, (row+1)*NODE_HEIGHT,  fill='blue')
 
 	def create_widgets(self):
 		self.canvas = tkinter.Canvas(self, width=NUM_COLUMNS*NODE_WIDTH+4, height=NUM_ROWS*NODE_HEIGHT+4)
-		self.canvas.grid()
-		#self.status = tkinter.Label(self)
-		#self.status.grid()
+		self.canvas.grid(row=0, column=0, rowspan=3)
+		self.explore_button = tkinter.Button(self, text='Explore', command=self.explore)
+		self.explore_button.grid(row=0, column=1)
+		self.reset_button = tkinter.Button(self, text='Reset', command=self.reset)
+		self.reset_button.grid(row=1, column=1)
+		self.seed_button = tkinter.Button(self, text='Next Seed', command=self.next_seed)
+		self.seed_button.grid(row=2, column=1)
 
 	def init_maze(self):
 		self.drawn_nodes = []
@@ -83,7 +82,7 @@ class MazeGUI(tkinter.Frame):
 				self.canvas.itemconfig(self.drawn_nodes[row][column], fill=color)
 		self.canvas.update_idletasks()
 
-	def explore(self, event):
+	def explore(self):
 		current_row = NUM_ROWS -1 
 		current_column = NUM_COLUMNS - 1
 		self.maze[current_row][current_column] |= 0b1100000 # start in bottom right
@@ -149,6 +148,15 @@ class MazeGUI(tkinter.Frame):
 					self.maze[row][column] |= 0b0010000
 		self.update_maze()
 
+	def reset(self):
+		self.maze = bit_map.parse_map('seed{}.txt'.format(self.seed))
+		self.init_maze()
+
+	def next_seed(self):
+		self.seed = (self.seed + 1) % self.num_seeds
+		self.maze = bit_map.parse_map('seed{}.txt'.format(self.seed))
+		self.init_maze()
+
 	def create_events(self):
 		self.canvas.bind_all('<KeyPress-Up>', self.explore)
 
@@ -156,8 +164,7 @@ class MazeGUI(tkinter.Frame):
 
 if __name__ == '__main__':
 	#top = tkinter.Tk()
-	maze = bit_map.parse_map('seed1')
-	maze_gui = MazeGUI(maze)
+	maze_gui = MazeGUI()
 	maze_gui.master.title("Maze Exploration")
 	maze_gui.mainloop()
 #w = Canvas(master, width=20, height=20, bg='white' )
