@@ -1,6 +1,17 @@
 
 #include <Servo.h>
+#include <StackArray.h>
 
+int dir;
+int currentRow;
+int currentColumn;
+unsigned char maze[4][5] = 
+      { 0, 0, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 0, 0,
+      };
 Servo leftWheel;
 Servo rightWheel;
 //Front Right Line Sensor
@@ -50,6 +61,7 @@ void turnLeft(){
   }
   leftWheel.write(90);
   rightWheel.write(90); 
+  dir = (dir - 1)%4; 
 }
 
 
@@ -69,6 +81,7 @@ void turnRight(){
   }
   leftWheel.write(90);
   rightWheel.write(90); 
+  dir = (dir + 1)%4; 
 }
 
 
@@ -164,6 +177,46 @@ bool detectRightWall() {
     return false;
   }
 }
+void check(){
+  maze[currentRow][currentColumn] = 1;
+  if(detectFrontWall()==false){
+    addNodes();
+  }
+  else if(detectLeftWall()==false){
+    turnLeft();
+    addNodes();
+  }
+  else if(detectRightWall()==false){
+    turnRight();
+    addNodes();
+  }
+  else
+}
+
+void addNodes(){
+ 
+    if (dir==0 & maze[currentRow-1][currentColumn] = 0){
+      moveForward();
+      maze[currentRow][currentColumn] = 2;
+      currentRow = currentRow-1;
+    }
+    if (dir==1 & maze[currentRow][currentColumn+1] = 0){
+      moveForward();
+      maze[currentRow][currentColumn] = 2;
+      currentColumn = currentColumn+1;
+    }
+    if (dir==2 & maze[currentRow+][currentColumn] = 0){
+      moveForward();
+      maze[currentRow][currentColumn] = 2;
+      currentRow = currentRow+1;
+    }
+    if (dir==3 & maze[currentRow][currentColumn-1] = 0){
+      moveForward();
+      maze[currentRow][currentColumn] = 2;
+      currentColumn = currentColumn-1;
+    }
+
+}
 
 void setup() {
   // put your setup code here, to run once:
@@ -177,26 +230,17 @@ void setup() {
 
   leftWheel.attach(leftWheelpin);
   rightWheel.attach(rightWheelpin);
+  currentRow = 4;
+  currentColumn = 3; 
+  dir = 0;
+  
+  StackArray<int> stack;
+
 
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  moveForward();
-  while (detectJunction()==false){
-    moveForward();
-  }
-  if (detectWall() == true){
-    stepPastJunction();
-    turnLeft();
-    if (detectWall() == true){
-      stepPastJunction();
-      turnLeft();
-    }
-  }
-  else {
-    moveForward();
-  }
   
-
+  
 }
