@@ -1,16 +1,16 @@
-import tkinter
+import Tkinter
 import bit_map
 import time
 import random
 
 NODE_WIDTH = 80
 NODE_HEIGHT = 80
-NUM_ROWS = 4
-NUM_COLUMNS = 5
+NUM_ROWS = 5
+NUM_COLUMNS = 4
 
-class MazeGUI(tkinter.Frame):
+class MazeGUI(Tkinter.Frame):
 	def __init__(self):
-		tkinter.Frame.__init__(self)
+		Tkinter.Frame.__init__(self)
 		self.num_seeds = 5 
 		self.seed = 0
 		self.maze = bit_map.parse_map('seed{}.txt'.format(self.seed))
@@ -19,13 +19,13 @@ class MazeGUI(tkinter.Frame):
 		self.init_maze()
 
 	def create_widgets(self):
-		self.canvas = tkinter.Canvas(self, width=NUM_COLUMNS*NODE_WIDTH+4, height=NUM_ROWS*NODE_HEIGHT+4)
+		self.canvas = Tkinter.Canvas(self, width=NUM_COLUMNS*NODE_WIDTH+4, height=NUM_ROWS*NODE_HEIGHT+4)
 		self.canvas.grid(row=0, column=0, rowspan=3)
-		self.explore_button = tkinter.Button(self, text='Explore', command=self.explore)
+		self.explore_button = Tkinter.Button(self, text='Explore', command=self.explore)
 		self.explore_button.grid(row=0, column=1)
-		self.reset_button = tkinter.Button(self, text='Reset', command=self.reset)
+		self.reset_button = Tkinter.Button(self, text='Reset', command=self.reset)
 		self.reset_button.grid(row=1, column=1)
-		self.seed_button = tkinter.Button(self, text='Next Seed', command=self.next_seed)
+		self.seed_button = Tkinter.Button(self, text='Next Seed', command=self.next_seed)
 		self.seed_button.grid(row=2, column=1)
 
 	def init_maze(self):
@@ -147,6 +147,9 @@ class MazeGUI(tkinter.Frame):
 				if (not self.maze[row][column] & 0b0100000): # unvisited
 					self.maze[row][column] |= 0b0010000
 		self.update_maze()
+		
+		self.done_sign = Tkinter.Label(text="Done Exploring!")
+		self.done_sign.grid(columnspan = 1)
 
 	def reset(self):
 		self.maze = bit_map.parse_map('seed{}.txt'.format(self.seed))
