@@ -116,12 +116,11 @@
                 <div class="wrapper style3">
                     <div class="title">In Real Life</div>
                     <div id="main" class="container">
-                        <header class="style1">
 
                         <p>
                         For milestone 2, our robot implemented a maze following algorithm with only one wall sensor. We decided to implment two additional a short range IR wall sensors for
                         left and right sides of the robot to facilitate wall detection when mapping the maze. By checking the wall sensor values via the Arduino Serial Monitor, we were able to
-                         indicate a threshold value to determine when there is a wall.
+                         indicate a threshold value to determine when there is a wall. The mounted wall sensors are shown in the picture below on the front, left, and right sides of the robot.
                         </p>
                          
                         <center>
@@ -130,7 +129,11 @@
                             </a>
                         </center>
                         
-                        </header>
+                        <p>
+                        Due to the addition of more sensors, we needed more analog input pins on the Arduino for our robot to function for Milestone 3. We decided to implement an 8-1 multiplexer with 3 select bits
+                        dependent on the readings from the wall sensors.
+                        </p>
+                        
                          
                     </div>
                 </div>
