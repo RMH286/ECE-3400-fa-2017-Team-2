@@ -87,7 +87,20 @@
                     <div id="main" class="container">
                         <header class="style1">
                             <p>
-                            
+                                For the simulation portion, we chose to implement a Depth First Search algorithm using
+                                python. The advantage of the simulation portion is that all the wall information for
+                                the maze is known beforehand. The idea of the Depth First Search (DFS) is to start with
+                                a graph (maze) of all unvisited nodes. At each iteration of the algorithm, move forward
+                                to an unvisited node in the graph, marking this new node as visited. If you encounter a
+                                node from which it is impossible to move forward to a new, unvisited node, move
+                                backward to the node you just came from and check if it is possible to move to another
+                                unvisited node from that position. If it is possible, begin moving forward again. If it
+                                is not possible, backtrack once again.
+                            </p>
+                            <p>
+                                If you backtrack all the way to the starting node and there are no possible moves to an
+                                unvisited node from that position, the algorithm is finished. If all the nodes in the
+                                graph have been visited, great! If some nodes have not been visited, mark them as unreachable.
                             </p>
                             <center>
                                 <a href="#">
