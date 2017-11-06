@@ -226,12 +226,15 @@
                 <div class="wrapper style3">
                     <div class="title">In Real Life</div>
                     <div id="main" class="container">
+                        
                         <header class="style1">
-
+                            <h2>Wall Sensors</h2>
+                        </header>
+                        
                         <p>
                         For milestone 2, our robot implemented a maze following algorithm with only one wall sensor. We decided to implment two additional a short range IR wall sensors for
                         left and right sides of the robot to facilitate wall detection when mapping the maze. By checking the wall sensor values via the Arduino Serial Monitor, we were able to
-                         indicate a threshold value to determine when there is a wall.
+                         indicate a threshold value to determine when there is a wall. The mounted wall sensors are shown in the picture below on the front, left, and right sides of the robot.
                         </p>
                          
                         <center>
@@ -240,7 +243,49 @@
                             </a>
                         </center>
                         
+                        <p>
+                        Due to the addition of more sensors, we needed more analog input pins on the Arduino for our robot to function for Milestone 3. We decided to implement an 8-1 multiplexer with 3 select bits
+                        dependent on three bits from the digital Arduino pins. The Left, Front, and Right wall sensors were connected to the Y0 (000), Y1 (001), and Y2 (010) pins of the multiplexer respectively. For example,
+                        when calling the detectLeftWall() function the digital select pins S0, S1, and S2 are set to 000 via Arduino to indicate we are checking the wall sensor at Y0 of the multiplexer. The output of the multiplexer
+                        is then connected to an analog input pin on the Arduino. 
+                        </p>
+                        
+                        <center>
+                            <a href="#">
+                                <img src="assets/images/mux.JPG" alt="" style="width:512px;" />
+                            </a>
+                        </center>
+                        
+                        <header class="style1">
+                            <h2>Movement Algorithm</h2>
                         </header>
+                        
+                        <p>
+                        We had to update our code from Milestone 2 to include additional functions for detecting walls to the left and right of the robot. Notice in the code below for detectLeftWall() we digital write the select
+                         pins of the Arduino to 000 in order to select the correct wall sensor to check.
+                            
+                        </p>
+                        
+                        <pre><code>
+                        bool detectLeftWall() {
+
+                            digitalWrite(wallbit2, LOW);
+                            digitalWrite(wallbit1, LOW);
+                            digitalWrite(wallbit0, LOW);
+
+                            int wall = analogRead(wallpin);
+  
+                            if (wall>250) {
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
+                        }
+                        
+                        </code></pre><br />
+                         
+                        
                          
                     </div>
                 </div>
