@@ -146,6 +146,16 @@
                             </a>
                         </center>
                         
+                        <header class="style1">
+                            <h2>Movement Algorithm</h2>
+                        </header>
+                        
+                        <p>
+                        We had to update our code from Milestone 2 to include additional functions for detecting walls to the left and right of the robot. Notice in the code below for detectLeftWall() we digital write the select
+                         pins of the Arduino to 000 in order to select the correct wall sensor to check.
+                            
+                        </p>
+                        
                         <pre><code>
                         bool detectLeftWall() {
 
@@ -155,7 +165,7 @@
 
                             int wall = analogRead(wallpin);
   
-                            if (wall>400) {
+                            if (wall>250) {
                                 return true;
                             }
                             else {
@@ -165,9 +175,7 @@
                         
                         </code></pre><br />
                          
-                         <header class="style1">
-                            <h2>Movement Algorithm</h2>
-                        </header>
+                        
                          
                     </div>
                 </div>
