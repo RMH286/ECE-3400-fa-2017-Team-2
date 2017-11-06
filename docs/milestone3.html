@@ -131,7 +131,9 @@
                         
                         <p>
                         Due to the addition of more sensors, we needed more analog input pins on the Arduino for our robot to function for Milestone 3. We decided to implement an 8-1 multiplexer with 3 select bits
-                        dependent on the readings from the wall sensors.
+                        dependent on three bits from the digital Arduino pins. The Left, Front, and Right wall sensors were connected to the Y0 (000), Y1 (001), and Y2 (010) pins of the multiplexer respectively. For example,
+                        when calling the detectLeftWall() function the digital select pins S0, S1, and S2 are set to 000 via Arduino to indicate we are checking the wall sensor at Y0 of the multiplexer. The output of the multiplexer
+                        is then connected to an analog input pin on the Arduino. 
                         </p>
                         
                         <center>
@@ -139,6 +141,25 @@
                                 <img src="assets/images/mux.JPG" alt="" style="width:512px;" />
                             </a>
                         </center>
+                        
+                        <pre><code>
+                        bool detectLeftWall() {
+
+                            digitalWrite(wallbit2, LOW);
+                            digitalWrite(wallbit1, LOW);
+                            digitalWrite(wallbit0, LOW);
+
+                            int wall = analogRead(wallpin);
+  
+                            if (wall>400) {
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
+                        }
+                        
+                        </code></pre><br />
                          
                     </div>
                 </div>
