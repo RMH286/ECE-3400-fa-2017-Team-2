@@ -148,17 +148,19 @@ class MazeGUI(Tkinter.Frame):
 					self.maze[row][column] |= 0b0010000
 		self.update_maze()
 		
-		self.done_sign = Tkinter.Label(text="Done Exploring!")
+		self.done_sign = Tkinter.Label(text="Done Exploring!", fg="black", bg="white", state="normal")
 		self.done_sign.grid(columnspan = 1)
 
 	def reset(self):
 		self.maze = bit_map.parse_map('seed{}.txt'.format(self.seed))
 		self.init_maze()
+		self.done_sign.grid_remove()
 
 	def next_seed(self):
 		self.seed = (self.seed + 1) % self.num_seeds
 		self.maze = bit_map.parse_map('seed{}.txt'.format(self.seed))
 		self.init_maze()
+		self.done_sign.grid_remove()
 
 	def create_events(self):
 		self.canvas.bind_all('<KeyPress-Up>', self.explore)
