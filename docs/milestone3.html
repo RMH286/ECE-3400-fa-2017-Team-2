@@ -85,30 +85,140 @@
                 <div class="wrapper style2">
                     <div class="title">In Simulation</div>
                     <div id="main" class="container">
-                            <p>
-                                For the simulation portion, we chose to implement a Depth First Search algorithm using
-                                python. The advantage of the simulation portion is that all the wall information for
-                                the maze is known beforehand. The idea of the Depth First Search (DFS) is to start with
-                                a graph (maze) of all unvisited nodes. At each iteration of the algorithm, move forward
-                                to an unvisited node in the graph, marking this new node as visited. If you encounter a
-                                node from which it is impossible to move forward to a new, unvisited node, move
-                                backward to the node you just came from and check if it is possible to move to another
-                                unvisited node from that position. If it is possible, begin moving forward again. If it
-                                is not possible, backtrack once again.
-                            </p>
-                            <p>
-                                If you backtrack all the way to the starting node and there are no possible moves to an
-                                unvisited node from that position, the algorithm is finished. If all the nodes in the
-                                graph have been visited, great! If some nodes have not been visited, mark them as unreachable.
-                            </p>
-                            <p>
-                                
-                            </p>
-                            <center>
-                                <a href="#">
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/dcDGxa18Z2U" frameborder="0" gesture="media" allowfullscreen></iframe>
-                                </a>
-                            </center>
+                        <p>
+                            For the simulation portion, we chose to implement a Depth First Search algorithm using
+                            python. The advantage of the simulation portion is that all the wall information for
+                            the maze is known beforehand. The idea of the Depth First Search (DFS) is to start with
+                            a graph (maze) of all unvisited nodes. At each iteration of the algorithm, move forward
+                            to an unvisited node in the graph, marking this new node as visited. If you encounter a
+                            node from which it is impossible to move forward to a new, unvisited node, move
+                            backward to the node you just came from and check if it is possible to move to another
+                            unvisited node from that position. If it is possible, begin moving forward again. If it
+                            is not possible, backtrack once again.
+                        </p>
+                        <p>
+                            If you backtrack all the way to the starting node and there are no possible moves to an
+                            unvisited node from that position, the algorithm is finished. If all the nodes in the
+                            graph have been visited, great! If some nodes have not been visited, mark them as unreachable.
+                        </p>
+                        <p>
+                            Before discussing the specifics of our implementation in python, we should mention how we
+                            chose to encode maze information. For our test cases, we created 5x4 arrays of 7-bit values
+                            to represent mazes. The information each bit encodes is as follows:
+                        </p>
+                        <p>
+                            <ul>
+                                <li>0th bit represents the north wall</li>
+                                <li>1st bit represents the south wall</li>
+                                <li>2nd bit represents the east wall</li>
+                                <li>3rd bit represents the west wall</li>
+                                <li>4th bit represents that the node is unreachable</li>
+                                <li>5th bit represents that the node has been visited</li>
+                                <li>6th bit represents that robot is currently at the node</li>
+                            </ul>
+                        </p>
+                        <p>
+                            For example, 1101010 means that the robot is currently at the node, the node has been visited,
+                            the node is not unreachable, and the node has walls on its west and south sides.
+                        </p>
+                        <p>
+                            For our maze exploration algorithm, we found the possible moves at each node using the following
+                            logic. If there is no wall to the north and the node to the north has not been visited, then
+                            moving north is a possible move. We used the exact same logic for determining whether south, east,
+                            and west were possible moves. In order to keep track of the possible moves at a node, we created
+                            an array called possible_moves. Once the possible moves were found, we randomly chose the next
+                            move to make using:
+                        </p>
+                        <pre><code class="cpp">
+                            # move in random direction
+                            next_move = random.choice(possible_moves)
+                            self.maze[current_row][current_column] &= 0b0111111
+                            backtrack.append((current_row, current_column))
+                            if (next_move == 0b0001):
+                            	current_row -= 1
+                            elif (next_move == 0b0010):
+                            	current_row += 1
+                            elif (next_move == 0b0100):
+                            	current_column += 1
+                            elif (next_move == 0b1000):
+                            	current_column -= 1
+                            self.maze[current_row][current_column] |= 0b1100000
+                            self.update_maze()
+                            time.sleep(.1)
+                        </code></pre><br />
+                        <p>
+                            First, the next move is chosen randomly. Then, we set the MSB of the previous node low, indicating
+                            that it is no longer the robot's current position. Next, the previous node is added to an array
+                            called backtrack, which we will discuss shortly. The if/elif statements are what make the actual
+                            move. The movements are encoded as: 0b0001 = move north, 0b0010 = move south, 0b0100 = move east,
+                            and 0b1000 = move west. We then set the two MSBs of the new node high, indicating that it is now
+                            the robot's current position and has been visited. Finally, we update the maze GUI, which we will
+                            discuss shortly, as well.
+                        </p>
+                        <p>
+                            As alluded to earlier, we used another array called backtrack to help facilitate moving backward in
+                            the algorithm. When we move forward from a node, we add it to this backtrack array, as was seen
+                            above. When we reach a node that has no valid forward moves to make (no unvisited nodes adjacent to
+                            it) we backtrack using:
+                        </p>
+                        <pre><code class="cpp">
+                            # no more moves ahead -> backtrack
+                            if (len(possible_moves) == 0):
+                            	self.maze[current_row][current_column] &= 0b0111111
+                            	prev_node = backtrack[-1]
+                            	backtrack.pop()
+                            	current_row = prev_node[0]
+                            	current_column = prev_node[1]
+                            	self.maze[current_row][current_column] |= 0b1100000
+                            	self.update_maze()
+                            	time.sleep(.1)
+                        </code></pre><br />
+                        <p>
+                            When the length of possible_moves is zero, we know we need to backtrack. First, we clear the MSB of
+                            the current node to indicate that it will no longer be the robot's current position. We then take
+                            the node most recently added to backtrack and move to it, setting its two MSBs high. Finally, we
+                            update the maze GUI accordingly.
+                        </p>
+                        <p>
+                            We created the maze GUI using python's tkinter package. Using this package, we made a 5x4 grid of
+                            colored squares to represent the maze. Each time the robot moves, we update the GUI. We colored the
+                            squares according to the following scheme:
+                        </p>
+                        <p>
+                            <ul>
+                                <li>White means no information about that position yet</li>
+                                <li>Green means that position is the robot's current location</li>
+                                <li>Blue means that position has already been visited</li>
+                                <li>Red means that position is unreachable</li>
+                            </ul>
+                        </p>
+                        <p>
+                            Our maze exploration algorithm ends with the following:
+                        </p>
+                        <pre><code class="cpp">
+                            for row in range(NUM_ROWS):
+                                for column in range(NUM_COLUMNS):
+                                	if (not self.maze[row][column] & 0b0100000): # unvisited
+                                		self.maze[row][column] |= 0b0010000
+                            self.update_maze()
+		
+                            self.done_sign = Tkinter.Label(text="Done Exploring!", fg="black", bg="white", state="normal")
+                            self.done_sign.grid(columnspan = 1)
+                        </code></pre><br />
+                        <p>
+                            For each node in the graph, if the 2nd MSB is not high, indicating that the node has not been
+                            visited, we set the 3rd MSB high, indicating that the node is unreachable. Finally, the algorithm
+                            ends by printing a "Done Exploring!" label at the bottom of the GUI.
+                        </p>
+                        
+                        <p>
+                            Here is our maze traversal algorithm and GUI in action!
+                        </p>
+                        <center>
+                            <a href="#">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/dcDGxa18Z2U" frameborder="0" gesture="media" allowfullscreen></iframe>
+                            </a>
+                        </center>
                             
                     </div>
                 </div>
