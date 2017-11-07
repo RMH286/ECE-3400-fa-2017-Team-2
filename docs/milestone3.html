@@ -232,9 +232,9 @@
                         </header>
                         
                         <p>
-                        For milestone 2, our robot implemented a maze following algorithm with only one wall sensor. We decided to implment two additional a short range IR wall sensors for
+                        For milestone 2, our robot implemented a wall detection algorithm with only one wall sensor. We decided to add two additional short range IR wall sensors to the
                         left and right sides of the robot to facilitate wall detection when mapping the maze. By checking the wall sensor values via the Arduino Serial Monitor, we were able to
-                         indicate a threshold value to determine when there is a wall. The mounted wall sensors are shown in the picture below on the front, left, and right sides of the robot.
+                        identify a threshold value to determine when there is a wall. The mounted wall sensors are shown in the picture below on the front, left, and right sides of the robot.
                         </p>
                          
                         <center>
@@ -262,8 +262,7 @@
                         
                         <p>
                         We had to update our code from Milestone 2 to include additional functions for detecting walls to the left and right of the robot. Notice in the code below for detectLeftWall() we digital write the select
-                         pins of the Arduino to 000 in order to select the correct wall sensor to check.
-                            
+                        pins of the Arduino to 000 in order to select the correct wall sensor to check.
                         </p>
                         
                         <pre><code>
@@ -282,8 +281,8 @@
                                 return false;
                             }
                         }
-                        
                         </code></pre><br />
+                        
                         <header class="style1">
                             <h2>Traversing the Maze</h2>
                         </header>
@@ -293,7 +292,8 @@
                         currently being visited, is unreacheable and which walls surround this junction (north, south, east and/or west). We also created a variable, dir, to represent the robot's current facing. If the robot
                         is facing north, dir=0, if east, dir=1, if south, dir=2, and if west, dir=3. currentRow and currentColumn are also used to keep track of the current square that the robot is visiting.
 
-                        We assume that we always start at the bottom right corner facing north so, Upon startup, the following code initializes the position and facing of the robot:
+                        We assume that we always start at the bottom right corner facing north so, upon startup, the following code initializes the position and facing of the robot:
+                        </p>
                         <pre><code>
                           currentRow = 4;
 						  currentColumn = 3; 
@@ -301,9 +301,10 @@
 						  maze[4][3] |= (CURRENT) | (VISITED);
                         
                         </code></pre><br />
-
+                        <p>
                         We then update the square we are currently in by checking the walls around us and adjusting the byte representing the current sqaure appropriately. We do this using our helper function, check(),
                         which is shown below.
+                        </p>
                         <pre><code>
                           void check(){
                           	  \\check the wall in front of us and or the current value with the appropriate wall value.
@@ -353,7 +354,16 @@
 							  }
                         
                         </code></pre><br />
-                        After we have checked the walls around us, we then search for a possible next move using the helper function, possibleMove(). We employed a simple depth first search algorithm. We first checked if there was not a wall north of our position (with north always representing the direction towards a lower valued row, aka the top of the maze.). If there was no north wall blocking our way and the sqaure to the north has not been visited before, we move north. Otherwise, we check the east. Then we check the south followed by checking the west. If we cannot move to an unvisited square in any direction, we backtrack. We use an array to keep track of the squares we have visited in the order that we visited them. A backTrackPointer variable keeps track of which node we should backtrack to in order to discover new squares in the maze. Below shows the function, possibleMove().
+                        <p>
+                        After we have checked the walls around us, we then search for a possible next move using the helper function,
+                        possibleMove(). We employed a simple depth first search algorithm. We first checked if there was not a wall
+                        north of our position (with north always representing the direction towards a lower valued row, aka the top
+                        of the maze). If there was no north wall blocking our way and the square to the north has not been visited
+                        before, we move north. Otherwise, we check the east. Then we check the south followed by checking the west.
+                        If we cannot move to an unvisited square in any direction, we backtrack. We use an array to keep track of the
+                        squares we have visited in the order that we visited them. A backTrackPointer variable keeps track of which
+                        node we should backtrack to in order to discover new squares in the maze. Below shows the function, possibleMove().
+                        </p>
                         <pre><code>
                         void possibleMove(){
 							  maze[currentRow][currentColumn] &= 0x3F;
@@ -388,7 +398,13 @@
 							}
                         
                         </code></pre><br />
-                        You will notice that each of these cases calls other functions in order to facilitate the movement of the robot. In order to move in a particualr direction, we must first take into accound the robots current direction and make the appropriate turns before moving forward the find a new junction. Below shows our moveNorth() function. The functions to move in the other directions work in the same manner. The moveForward(), detectJunction() and turning functions are the same as in previous labs and milestones.
+                        <p>
+                        You will notice that each of these cases calls other functions in order to facilitate the movement of the robot.
+                        In order to move in a particualr direction, we must first take into accound the robots current direction and
+                        make the appropriate turns before moving forward the find a new junction. Below shows our moveNorth() function.
+                        The functions to move in the other directions work in the same manner. The moveForward(), detectJunction() and
+                        turning functions are the same as in previous labs and milestones.
+                        </p>
                         <pre><code>
                         void moveNorth(){
 							  if(dir==0){
@@ -424,10 +440,11 @@
 							  currentRow -=1;
 							  maze[currentRow][currentColumn] |= VISITED;
 							}
-                        
-                        
                         </code></pre><br />
-                        Our backtracks() function needs to assess our current position in relation to the previous square we visited and then move towards that previous square. The code for that function is shown below.
+                        <p>
+                        Our backtracks() function needs to assess our current position in relation to the previous square we visited
+                        and then move towards that previous square. The code for that function is shown below.
+                        </p>
                         <pre><code>
                         void backTracks(){
 							  char prevRow = backTrack[backTrackPointer][0];
@@ -450,27 +467,34 @@
 							  }
 							  backTrackPointer -=1;
 							}
-
                         </code></pre><br />
-
-                        We continuously check for walls and move throughout the maze until backTrackPointer=0. This signifies that we have made every possible move and then backtracked to our intial position in the maze, letting us know we have finished traversing the maze. Once this occurs, we turn on an LED to signify our robot is done mapping the maze. 
+                        <p>
+                        We continuously check for walls and move throughout the maze until backTrackPointer=0. This signifies that we
+                        have made every possible move and then backtracked to our initial position in the maze, letting us know we
+                        have finished traversing the maze. Once this occurs, we turn on an LED to signify our robot is done mapping
+                        the maze. 
                         </p>
                         <header class="style1">
                             <h2>Current Issues</h2>
                         </header>
                         <p>
-                        Unfortunately, our algorithm has not yet run successfully. After trying to debug the algorithm for a while, we realized that the main issue we were facing was invalid readings from our wall sensors. We had checked the readings multiple times, but only by printing out one of the values at a time. We then realized that when reading the values of all 3 wall sensors successively, the values became incorrect. The sensors routinely output values corresponding to walls even if no walls were present. This helped us identify that the main issue was with the mux switching quickly between input signals. We attempted to add delays before and after reading a wall sensor value to see if the values would then correct. Still, the values were unreliable. We were unable to finish debugging this problem in lab, but will focus on making sure our mux works reliably in the future. Our plan is to use the oscilloscope to further assess what is happening when we switch between signals in the mux. 
+                        Unfortunately, our algorithm has not yet run successfully. After trying to debug the algorithm for a while,
+                        we realized that the main issue we were facing was invalid readings from our wall sensors. We had checked
+                        the readings multiple times, but only by printing out one of the values at a time. We then realized that
+                        when reading the values of all 3 wall sensors successively, the values became incorrect. The sensors routinely
+                        output values corresponding to walls even if no walls were present. This helped us identify that the main
+                        issue was with the mux switching quickly between input signals. We attempted to add delays before and after
+                        reading a wall sensor value to see if the values would then correct. Still, the values were unreliable. We
+                        were unable to finish debugging this problem in lab, but will focus on making sure our mux works reliably
+                        in the future. Our plan is to use the oscilloscope to further assess what is happening when we switch between
+                        signals in the mux. 
                         </p>
                         <p>
-
-                        We are confident that our current algorithm will function properly as soon as we fix the wall sensor data. The alogorithm is very similar to that in our simulation and expect it to function just as well. In the future we would like to optimize our algorithm by prioritizing the nodes to backtrack to and moving to them in a more efficient manner. 
+                        We are confident that our current algorithm will function properly as soon as we fix the wall sensor data.
+                        The alogorithm is very similar to that in our simulation, and we expect it to function just as well. In the
+                        future we would like to optimize our algorithm by prioritizing the nodes to backtrack to and moving to them
+                        in a more efficient manner. 
                         </p>
-
-
-
-                        
-                         
-                        
                          
                     </div>
                 </div>
