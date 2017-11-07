@@ -5,13 +5,24 @@
 int dir;
 int currentRow;
 int currentColumn;
-unsigned char maze[4][5] = 
-      { 0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
+#define NORTHWALL 1
+#define EASTWALL 2
+#define SOUTHWALL 4
+#define WESTWALL 8
+#define UNREACHABLE 16
+#define VISITED 32
+#define CURRENT 64
+unsigned char maze[5][4] = 
+      { {0, 0, 0, 0},
+        {0, 0, 0, 0},
+        {0, 0, 0, 0},
+        {0, 0, 0, 0},
+        {0, 0, 0, 0}
       };
+unsigned char backTrack[20][2];
+unsigned char backTrackPointer = 0;
+
+
 Servo leftWheel;
 Servo rightWheel;
 //Front Right Line Sensor
@@ -22,8 +33,8 @@ int FLlinepin = A4;
 int BRlinepin = A2;
 //Back Left Line Sensor
 int BLlinepin = A1;
-int leftWheelpin = 3;
-int rightWheelpin = 5;
+int leftWheelpin = 5;
+int rightWheelpin = 3;
 //Front Wall Sensor
 int wallpin = A0;
 //Wall Selector
@@ -61,7 +72,6 @@ void turnLeft(){
   }
   leftWheel.write(90);
   rightWheel.write(90); 
-  dir = (dir - 1)%4; 
 }
 
 
@@ -80,8 +90,7 @@ void turnRight(){
     FL = analogRead(FLlinepin);
   }
   leftWheel.write(90);
-  rightWheel.write(90); 
-  dir = (dir + 1)%4; 
+  rightWheel.write(90);
 }
 
 
@@ -102,7 +111,6 @@ void moveForward(){
     right = 0;
     left = 180;
   }
-  Serial.println(FR);
   leftWheel.write(left);
   rightWheel.write(right);
 }
@@ -131,14 +139,15 @@ void stepPastJunction() {
 }
 
 bool detectLeftWall() {
-
+  delay(500);
   digitalWrite(wallbit2, LOW);
   digitalWrite(wallbit1, LOW);
   digitalWrite(wallbit0, LOW);
+  delay(500);
 
   int wall = analogRead(wallpin);
   
-  if (wall>400) {
+  if (wall>250) {
     return true;
   }
   else {
@@ -147,14 +156,14 @@ bool detectLeftWall() {
 }
 
 bool detectFrontWall() {
-
   digitalWrite(wallbit2, LOW);
   digitalWrite(wallbit1, LOW);
   digitalWrite(wallbit0, HIGH);
-
+  delay(100);
+  
   int wall = analogRead(wallpin);
   
-  if (wall>400) {
+  if (wall>250) {
     return true;
   }
   else {
@@ -163,14 +172,15 @@ bool detectFrontWall() {
 }
 
 bool detectRightWall() {
-
+  delay(500);
   digitalWrite(wallbit2, LOW);
   digitalWrite(wallbit1, HIGH);
   digitalWrite(wallbit0, LOW);
+  delay(500);
 
   int wall = analogRead(wallpin);
   
-  if (wall>400) {
+  if (wall>250) {
     return true;
   }
   else {
@@ -178,44 +188,242 @@ bool detectRightWall() {
   }
 }
 void check(){
-  maze[currentRow][currentColumn] = 1;
-  if(detectFrontWall()==false){
-    addNodes();
+  Serial.println(detectFrontWall());
+  Serial.println(detectRightWall());
+  Serial.println(detectLeftWall());
+  if(detectFrontWall()){
+    if(dir = 0){
+      maze[currentRow][currentColumn] |= NORTHWALL;
+    }
+    else if(dir = 1){
+      maze[currentRow][currentColumn] |= EASTWALL;
+    }
+    else if(dir = 2){
+      maze[currentRow][currentColumn] |= SOUTHWALL;
+    }
+    else if(dir = 3){
+      maze[currentRow][currentColumn] |= WESTWALL;
+    } 
   }
-  else if(detectLeftWall()==false){
-    turnLeft();
-    addNodes();
+  if(detectLeftWall()){
+    if(dir = 0){
+      maze[currentRow][currentColumn] |= WESTWALL;
+    }
+    else if(dir = 1){
+      maze[currentRow][currentColumn] |= NORTHWALL;
+    }
+    else if(dir = 2){
+      maze[currentRow][currentColumn] |= EASTWALL;
+    }
+    else if(dir = 3){
+      maze[currentRow][currentColumn] |= SOUTHWALL;
+    } 
   }
-  else if(detectRightWall()==false){
-    turnRight();
-    addNodes();
+  else if(detectRightWall()){
+    if(dir = 0){
+      maze[currentRow][currentColumn] |= EASTWALL;
+    }
+    else if(dir = 1){
+      maze[currentRow][currentColumn] |= SOUTHWALL;
+    }
+    else if(dir = 2){
+      maze[currentRow][currentColumn] |= WESTWALL;
+    }
+    else if(dir = 3){
+      maze[currentRow][currentColumn] |= NORTHWALL;
+    } 
   }
-  else
 }
 
-void addNodes(){
- 
-    if (dir==0 & maze[currentRow-1][currentColumn] = 0){
-      moveForward();
-      maze[currentRow][currentColumn] = 2;
-      currentRow = currentRow-1;
-    }
-    if (dir==1 & maze[currentRow][currentColumn+1] = 0){
-      moveForward();
-      maze[currentRow][currentColumn] = 2;
-      currentColumn = currentColumn+1;
-    }
-    if (dir==2 & maze[currentRow+][currentColumn] = 0){
-      moveForward();
-      maze[currentRow][currentColumn] = 2;
-      currentRow = currentRow+1;
-    }
-    if (dir==3 & maze[currentRow][currentColumn-1] = 0){
-      moveForward();
-      maze[currentRow][currentColumn] = 2;
-      currentColumn = currentColumn-1;
-    }
+void possibleMove(){
+  maze[currentRow][currentColumn] &= 0x3F;
+  if((!(maze[currentRow][currentColumn] & NORTHWALL)) && (!(maze[currentRow-1][currentColumn] & VISITED))){
+    backTrack[backTrackPointer][0] = currentRow;
+    backTrack[backTrackPointer][1] = currentColumn;
+    backTrackPointer += 1;
+    moveNorth();
+  }
+  else if((!(maze[currentRow][currentColumn] & EASTWALL)) && (!(maze[currentRow][currentColumn+1] & VISITED))){
+    backTrack[backTrackPointer][0] = currentRow;
+    backTrack[backTrackPointer][1] = currentColumn;
+    backTrackPointer += 1;
+    moveEast();
+  }
+  else if((!(maze[currentRow][currentColumn] & SOUTHWALL)) && (!(maze[currentRow+1][currentColumn] & VISITED))){
+    backTrack[backTrackPointer][0] = currentRow;
+    backTrack[backTrackPointer][1] = currentColumn;
+    backTrackPointer += 1;
+    moveSouth();
+  }
+  else if((!(maze[currentRow][currentColumn] & WESTWALL)) && (!(maze[currentRow][currentColumn-1] & VISITED))){
+    backTrack[backTrackPointer][0] = currentRow;
+    backTrack[backTrackPointer][1] = currentColumn;
+    backTrackPointer += 1;
+    moveWest();
+  }
+  else{
+    backTracks();
+  }
+  
+}
 
+void backTracks(){
+  char prevRow = backTrack[backTrackPointer][0];
+  char prevColumn = backTrack[backTrackPointer][1];
+  if(prevRow == currentRow){
+    if(prevColumn == currentColumn - 1){
+      moveWest();
+    }
+    else{
+      moveEast();
+    }
+  }
+    else if(prevColumn == currentColumn){
+      if(prevRow == currentRow - 1){
+        moveNorth();
+      }
+      else{
+        moveSouth();
+      } 
+  }
+  backTrackPointer -=1;
+}
+
+ 
+void moveNorth(){
+  if(dir==0){
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  if(dir==1){
+    turnLeft();
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  if(dir==2){
+    turnLeft();
+    turnLeft();
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  if(dir==3){
+    turnRight();
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  dir = 0;
+  currentRow -=1;
+  maze[currentRow][currentColumn] |= VISITED;
+}
+
+void moveEast(){
+  if(dir==1){
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  if(dir==2){
+    turnLeft();
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  if(dir==3){
+    turnLeft();
+    turnLeft();
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  if(dir==0){
+    turnRight();
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  dir = 1;
+  currentColumn += 1;
+  maze[currentRow][currentColumn] |= VISITED;
+  
+}
+
+void moveSouth(){
+  if(dir==2){
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  if(dir==3){
+    turnLeft();
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  if(dir==0){
+    turnLeft();
+    turnLeft();
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  if(dir==1){
+    turnRight();
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  dir = 2;
+  currentRow +=1;
+  maze[currentRow][currentColumn] |= VISITED;
+}
+void moveWest(){
+  if(dir==3){
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  if(dir==0){
+    turnLeft();
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  if(dir==1){
+    turnLeft();
+    turnLeft();
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  if(dir==2){
+    turnRight();
+    while (detectJunction()==false){
+      moveForward();
+    }
+    stepPastJunction();
+  }
+  dir = 3;
+  currentColumn -= 1;
+  maze[currentRow][currentColumn] |= VISITED;
 }
 
 void setup() {
@@ -228,11 +436,15 @@ void setup() {
   
   Serial.begin(9600);          //  setup serial
 
+  pinMode(4, OUTPUT);
   leftWheel.attach(leftWheelpin);
   rightWheel.attach(rightWheelpin);
   currentRow = 4;
   currentColumn = 3; 
   dir = 0;
+  
+  
+  
   
   StackArray<int> stack;
 
@@ -241,6 +453,33 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+//  maze[4][3] |= (CURRENT) | (VISITED);
+//  check();
+//  Serial.println(currentRow);
+//  Serial.println(currentColumn);
+//  Serial.println(maze[currentRow][currentColumn]);
+//  possibleMove();
+//  while(backTrackPointer != 0){
+//    check();
+//    Serial.println(currentRow);
+//    Serial.println(currentColumn);
+//    Serial.println(maze[currentRow][currentColumn]);
+//    possibleMove();
+//  }
+//  while(1){
+//    digitalWrite(4, HIGH);    
+//  }
+  bool val1 = detectFrontWall();
+  Serial.println(val1);
+  val1 = detectFrontWall();
+  Serial.println(val1);
+  bool val2 = detectRightWall();
+  Serial.println(val2);
+  
+  val2 = detectRightWall();
+  Serial.println(val2);
+  
+   
   
   
 }
