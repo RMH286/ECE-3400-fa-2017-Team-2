@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP4CE22F17) Path("C:/Users/labuser/Desktop/Lab3_template/") File("DE0_NANO.sof") MfrSpec(OpMask(1));
+		Device PartName(EP4CE22F17) Path("C:/Users/labuser/Desktop/3400 Lab 3/lab3/audio/") File("DE0_NANO.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 
