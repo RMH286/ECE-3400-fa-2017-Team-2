@@ -76,11 +76,11 @@ module DE0_NANO(
 	 reg [24:0] led_counter; // timer to keep track of when to toggle LED
 	 reg 			led_state;   // 1 is on, 0 is off
 	 
-	 reg [7:0] 	DIN;
-	 wire [7:0] DOUT;
+	 reg [10:0] 	DIN;
+	 wire [10:0] DOUT;
 	 wire 		DONE;
-	 reg [7:0]	LAST_POS;
-	 reg [7:0] 	CURR_POS;
+	 reg [10:0]	LAST_POS;
+	 reg [10:0] 	CURR_POS;
 	 
     // Module outputs coordinates of next pixel to be written onto screen
     VGA_DRIVER driver(
@@ -121,20 +121,20 @@ module DE0_NANO(
 	 reg[7:0] white = 8'b111_111_11;
 	 reg[7:0] blue = 8'b000_000_11;
 	 reg[7:0] green = 8'b000_111_00;
+	 reg[7:0] black = 8'b000_000_00;
 	 
 	 reg[1:0] my_grid[3:0][4:0];
-	 reg[7:0] colors[2:0];
+	 reg[7:0] colors[4:0];
  
-	 reg[1:0] newx;
-	 reg[2:0] newy;
+	 reg[4:0] newx; //update position with 9x11
+	 reg[4:0] newy;
 	 
-	 reg test;
+	 reg[2:0] wall_grid[8:0][10:0];
 	 
-	 assign GPIO_1_D[1] = test;
+//	 reg test;
 	 
-	 integer i;
-	 integer j;
-
+	// assign GPIO_1_D[1] = test;
+	 
 	 
 	 
     //=======================================================
@@ -143,31 +143,79 @@ module DE0_NANO(
  
 	 // Always checking for pixel position
 	 always @ (*) begin
-		if (reset) begin
-			for (i = 0; i < 4; i=i+1) begin
-				for (j = 0; j < 5; j=j+1) begin 
-					my_grid[i][j] = 2'b00;
+//		if (reset) begin
+//			for (i = 0; i < 4; i=i+1) begin
+//				for (j = 0; j < 5; j=j+1) begin 
+//					my_grid[i][j] = 2'b00;
+//				end
+//			end
+//			colors[0] = red;
+//			colors[1] = green;
+//			colors[2] = blue;
+//			LAST_POS = 7'b1111111;
+//		end
+//		
+//		my_grid[LAST_POS[7:6]][LAST_POS[5:3]] = 2'b10;
+//		my_grid[DOUT[7:6]][DOUT[5:3]] = 2'b01;
+//		//LAST_POS = DOUT;
+//	 
+//		newx = PIXEL_COORD_X/10'd100;
+//		newy = PIXEL_COORD_Y/10'd100;
+//		if (PIXEL_COORD_X > 399 | PIXEL_COORD_Y > 499) begin
+//			PIXEL_COLOR = 8'd0;
+//		end
+//		else begin
+//			PIXEL_COLOR = colors[my_grid[newx][newy]];
+//		end
+//		
+//		end
+	
+	if (reset) begin
+	
+			integer i;
+			integer j;
+
+			for (i = 0; i < 9; i=i+1) begin
+				for (j = 0; j < 11; j=j+1) begin 
+				
+					wall_grid[i][j] = 3'b000;
+					
+					if ( i%2 == 0) begin
+						wall_grid[i][j] = 3'b011;
+					end
+						
+					if ( j%2 == 0) begin
+						wall_grid[i][j] = 3'b011;
+					end
+			
 				end
 			end
+			
+			
 			colors[0] = red;
 			colors[1] = green;
 			colors[2] = blue;
+			colors[3] = white;
+			colors[4] = black;
 			LAST_POS = 7'b1111111;
 		end
 		
-		my_grid[LAST_POS[7:6]][LAST_POS[5:3]] = 2'b10;
-		my_grid[DOUT[7:6]][DOUT[5:3]] = 2'b01;
+		wall_grid[LAST_POS[10:7]][LAST_POS[6:3]] = 2'b10;
+		wall_grid[DOUT[10:7]][DOUT[6:3]] = 2'b01;
 		//LAST_POS = DOUT;
 	 
-		newx = PIXEL_COORD_X/10'd100;
-		newy = PIXEL_COORD_Y/10'd100;
-		if (PIXEL_COORD_X > 399 | PIXEL_COORD_Y > 499) begin
+		newx = PIXEL_COORD_X/10'd40;
+		newy = PIXEL_COORD_Y/10'd40;
+		if (PIXEL_COORD_X > 359 | PIXEL_COORD_Y > 439) begin
 			PIXEL_COLOR = 8'd0;
 		end
 		else begin
-			PIXEL_COLOR = colors[my_grid[newx][newy]];
+			PIXEL_COLOR = colors[wall_grid[newx][newy]];
 		end
-	end
+		
+		end
+		
+		
 		
 		
 	

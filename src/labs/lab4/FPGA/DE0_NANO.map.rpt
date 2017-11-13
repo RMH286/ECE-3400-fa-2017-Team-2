@@ -1,5 +1,5 @@
 Analysis & Synthesis report for DE0_NANO
-Mon Oct 23 16:32:25 2017
+Mon Nov 13 16:19:14 2017
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -16,8 +16,8 @@ Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
   8. User-Specified and Inferred Latches
   9. General Register Statistics
  10. Multiplexer Restructuring Statistics (Restructuring Performed)
- 11. Parameter Settings for Inferred Entity Instance: lpm_divide:Div1
- 12. Parameter Settings for Inferred Entity Instance: lpm_divide:Div0
+ 11. Parameter Settings for Inferred Entity Instance: lpm_divide:Div0
+ 12. Parameter Settings for Inferred Entity Instance: lpm_divide:Div1
  13. Port Connectivity Checks: "spi_slave:slave"
  14. Post-Synthesis Netlist Statistics for Top Partition
  15. Elapsed Time Per Partition
@@ -48,13 +48,13 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Mon Oct 23 16:32:24 2017       ;
+; Analysis & Synthesis Status        ; Successful - Mon Nov 13 16:19:14 2017       ;
 ; Quartus Prime Version              ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
 ; Revision Name                      ; DE0_NANO                                    ;
 ; Top-level Entity Name              ; DE0_NANO                                    ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 348                                         ;
-;     Total combinational functions  ; 344                                         ;
+; Total logic elements               ; 379                                         ;
+;     Total combinational functions  ; 375                                         ;
 ;     Dedicated logic registers      ; 68                                          ;
 ; Total registers                    ; 68                                          ;
 ; Total pins                         ; 87                                          ;
@@ -173,18 +173,18 @@ agreement for further details.
 +----------------------------------+-----------------+------------------------------+----------------------------------------------------------------------------+---------+
 ; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                               ; Library ;
 +----------------------------------+-----------------+------------------------------+----------------------------------------------------------------------------+---------+
-; VGA_DRIVER.v                     ; yes             ; User Verilog HDL File        ; F:/ECE 3400 Lab 4/FPGA/VGA_DRIVER.v                                        ;         ;
-; DE0_NANO.v                       ; yes             ; User Verilog HDL File        ; F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v                                          ;         ;
-; spi_slave.v                      ; yes             ; User Verilog HDL File        ; F:/ECE 3400 Lab 4/FPGA/spi_slave.v                                         ;         ;
+; VGA_DRIVER.v                     ; yes             ; User Verilog HDL File        ; D:/3400 Lab 4/lab4/FPGA/VGA_DRIVER.v                                       ;         ;
+; DE0_NANO.v                       ; yes             ; User Verilog HDL File        ; D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v                                         ;         ;
+; spi_slave.v                      ; yes             ; User Verilog HDL File        ; D:/3400 Lab 4/lab4/FPGA/spi_slave.v                                        ;         ;
 ; lpm_divide.tdf                   ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_divide.tdf      ;         ;
 ; abs_divider.inc                  ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/abs_divider.inc     ;         ;
 ; sign_div_unsign.inc              ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/sign_div_unsign.inc ;         ;
 ; aglobal170.inc                   ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/aglobal170.inc      ;         ;
-; db/lpm_divide_vim.tdf            ; yes             ; Auto-Generated Megafunction  ; F:/ECE 3400 Lab 4/FPGA/db/lpm_divide_vim.tdf                               ;         ;
-; db/sign_div_unsign_nlh.tdf       ; yes             ; Auto-Generated Megafunction  ; F:/ECE 3400 Lab 4/FPGA/db/sign_div_unsign_nlh.tdf                          ;         ;
-; db/alt_u_div_27f.tdf             ; yes             ; Auto-Generated Megafunction  ; F:/ECE 3400 Lab 4/FPGA/db/alt_u_div_27f.tdf                                ;         ;
-; db/add_sub_7pc.tdf               ; yes             ; Auto-Generated Megafunction  ; F:/ECE 3400 Lab 4/FPGA/db/add_sub_7pc.tdf                                  ;         ;
-; db/add_sub_8pc.tdf               ; yes             ; Auto-Generated Megafunction  ; F:/ECE 3400 Lab 4/FPGA/db/add_sub_8pc.tdf                                  ;         ;
+; db/lpm_divide_uim.tdf            ; yes             ; Auto-Generated Megafunction  ; D:/3400 Lab 4/lab4/FPGA/db/lpm_divide_uim.tdf                              ;         ;
+; db/sign_div_unsign_mlh.tdf       ; yes             ; Auto-Generated Megafunction  ; D:/3400 Lab 4/lab4/FPGA/db/sign_div_unsign_mlh.tdf                         ;         ;
+; db/alt_u_div_07f.tdf             ; yes             ; Auto-Generated Megafunction  ; D:/3400 Lab 4/lab4/FPGA/db/alt_u_div_07f.tdf                               ;         ;
+; db/add_sub_7pc.tdf               ; yes             ; Auto-Generated Megafunction  ; D:/3400 Lab 4/lab4/FPGA/db/add_sub_7pc.tdf                                 ;         ;
+; db/add_sub_8pc.tdf               ; yes             ; Auto-Generated Megafunction  ; D:/3400 Lab 4/lab4/FPGA/db/add_sub_8pc.tdf                                 ;         ;
 +----------------------------------+-----------------+------------------------------+----------------------------------------------------------------------------+---------+
 
 
@@ -193,17 +193,17 @@ agreement for further details.
 +---------------------------------------------+----------+
 ; Resource                                    ; Usage    ;
 +---------------------------------------------+----------+
-; Estimated Total logic elements              ; 348      ;
+; Estimated Total logic elements              ; 379      ;
 ;                                             ;          ;
-; Total combinational functions               ; 344      ;
+; Total combinational functions               ; 375      ;
 ; Logic element usage by number of LUT inputs ;          ;
-;     -- 4 input functions                    ; 77       ;
+;     -- 4 input functions                    ; 96       ;
 ;     -- 3 input functions                    ; 89       ;
-;     -- <=2 input functions                  ; 178      ;
+;     -- <=2 input functions                  ; 190      ;
 ;                                             ;          ;
 ; Logic elements by mode                      ;          ;
-;     -- normal mode                          ; 256      ;
-;     -- arithmetic mode                      ; 88       ;
+;     -- normal mode                          ; 295      ;
+;     -- arithmetic mode                      ; 80       ;
 ;                                             ;          ;
 ; Total registers                             ; 68       ;
 ;     -- Dedicated logic registers            ; 68       ;
@@ -215,8 +215,8 @@ agreement for further details.
 ;                                             ;          ;
 ; Maximum fan-out node                        ; CLOCK_25 ;
 ; Maximum fan-out                             ; 68       ;
-; Total fan-out                               ; 1259     ;
-; Average fan-out                             ; 1.93     ;
+; Total fan-out                               ; 1357     ;
+; Average fan-out                             ; 1.98     ;
 +---------------------------------------------+----------+
 
 
@@ -225,16 +225,16 @@ agreement for further details.
 +----------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------+---------------------+--------------+
 ; Compilation Hierarchy Node             ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                       ; Entity Name         ; Library Name ;
 +----------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------+---------------------+--------------+
-; |DE0_NANO                              ; 344 (145)           ; 68 (27)                   ; 0           ; 0            ; 0       ; 0         ; 87   ; 0            ; |DE0_NANO                                                                                                 ; DE0_NANO            ; work         ;
-;    |VGA_DRIVER:driver|                 ; 37 (37)             ; 20 (20)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|VGA_DRIVER:driver                                                                               ; VGA_DRIVER          ; work         ;
-;    |lpm_divide:Div0|                   ; 69 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div0                                                                                 ; lpm_divide          ; work         ;
-;       |lpm_divide_vim:auto_generated|  ; 69 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div0|lpm_divide_vim:auto_generated                                                   ; lpm_divide_vim      ; work         ;
-;          |sign_div_unsign_nlh:divider| ; 69 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div0|lpm_divide_vim:auto_generated|sign_div_unsign_nlh:divider                       ; sign_div_unsign_nlh ; work         ;
-;             |alt_u_div_27f:divider|    ; 69 (69)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div0|lpm_divide_vim:auto_generated|sign_div_unsign_nlh:divider|alt_u_div_27f:divider ; alt_u_div_27f       ; work         ;
-;    |lpm_divide:Div1|                   ; 69 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div1                                                                                 ; lpm_divide          ; work         ;
-;       |lpm_divide_vim:auto_generated|  ; 69 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div1|lpm_divide_vim:auto_generated                                                   ; lpm_divide_vim      ; work         ;
-;          |sign_div_unsign_nlh:divider| ; 69 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div1|lpm_divide_vim:auto_generated|sign_div_unsign_nlh:divider                       ; sign_div_unsign_nlh ; work         ;
-;             |alt_u_div_27f:divider|    ; 69 (69)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div1|lpm_divide_vim:auto_generated|sign_div_unsign_nlh:divider|alt_u_div_27f:divider ; alt_u_div_27f       ; work         ;
+; |DE0_NANO                              ; 375 (170)           ; 68 (27)                   ; 0           ; 0            ; 0       ; 0         ; 87   ; 0            ; |DE0_NANO                                                                                                 ; DE0_NANO            ; work         ;
+;    |VGA_DRIVER:driver|                 ; 39 (39)             ; 20 (20)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|VGA_DRIVER:driver                                                                               ; VGA_DRIVER          ; work         ;
+;    |lpm_divide:Div0|                   ; 71 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div0                                                                                 ; lpm_divide          ; work         ;
+;       |lpm_divide_uim:auto_generated|  ; 71 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div0|lpm_divide_uim:auto_generated                                                   ; lpm_divide_uim      ; work         ;
+;          |sign_div_unsign_mlh:divider| ; 71 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div0|lpm_divide_uim:auto_generated|sign_div_unsign_mlh:divider                       ; sign_div_unsign_mlh ; work         ;
+;             |alt_u_div_07f:divider|    ; 71 (71)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div0|lpm_divide_uim:auto_generated|sign_div_unsign_mlh:divider|alt_u_div_07f:divider ; alt_u_div_07f       ; work         ;
+;    |lpm_divide:Div1|                   ; 71 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div1                                                                                 ; lpm_divide          ; work         ;
+;       |lpm_divide_uim:auto_generated|  ; 71 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div1|lpm_divide_uim:auto_generated                                                   ; lpm_divide_uim      ; work         ;
+;          |sign_div_unsign_mlh:divider| ; 71 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div1|lpm_divide_uim:auto_generated|sign_div_unsign_mlh:divider                       ; sign_div_unsign_mlh ; work         ;
+;             |alt_u_div_07f:divider|    ; 71 (71)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_divide:Div1|lpm_divide_uim:auto_generated|sign_div_unsign_mlh:divider|alt_u_div_07f:divider ; alt_u_div_07f       ; work         ;
 ;    |spi_slave:slave|                   ; 24 (24)             ; 21 (21)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|spi_slave:slave                                                                                 ; spi_slave           ; work         ;
 +----------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------+---------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
@@ -245,27 +245,29 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-----------------------------------------------------+---------------------+------------------------+
 ; Latch Name                                          ; Latch Enable Signal ; Free of Timing Hazards ;
 +-----------------------------------------------------+---------------------+------------------------+
-; my_grid[1][1][0]                                    ; my_grid[1][1][1]    ; yes                    ;
-; my_grid[1][2][0]                                    ; my_grid[1][2][1]    ; yes                    ;
-; my_grid[1][0][0]                                    ; my_grid[1][0][1]    ; yes                    ;
-; my_grid[1][3][0]                                    ; my_grid[1][3][0]    ; yes                    ;
-; my_grid[0][4][0]                                    ; my_grid[0][4][1]    ; yes                    ;
-; my_grid[0][2][0]                                    ; my_grid[0][2][1]    ; yes                    ;
-; my_grid[0][1][0]                                    ; my_grid[0][1][1]    ; yes                    ;
-; my_grid[0][0][0]                                    ; my_grid[0][0][1]    ; yes                    ;
-; my_grid[0][3][0]                                    ; my_grid[0][3][1]    ; yes                    ;
-; my_grid[1][4][0]                                    ; my_grid[1][4][0]    ; yes                    ;
-; my_grid[2][4][0]                                    ; my_grid[2][4][0]    ; yes                    ;
-; my_grid[3][1][0]                                    ; my_grid[3][1][0]    ; yes                    ;
-; my_grid[3][2][0]                                    ; my_grid[3][2][0]    ; yes                    ;
-; my_grid[3][0][0]                                    ; my_grid[3][0][0]    ; yes                    ;
-; my_grid[3][3][0]                                    ; my_grid[3][3][0]    ; yes                    ;
-; my_grid[2][2][0]                                    ; my_grid[2][2][0]    ; yes                    ;
-; my_grid[2][1][0]                                    ; my_grid[2][1][0]    ; yes                    ;
-; my_grid[2][0][0]                                    ; my_grid[2][0][0]    ; yes                    ;
-; my_grid[2][3][0]                                    ; my_grid[2][3][0]    ; yes                    ;
-; my_grid[3][4][0]                                    ; my_grid[3][4][0]    ; yes                    ;
-; Number of user-specified and inferred latches = 20  ;                     ;                        ;
+; wall_grid[1][5][0]                                  ; wall_grid[1][5][0]  ; yes                    ;
+; wall_grid[1][3][0]                                  ; wall_grid[1][3][0]  ; yes                    ;
+; wall_grid[1][1][0]                                  ; wall_grid[1][1][0]  ; yes                    ;
+; wall_grid[1][7][0]                                  ; wall_grid[1][7][0]  ; yes                    ;
+; wall_grid[1][9][0]                                  ; wall_grid[1][9][0]  ; yes                    ;
+; wall_grid[0][1][1]                                  ; wall_grid[0][1][2]  ; yes                    ;
+; wall_grid[0][2][1]                                  ; wall_grid[0][2][2]  ; yes                    ;
+; wall_grid[0][0][1]                                  ; wall_grid[0][0][2]  ; yes                    ;
+; wall_grid[0][3][1]                                  ; wall_grid[0][3][2]  ; yes                    ;
+; wall_grid[0][6][1]                                  ; wall_grid[0][6][0]  ; yes                    ;
+; wall_grid[0][5][1]                                  ; wall_grid[0][5][0]  ; yes                    ;
+; wall_grid[0][4][1]                                  ; wall_grid[0][4][1]  ; yes                    ;
+; wall_grid[0][7][1]                                  ; wall_grid[0][7][0]  ; yes                    ;
+; wall_grid[0][8][1]                                  ; wall_grid[0][8][0]  ; yes                    ;
+; wall_grid[0][9][1]                                  ; wall_grid[0][9][0]  ; yes                    ;
+; wall_grid[0][10][1]                                 ; wall_grid[0][10][0] ; yes                    ;
+; wall_grid[1][8][1]                                  ; wall_grid[1][8][0]  ; yes                    ;
+; wall_grid[1][2][1]                                  ; wall_grid[1][2][0]  ; yes                    ;
+; wall_grid[1][0][1]                                  ; wall_grid[1][0][0]  ; yes                    ;
+; wall_grid[1][10][1]                                 ; wall_grid[1][10][0] ; yes                    ;
+; wall_grid[1][4][1]                                  ; wall_grid[1][4][0]  ; yes                    ;
+; wall_grid[1][6][1]                                  ; wall_grid[1][6][0]  ; yes                    ;
+; Number of user-specified and inferred latches = 22  ;                     ;                        ;
 +-----------------------------------------------------+---------------------+------------------------+
 Note: All latches listed above may not be present at the end of synthesis due to various synthesis optimizations.
 
@@ -291,34 +293,11 @@ Note: All latches listed above may not be present at the end of synthesis due to
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                 ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------+
 ; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|VGA_DRIVER:driver|pixel_count[0] ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |DE0_NANO|spi_slave:slave|dout_q[7]        ;
-; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|VGA_DRIVER:driver|line_count[3]  ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |DE0_NANO|spi_slave:slave|dout_q[5]        ;
+; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|VGA_DRIVER:driver|line_count[2]  ;
 ; 4:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |DE0_NANO|spi_slave:slave|bit_ct_q[0]      ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |DE0_NANO|spi_slave:slave|data_q[6]        ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |DE0_NANO|spi_slave:slave|data_q[5]        ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------+
-
-
-+------------------------------------------------------------------+
-; Parameter Settings for Inferred Entity Instance: lpm_divide:Div1 ;
-+------------------------+----------------+------------------------+
-; Parameter Name         ; Value          ; Type                   ;
-+------------------------+----------------+------------------------+
-; LPM_WIDTHN             ; 10             ; Untyped                ;
-; LPM_WIDTHD             ; 7              ; Untyped                ;
-; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                ;
-; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                ;
-; LPM_PIPELINE           ; 0              ; Untyped                ;
-; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                ;
-; MAXIMIZE_SPEED         ; 5              ; Untyped                ;
-; CBXI_PARAMETER         ; lpm_divide_vim ; Untyped                ;
-; CARRY_CHAIN            ; MANUAL         ; Untyped                ;
-; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                ;
-; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY             ;
-; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY           ;
-; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE           ;
-; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE         ;
-+------------------------+----------------+------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
 +------------------------------------------------------------------+
@@ -327,13 +306,13 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Parameter Name         ; Value          ; Type                   ;
 +------------------------+----------------+------------------------+
 ; LPM_WIDTHN             ; 10             ; Untyped                ;
-; LPM_WIDTHD             ; 7              ; Untyped                ;
+; LPM_WIDTHD             ; 6              ; Untyped                ;
 ; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                ;
 ; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                ;
 ; LPM_PIPELINE           ; 0              ; Untyped                ;
 ; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                ;
 ; MAXIMIZE_SPEED         ; 5              ; Untyped                ;
-; CBXI_PARAMETER         ; lpm_divide_vim ; Untyped                ;
+; CBXI_PARAMETER         ; lpm_divide_uim ; Untyped                ;
 ; CARRY_CHAIN            ; MANUAL         ; Untyped                ;
 ; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                ;
 ; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY             ;
@@ -344,14 +323,39 @@ Note: In order to hide this table in the UI and the text report file, please set
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
-+----------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "spi_slave:slave"                                                                          ;
-+------------+--------+----------+-------------------------------------------------------------------------------------+
-; Port       ; Type   ; Severity ; Details                                                                             ;
-+------------+--------+----------+-------------------------------------------------------------------------------------+
-; done       ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-; dout[2..0] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+------------+--------+----------+-------------------------------------------------------------------------------------+
++------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: lpm_divide:Div1 ;
++------------------------+----------------+------------------------+
+; Parameter Name         ; Value          ; Type                   ;
++------------------------+----------------+------------------------+
+; LPM_WIDTHN             ; 10             ; Untyped                ;
+; LPM_WIDTHD             ; 6              ; Untyped                ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                ;
+; LPM_PIPELINE           ; 0              ; Untyped                ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                ;
+; CBXI_PARAMETER         ; lpm_divide_uim ; Untyped                ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY             ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY           ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE           ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE         ;
++------------------------+----------------+------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "spi_slave:slave"                                                                                                                                                                        ;
++------------+--------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port       ; Type   ; Severity ; Details                                                                                                                                                                           ;
++------------+--------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; done       ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed.                                                                                               ;
+; din        ; Input  ; Warning  ; Input port expression (11 bits) is wider than the input port (8 bits) it drives.  The 3 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; dout       ; Output ; Warning  ; Output or bidir port (8 bits) is smaller than the port expression (11 bits) it drives.  The 3 most-significant bit(s) in the port expression will be connected to GND.            ;
+; dout[2..0] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed.                                                                                               ;
++------------+--------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
 +-----------------------------------------------------+
@@ -367,19 +371,19 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     SLD               ; 1                           ;
 ;     plain             ; 31                          ;
 ; cycloneiii_io_obuf    ; 68                          ;
-; cycloneiii_lcell_comb ; 345                         ;
-;     arith             ; 88                          ;
-;         2 data inputs ; 52                          ;
-;         3 data inputs ; 36                          ;
-;     normal            ; 257                         ;
-;         0 data inputs ; 9                           ;
+; cycloneiii_lcell_comb ; 376                         ;
+;     arith             ; 80                          ;
+;         2 data inputs ; 48                          ;
+;         3 data inputs ; 32                          ;
+;     normal            ; 296                         ;
+;         0 data inputs ; 11                          ;
 ;         1 data inputs ; 4                           ;
-;         2 data inputs ; 114                         ;
-;         3 data inputs ; 53                          ;
-;         4 data inputs ; 77                          ;
+;         2 data inputs ; 128                         ;
+;         3 data inputs ; 57                          ;
+;         4 data inputs ; 96                          ;
 ;                       ;                             ;
-; Max LUT depth         ; 14.30                       ;
-; Average LUT depth     ; 6.41                        ;
+; Max LUT depth         ; 16.90                       ;
+; Average LUT depth     ; 7.19                        ;
 +-----------------------+-----------------------------+
 
 
@@ -398,280 +402,552 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Mon Oct 23 16:32:09 2017
+    Info: Processing started: Mon Nov 13 16:19:02 2017
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off DE0_NANO -c DE0_NANO
 Warning (125092): Tcl Script File DE_NANO_SOPC.qip not found
     Info (125063): set_global_assignment -name QIP_FILE DE_NANO_SOPC.qip
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (12021): Found 1 design units, including 1 entities, in source file vga_driver.v
-    Info (12023): Found entity 1: VGA_DRIVER File: F:/ECE 3400 Lab 4/FPGA/VGA_DRIVER.v Line: 14
-Warning (10275): Verilog HDL Module Instantiation warning at DE0_NANO.v(107): ignored dangling comma in List of Port Connections File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 107
-Warning (10238): Verilog Module Declaration warning at DE0_NANO.v(32): ignored anonymous port(s) indicated by duplicate or dangling comma(s) in the port list for module "DE0_NANO" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 32
+    Info (12023): Found entity 1: VGA_DRIVER File: D:/3400 Lab 4/lab4/FPGA/VGA_DRIVER.v Line: 14
+Warning (10275): Verilog HDL Module Instantiation warning at DE0_NANO.v(107): ignored dangling comma in List of Port Connections File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 107
+Warning (10238): Verilog Module Declaration warning at DE0_NANO.v(32): ignored anonymous port(s) indicated by duplicate or dangling comma(s) in the port list for module "DE0_NANO" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 32
 Info (12021): Found 1 design units, including 1 entities, in source file de0_nano.v
-    Info (12023): Found entity 1: DE0_NANO File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 11
+    Info (12023): Found entity 1: DE0_NANO File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 11
 Info (12021): Found 1 design units, including 1 entities, in source file spi_slave.v
-    Info (12023): Found entity 1: spi_slave File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 1
+    Info (12023): Found entity 1: spi_slave File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 1
 Info (12127): Elaborating entity "DE0_NANO" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at DE0_NANO.v(121): object "white" assigned a value but never read File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 121
-Warning (10858): Verilog HDL warning at DE0_NANO.v(131): object test used but never assigned File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 131
-Warning (10230): Verilog HDL assignment warning at DE0_NANO.v(162): truncated value with size 10 to match size of target (2) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 162
-Warning (10230): Verilog HDL assignment warning at DE0_NANO.v(163): truncated value with size 10 to match size of target (3) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 163
-Warning (10240): Verilog HDL Always Construct warning at DE0_NANO.v(146): inferring latch(es) for variable "i", which holds its previous value in one or more paths through the always construct File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Warning (10240): Verilog HDL Always Construct warning at DE0_NANO.v(146): inferring latch(es) for variable "j", which holds its previous value in one or more paths through the always construct File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Warning (10240): Verilog HDL Always Construct warning at DE0_NANO.v(146): inferring latch(es) for variable "LAST_POS", which holds its previous value in one or more paths through the always construct File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Warning (10030): Net "test" at DE0_NANO.v(131) has no driver or initial value, using a default initial value '0' File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 131
-Warning (10034): Output port "LED[7..1]" at DE0_NANO.v(48) has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 48
-Info (10041): Inferred latch for "my_grid[0][0][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[0][0][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[0][1][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[0][1][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[0][2][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[0][2][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[0][3][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[0][3][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[0][4][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[0][4][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[1][0][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[1][0][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[1][1][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[1][1][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[1][2][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[1][2][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[1][3][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[1][3][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[1][4][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[1][4][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[2][0][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[2][0][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[2][1][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[2][1][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[2][2][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[2][2][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[2][3][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[2][3][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[2][4][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[2][4][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[3][0][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[3][0][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[3][1][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[3][1][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[3][2][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[3][2][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[3][3][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[3][3][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[3][4][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "my_grid[3][4][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "LAST_POS[3]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "LAST_POS[4]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "LAST_POS[5]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "LAST_POS[6]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "LAST_POS[7]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[0][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[0][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[0][2]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[0][3]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[0][4]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[0][5]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[0][6]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[0][7]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[1][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[1][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[1][2]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[1][3]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[1][4]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[1][5]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[1][6]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[1][7]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[2][0]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[2][1]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[2][2]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[2][3]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[2][4]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[2][5]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[2][6]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
-Info (10041): Inferred latch for "colors[2][7]" at DE0_NANO.v(146) File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 146
+Warning (10230): Verilog HDL assignment warning at DE0_NANO.v(207): truncated value with size 10 to match size of target (5) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 207
+Warning (10230): Verilog HDL assignment warning at DE0_NANO.v(208): truncated value with size 10 to match size of target (5) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 208
+Warning (10240): Verilog HDL Always Construct warning at DE0_NANO.v(173): inferring latch(es) for variable "LAST_POS", which holds its previous value in one or more paths through the always construct File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Warning (10034): Output port "LED[7..1]" at DE0_NANO.v(48) has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 48
+Info (10041): Inferred latch for "wall_grid[0][0][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][0][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][0][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][1][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][1][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][1][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][2][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][2][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][2][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][3][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][3][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][3][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][4][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][4][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][4][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][5][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][5][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][5][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][6][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][6][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][6][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][7][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][7][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][7][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][8][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][8][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][8][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][9][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][9][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][9][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][10][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][10][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[0][10][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][0][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][0][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][0][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][1][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][1][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][1][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][2][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][2][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][2][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][3][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][3][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][3][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][4][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][4][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][4][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][5][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][5][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][5][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][6][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][6][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][6][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][7][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][7][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][7][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][8][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][8][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][8][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][9][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][9][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][9][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][10][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][10][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[1][10][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][0][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][0][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][0][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][1][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][1][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][1][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][2][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][2][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][2][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][3][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][3][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][3][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][4][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][4][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][4][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][5][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][5][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][5][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][6][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][6][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][6][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][7][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][7][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][7][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][8][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][8][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][8][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][9][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][9][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][9][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][10][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][10][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[2][10][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][0][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][0][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][0][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][1][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][1][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][1][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][2][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][2][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][2][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][3][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][3][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][3][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][4][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][4][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][4][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][5][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][5][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][5][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][6][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][6][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][6][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][7][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][7][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][7][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][8][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][8][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][8][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][9][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][9][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][9][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][10][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][10][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[3][10][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][0][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][0][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][0][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][1][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][1][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][1][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][2][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][2][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][2][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][3][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][3][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][3][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][4][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][4][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][4][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][5][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][5][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][5][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][6][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][6][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][6][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][7][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][7][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][7][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][8][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][8][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][8][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][9][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][9][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][9][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][10][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][10][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[4][10][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][0][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][0][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][0][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][1][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][1][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][1][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][2][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][2][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][2][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][3][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][3][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][3][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][4][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][4][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][4][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][5][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][5][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][5][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][6][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][6][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][6][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][7][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][7][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][7][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][8][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][8][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][8][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][9][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][9][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][9][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][10][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][10][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[5][10][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][0][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][0][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][0][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][1][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][1][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][1][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][2][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][2][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][2][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][3][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][3][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][3][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][4][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][4][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][4][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][5][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][5][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][5][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][6][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][6][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][6][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][7][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][7][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][7][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][8][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][8][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][8][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][9][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][9][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][9][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][10][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][10][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[6][10][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][0][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][0][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][0][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][1][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][1][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][1][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][2][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][2][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][2][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][3][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][3][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][3][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][4][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][4][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][4][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][5][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][5][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][5][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][6][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][6][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][6][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][7][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][7][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][7][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][8][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][8][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][8][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][9][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][9][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][9][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][10][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][10][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[7][10][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][0][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][0][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][0][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][1][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][1][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][1][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][2][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][2][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][2][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][3][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][3][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][3][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][4][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][4][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][4][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][5][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][5][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][5][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][6][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][6][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][6][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][7][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][7][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][7][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][8][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][8][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][8][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][9][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][9][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][9][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][10][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][10][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "wall_grid[8][10][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "LAST_POS[3]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "LAST_POS[4]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "LAST_POS[5]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "LAST_POS[6]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "LAST_POS[7]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "LAST_POS[8]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "LAST_POS[9]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "LAST_POS[10]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[0][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[0][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[0][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[0][3]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[0][4]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[0][5]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[0][6]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[0][7]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[1][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[1][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[1][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[1][3]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[1][4]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[1][5]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[1][6]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[1][7]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[2][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[2][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[2][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[2][3]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[2][4]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[2][5]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[2][6]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[2][7]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[3][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[3][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[3][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[3][3]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[3][4]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[3][5]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[3][6]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[3][7]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[4][0]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[4][1]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[4][2]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[4][3]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[4][4]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[4][5]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[4][6]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
+Info (10041): Inferred latch for "colors[4][7]" at DE0_NANO.v(173) File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 173
 Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "my_grid" into its bus
-Info (12128): Elaborating entity "VGA_DRIVER" for hierarchy "VGA_DRIVER:driver" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 95
-Warning (10230): Verilog HDL assignment warning at VGA_DRIVER.v(71): truncated value with size 32 to match size of target (10) File: F:/ECE 3400 Lab 4/FPGA/VGA_DRIVER.v Line: 71
-Warning (10230): Verilog HDL assignment warning at VGA_DRIVER.v(75): truncated value with size 32 to match size of target (10) File: F:/ECE 3400 Lab 4/FPGA/VGA_DRIVER.v Line: 75
-Info (12128): Elaborating entity "spi_slave" for hierarchy "spi_slave:slave" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 107
+Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "wall_grid" into its bus
+Info (12128): Elaborating entity "VGA_DRIVER" for hierarchy "VGA_DRIVER:driver" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 95
+Warning (10230): Verilog HDL assignment warning at VGA_DRIVER.v(71): truncated value with size 32 to match size of target (10) File: D:/3400 Lab 4/lab4/FPGA/VGA_DRIVER.v Line: 71
+Warning (10230): Verilog HDL assignment warning at VGA_DRIVER.v(75): truncated value with size 32 to match size of target (10) File: D:/3400 Lab 4/lab4/FPGA/VGA_DRIVER.v Line: 75
+Info (12128): Elaborating entity "spi_slave" for hierarchy "spi_slave:slave" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 107
 Info (278001): Inferred 2 megafunctions from design logic
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "Div1" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 163
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "Div0" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 162
-Info (12130): Elaborated megafunction instantiation "lpm_divide:Div1" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 163
-Info (12133): Instantiated megafunction "lpm_divide:Div1" with the following parameter: File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 163
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "Div0" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 207
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "Div1" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 208
+Info (12130): Elaborated megafunction instantiation "lpm_divide:Div0" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 207
+Info (12133): Instantiated megafunction "lpm_divide:Div0" with the following parameter: File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 207
     Info (12134): Parameter "LPM_WIDTHN" = "10"
-    Info (12134): Parameter "LPM_WIDTHD" = "7"
+    Info (12134): Parameter "LPM_WIDTHD" = "6"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
     Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
-Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_vim.tdf
-    Info (12023): Found entity 1: lpm_divide_vim File: F:/ECE 3400 Lab 4/FPGA/db/lpm_divide_vim.tdf Line: 25
-Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_nlh.tdf
-    Info (12023): Found entity 1: sign_div_unsign_nlh File: F:/ECE 3400 Lab 4/FPGA/db/sign_div_unsign_nlh.tdf Line: 25
-Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_27f.tdf
-    Info (12023): Found entity 1: alt_u_div_27f File: F:/ECE 3400 Lab 4/FPGA/db/alt_u_div_27f.tdf Line: 27
+Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_uim.tdf
+    Info (12023): Found entity 1: lpm_divide_uim File: D:/3400 Lab 4/lab4/FPGA/db/lpm_divide_uim.tdf Line: 25
+Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_mlh.tdf
+    Info (12023): Found entity 1: sign_div_unsign_mlh File: D:/3400 Lab 4/lab4/FPGA/db/sign_div_unsign_mlh.tdf Line: 25
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_07f.tdf
+    Info (12023): Found entity 1: alt_u_div_07f File: D:/3400 Lab 4/lab4/FPGA/db/alt_u_div_07f.tdf Line: 27
 Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_7pc.tdf
-    Info (12023): Found entity 1: add_sub_7pc File: F:/ECE 3400 Lab 4/FPGA/db/add_sub_7pc.tdf Line: 23
+    Info (12023): Found entity 1: add_sub_7pc File: D:/3400 Lab 4/lab4/FPGA/db/add_sub_7pc.tdf Line: 23
 Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_8pc.tdf
-    Info (12023): Found entity 1: add_sub_8pc File: F:/ECE 3400 Lab 4/FPGA/db/add_sub_8pc.tdf Line: 23
-Info (12130): Elaborated megafunction instantiation "lpm_divide:Div0" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 162
-Info (12133): Instantiated megafunction "lpm_divide:Div0" with the following parameter: File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 162
-    Info (12134): Parameter "LPM_WIDTHN" = "10"
-    Info (12134): Parameter "LPM_WIDTHD" = "7"
-    Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
-    Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+    Info (12023): Found entity 1: add_sub_8pc File: D:/3400 Lab 4/lab4/FPGA/db/add_sub_8pc.tdf Line: 23
+Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Warning (13034): The following nodes have both tri-state and non-tri-state drivers
-    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[5]" and its non-tri-state driver. File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[7]" and its non-tri-state driver. File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[9]" and its non-tri-state driver. File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[11]" and its non-tri-state driver. File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[13]" and its non-tri-state driver. File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[15]" and its non-tri-state driver. File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[17]" and its non-tri-state driver. File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[19]" and its non-tri-state driver. File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_1_D[28]" and its non-tri-state driver. File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[5]" and its non-tri-state driver. File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[7]" and its non-tri-state driver. File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[9]" and its non-tri-state driver. File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[11]" and its non-tri-state driver. File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[13]" and its non-tri-state driver. File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[15]" and its non-tri-state driver. File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[17]" and its non-tri-state driver. File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[19]" and its non-tri-state driver. File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[21]" and its non-tri-state driver. File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0_D[23]" and its non-tri-state driver. File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_1_D[28]" and its non-tri-state driver. File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
 Warning (13039): The following bidirectional pins have no drivers
-    Warning (13040): bidirectional pin "GPIO_1_D[26]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[30]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[32]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_0_D[0]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[1]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[2]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[3]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[4]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[6]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[8]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[10]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[12]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[14]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[16]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[18]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[20]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[22]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[24]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[25]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[26]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[27]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[28]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[29]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[30]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[31]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[32]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_0_D[33]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13040): bidirectional pin "GPIO_1_D[0]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[2]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[3]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[4]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[5]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[6]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[7]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[8]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[9]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[10]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[11]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[12]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[13]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[14]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[15]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[16]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[17]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[18]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[19]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[20]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[21]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[22]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[23]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[24]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[25]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[27]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[29]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[31]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-    Warning (13040): bidirectional pin "GPIO_1_D[33]" has no driver File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-Warning (13032): The following tri-state nodes are fed by constants
-    Warning (13033): The pin "GPIO_0_D[21]" is fed by GND File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13033): The pin "GPIO_0_D[23]" is fed by GND File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13033): The pin "GPIO_1_D[1]" is fed by GND File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
-Warning (13012): Latch my_grid[1][1][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[1][2][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[1][0][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[1][3][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[0][4][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[0][2][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[0][1][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[0][0][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[0][3][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[1][4][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[2][4][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[3][1][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[3][2][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[3][0][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[3][3][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[2][2][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[2][1][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[2][0][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[2][3][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
-Warning (13012): Latch my_grid[3][4][0] has unsafe behavior File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 125
-    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[6] File: F:/ECE 3400 Lab 4/FPGA/spi_slave.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_1_D[26]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[30]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[32]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_0_D[0]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[1]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[2]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[3]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[4]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[6]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[8]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[10]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[12]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[14]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[16]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[18]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[20]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[22]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[24]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[25]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[26]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[27]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[28]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[29]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[30]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[31]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[32]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_0_D[33]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13040): bidirectional pin "GPIO_1_D[0]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[1]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[2]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[3]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[4]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[5]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[6]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[7]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[8]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[9]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[10]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[11]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[12]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[13]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[14]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[15]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[16]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[17]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[18]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[19]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[20]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[21]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[22]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[23]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[24]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[25]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[27]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[29]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[31]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+    Warning (13040): bidirectional pin "GPIO_1_D[33]" has no driver File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
+Warning (13012): Latch wall_grid[1][5][0] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[1][3][0] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[1][1][0] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[1][7][0] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[1][9][0] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[0][1][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[0][2][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[0][0][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[0][3][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[0][6][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[0][5][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[0][4][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[0][7][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[0][8][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[0][9][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[0][10][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[1][8][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[1][2][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[1][0][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[1][10][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[1][4][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
+Warning (13012): Latch wall_grid[1][6][1] has unsafe behavior File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 132
+    Warning (13013): Ports D and ENA on the latch are fed by the same signal spi_slave:slave|dout_q[7] File: D:/3400 Lab 4/lab4/FPGA/spi_slave.v Line: 57
 Warning (13009): TRI or OPNDRN buffers permanently enabled
-    Warning (13010): Node "GPIO_0_D[5]~synth" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13010): Node "GPIO_0_D[7]~synth" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13010): Node "GPIO_0_D[9]~synth" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13010): Node "GPIO_0_D[11]~synth" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13010): Node "GPIO_0_D[13]~synth" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13010): Node "GPIO_0_D[15]~synth" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13010): Node "GPIO_0_D[17]~synth" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13010): Node "GPIO_0_D[19]~synth" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 57
-    Warning (13010): Node "GPIO_1_D[28]~synth" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 61
+    Warning (13010): Node "GPIO_0_D[5]~synth" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13010): Node "GPIO_0_D[7]~synth" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13010): Node "GPIO_0_D[9]~synth" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13010): Node "GPIO_0_D[11]~synth" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13010): Node "GPIO_0_D[13]~synth" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13010): Node "GPIO_0_D[15]~synth" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13010): Node "GPIO_0_D[17]~synth" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13010): Node "GPIO_0_D[19]~synth" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13010): Node "GPIO_0_D[21]~synth" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13010): Node "GPIO_0_D[23]~synth" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 57
+    Warning (13010): Node "GPIO_1_D[28]~synth" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 61
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "LED[1]" is stuck at GND File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 48
-    Warning (13410): Pin "LED[2]" is stuck at GND File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 48
-    Warning (13410): Pin "LED[3]" is stuck at GND File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 48
-    Warning (13410): Pin "LED[4]" is stuck at GND File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 48
-    Warning (13410): Pin "LED[5]" is stuck at GND File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 48
-    Warning (13410): Pin "LED[6]" is stuck at GND File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 48
-    Warning (13410): Pin "LED[7]" is stuck at GND File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 48
+    Warning (13410): Pin "LED[1]" is stuck at GND File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 48
+    Warning (13410): Pin "LED[2]" is stuck at GND File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 48
+    Warning (13410): Pin "LED[3]" is stuck at GND File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 48
+    Warning (13410): Pin "LED[4]" is stuck at GND File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 48
+    Warning (13410): Pin "LED[5]" is stuck at GND File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 48
+    Warning (13410): Pin "LED[6]" is stuck at GND File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 48
+    Warning (13410): Pin "LED[7]" is stuck at GND File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 48
 Info (286030): Timing-Driven Synthesis is running
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
 Warning (21074): Design contains 9 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "KEY[1]" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 51
-    Warning (15610): No output dependent on input pin "SW[0]" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 54
-    Warning (15610): No output dependent on input pin "SW[1]" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 54
-    Warning (15610): No output dependent on input pin "SW[2]" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 54
-    Warning (15610): No output dependent on input pin "SW[3]" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 54
-    Warning (15610): No output dependent on input pin "GPIO_0_IN[0]" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 58
-    Warning (15610): No output dependent on input pin "GPIO_0_IN[1]" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 58
-    Warning (15610): No output dependent on input pin "GPIO_1_IN[0]" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 62
-    Warning (15610): No output dependent on input pin "GPIO_1_IN[1]" File: F:/ECE 3400 Lab 4/FPGA/DE0_NANO.v Line: 62
-Info (21057): Implemented 435 device resources after synthesis - the final resource count might be different
+    Warning (15610): No output dependent on input pin "KEY[1]" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 51
+    Warning (15610): No output dependent on input pin "SW[0]" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 54
+    Warning (15610): No output dependent on input pin "SW[1]" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 54
+    Warning (15610): No output dependent on input pin "SW[2]" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 54
+    Warning (15610): No output dependent on input pin "SW[3]" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 54
+    Warning (15610): No output dependent on input pin "GPIO_0_IN[0]" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 58
+    Warning (15610): No output dependent on input pin "GPIO_0_IN[1]" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 58
+    Warning (15610): No output dependent on input pin "GPIO_1_IN[0]" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 62
+    Warning (15610): No output dependent on input pin "GPIO_1_IN[1]" File: D:/3400 Lab 4/lab4/FPGA/DE0_NANO.v Line: 62
+Info (21057): Implemented 466 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 11 input pins
     Info (21059): Implemented 8 output pins
     Info (21060): Implemented 68 bidirectional pins
-    Info (21061): Implemented 348 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 154 warnings
-    Info: Peak virtual memory: 658 megabytes
-    Info: Processing ended: Mon Oct 23 16:32:25 2017
-    Info: Elapsed time: 00:00:16
+    Info (21061): Implemented 379 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 155 warnings
+    Info: Peak virtual memory: 659 megabytes
+    Info: Processing ended: Mon Nov 13 16:19:14 2017
+    Info: Elapsed time: 00:00:12
     Info: Total CPU time (on all processors): 00:00:22
 
 

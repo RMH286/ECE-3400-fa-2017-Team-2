@@ -51,7 +51,7 @@ GPIO_0_D[33] <> <UNC>
 GPIO_0_IN[0] => ~NO_FANOUT~
 GPIO_0_IN[1] => ~NO_FANOUT~
 GPIO_1_D[0] <> <UNC>
-GPIO_1_D[1] <> <GND>
+GPIO_1_D[1] <> <UNC>
 GPIO_1_D[2] <> <UNC>
 GPIO_1_D[3] <> <UNC>
 GPIO_1_D[4] <> <UNC>
