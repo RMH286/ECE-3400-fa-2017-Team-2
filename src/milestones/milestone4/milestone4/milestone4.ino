@@ -1,6 +1,7 @@
 
 #include <Servo.h>
 #include <StackArray.h>
+#include "radio.h"
 
 static int dir = 0;
 static int currentRow;
@@ -445,6 +446,7 @@ void setup() {
   pinMode(wallbit0, OUTPUT);
   pinMode(wallbit1, OUTPUT);
   pinMode(wallbit2, OUTPUT);
+  pinMode(buttonpin, INPUT);
   
   Serial.begin(9600);          //  setup serial
 
@@ -452,6 +454,7 @@ void setup() {
   leftWheel.attach(leftWheelpin);
   rightWheel.attach(rightWheelpin);
   leftWheel.write(90);
+  rightWheel.write(90);
   currentRow = 4;
   currentColumn = 3; 
   dir = 0;
@@ -466,6 +469,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+//  Serial.println(digitalRead(buttonpin));
+//  while(digitalRead(buttonpin)==0){
+//    Serial.println("Button Not Pressed");
+//  }
   maze[4][3] |= (CURRENT) | (VISITED);
   check();
   Serial.print("direction ");
