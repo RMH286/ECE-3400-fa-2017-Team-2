@@ -1,7 +1,9 @@
 
 #include <Servo.h>
 #include <StackArray.h>
+//#include "FFT.h" // include the library
 #include "radio.h"
+#include "treasure.h"
 
 static int dir = 0;
 static int currentRow;
@@ -38,18 +40,28 @@ int leftWheelpin = 5;
 int rightWheelpin = 3;
 //Front Wall Sensor
 int wallpin = A0;
+int treasurepin = A3;
 //Wall Selector
-int wallbit2 = 7;
 int wallbit1 = 6;
 int wallbit0 = 2;
-int buttonpin = 1;
+int tbit0 = 7;
+int tbit1 = 8;
+int RED = 1;
+int GREEN = 0;
+int BLUE = 4;
 
 
-//MUX Pins Digital 2, 6, 7
+//Wall MUX Pins Digital 2, 6
 //000 Left Wall Sensor
 //001 Front Wall Sensor
 //010 Right Wall Sensor
 //A0 is MUX Output
+
+//Treasure MUX pins digital 7,8
+//000 Left Treasure Sensor
+//001 Front Treasure Sensor
+//010 Right Treasure Sensor 
+//A3 is MUX output
 
 
 //Used to line follow, number to be written to right wheel servo.
@@ -143,11 +155,8 @@ void stepPastJunction() {
 }
 
 bool detectLeftWall() {
-  delay(100);
-  digitalWrite(wallbit2, LOW);
   digitalWrite(wallbit1, LOW);
   digitalWrite(wallbit0, LOW);
-  delay(100);
 
   int wall = analogRead(wallpin);
   
@@ -160,11 +169,8 @@ bool detectLeftWall() {
 }
 
 bool detectFrontWall() {
-  delay(100);
-  digitalWrite(wallbit2, LOW);
   digitalWrite(wallbit1, LOW);
   digitalWrite(wallbit0, HIGH);
-  delay(100);
   
   
   int wall = analogRead(wallpin);
@@ -178,11 +184,8 @@ bool detectFrontWall() {
 }
 
 bool detectRightWall() {
-  delay(100);
-  digitalWrite(wallbit2, LOW);
   digitalWrite(wallbit1, HIGH);
   digitalWrite(wallbit0, LOW);
-  delay(100);
 
   int wall = analogRead(wallpin);
   
@@ -443,10 +446,14 @@ void setup() {
   pinMode(BRlinepin, INPUT);
   pinMode(BLlinepin, INPUT);
   pinMode(wallpin, INPUT);
+  pinMode(treasurepin, INPUT);
   pinMode(wallbit0, OUTPUT);
   pinMode(wallbit1, OUTPUT);
-  pinMode(wallbit2, OUTPUT);
-  pinMode(buttonpin, INPUT);
+  pinMode(tbit0, OUTPUT);
+  pinMode(tbit1, OUTPUT);
+  pinMode(RED, OUTPUT);
+  pinMode(GREEN, OUTPUT);
+  pinMode(BLUE, OUTPUT);
   
   Serial.begin(9600);          //  setup serial
 
@@ -458,6 +465,8 @@ void setup() {
   currentRow = 4;
   currentColumn = 3; 
   dir = 0;
+  radio_setup();
+  treasure_setup();
   
   
   
