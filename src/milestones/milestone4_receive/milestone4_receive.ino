@@ -1,4 +1,15 @@
 
+#include <SPI.h>
+
+// Arduino SPI Pins
+// SCK = 13
+// MISO = 12
+// MOSI = 11
+// SS = 4 
+
+
+#define speed 100
+
 void setup() {
   // put your setup code here, to run once:
   radio.setPayloadSize(2);
@@ -41,8 +52,10 @@ void setup() {
   //
 
   radio.startListening();
-
-
+  
+  //SPI MERGED CODE
+  digitalWrite(SS, HIGH); // ensures SS stays high
+  SPI.begin();
 }
 
 void loop() {
@@ -65,7 +78,10 @@ void loop() {
 
     // Send the final one back.
     radio.write(&got_data, 2 );
-  
+
+    digitalWrite(SS, LOW);
+    SPI.transfer(got_data[2]);
+    digitalWrite(SS, HIGH);
 
     // Now, resume listening so we catch the next packets.
     radio.startListening();
