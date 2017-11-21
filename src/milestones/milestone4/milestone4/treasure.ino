@@ -8,11 +8,12 @@ port at 115.2kb.
 */
 
 #define LOG_OUT 1 // use the log output function
-#define FFT_N 256 // set to 256 point fft
+#define FFT_N 128 // set to 256 point fft
 
 #include <FFT.h> // include the library
 
-
+#define s1 3
+#define s0 2
 
 
 
@@ -30,10 +31,26 @@ void treasure_setup() {
 }
 
 char detect_treasure() {
+  TIMSK0 = 0; // turn off timer0 for lower jitter
+  ADCSRA = 0xe5; // set the adc to free running mode
+  ADCSRA &= ~(bit (ADPS0) | bit (ADPS1) | bit (ADPS2)); // clear prescaler bits
+  ADCSRA |= bit (ADPS0) | bit (ADPS2);
+  ADMUX = 0x40; // use adc0
+  DIDR0 = 0x01; // turn off the digital input for adc0
+  
   char treasure = 0;
-  while(1) { // reduces jitter
+  digitalWrite(s2, HIGH);
+  for (int i = 0; i < 3; i++) {
+    digitalWrite(s0, LOW);
+    digitalWrite(s1, LOW);
+    if (i & 1) {
+      digitalWrite(s0, HIGH);
+    }
+    if (i & 2) {
+      digitalWrite(s1, HIGH);
+    }
     cli();  // UDRE interrupt slows this way down on arduino1.0
-    for (int i = 0 ; i < 512 ; i += 2) { // save 256 samples
+    for (int i = 0 ; i < 256 ; i += 2) { // save 256 samples
       while(!(ADCSRA & 0x10)); // wait for adc to be ready
       ADCSRA = 0xf5; // restart adc
       byte m = ADCL; // fetch adc data
@@ -50,34 +67,29 @@ char detect_treasure() {
     fft_mag_log(); // take the output of the fft
     sei();
     
-    int seven = fft_log_out[46] + fft_log_out[47] + fft_log_out[48];
-    int twelve = fft_log_out[79] + fft_log_out[80] + fft_log_out[81];
-    int seventeen = fft_log_out[112] + fft_log_out[113] + fft_log_out[114];
-      
-    if (seven > 300){
-       digitalWrite(RED,HIGH); //7kHz detected
-       delay(2000);
-       digitalWrite(RED,LOW);
-       treasure = 1;
+    int seven = fft_log_out[24] + fft_log_out[25];
+    int twelve = fft_log_out[40] + fft_log_out[41] + fft_log_out[42];
+    int seventeen = fft_log_out[57] + fft_log_out[58] + fft_log_out[59];
+    
+    if (seven > 120){
+      treasure = 1;
     }
 
-    if (twelve > 300){
-       digitalWrite(GREEN,HIGH); //12kHz detected
-       delay(2000);
-       digitalWrite(GREEN,LOW);
-       treasure = 2;
+    else if (twelve > 180){
+      treasure = 2;
     }
 
-    if (seventeen > 300){
-       digitalWrite(BLUE,HIGH); //17kHz detected
-       delay(2000);
-       digitalWrite(BLUE,LOW);
-       treasure = 3;
+    else if (seventeen > 180){
+      treasure = 3;
     }
-    for (byte i = 0 ; i < FFT_N/2 ; i++) { 
-      Serial.println(fft_log_out[i]); // send out the data
+    if (treasure != 0) {
+      ADCSRA = 0xc0; // set the adc to free running mode
+      analogRead(A0);
+      return treasure;
     }
   }
+  ADCSRA = 0xc0; // set the adc to free running mode
+  analogRead(A0);
   return treasure;
   //fclose(myserialport);
 }

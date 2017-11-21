@@ -1,4 +1,3 @@
-
 #include <Servo.h>
 #include <StackArray.h>
 //#include "FFT.h" // include the library
@@ -14,7 +13,9 @@ static int currentColumn;
 #define WESTWALL 8
 #define UNREACHABLE 16
 #define VISITED 32
-#define CURRENT 64
+#define SEVEN  64
+#define TWELVE  128
+#define SEVENTEEN 192
 unsigned char maze[5][4] = 
       { {0, 0, 0, 0},
         {0, 0, 0, 0},
@@ -29,26 +30,24 @@ unsigned char backTrackPointer = 0;
 Servo leftWheel;
 Servo rightWheel;
 //Front Right Line Sensor
-int FRlinepin = A5;
+int FRlinepin = A4;
 //Front Left Line Sensor
-int FLlinepin = A4;
+int FLlinepin = A3;
 //Back Right Line Sensor
 int BRlinepin = A2;
 //Back Left Line Sensor
 int BLlinepin = A1;
 int leftWheelpin = 5;
-int rightWheelpin = 3;
+int rightWheelpin = 6;
 //Front Wall Sensor
-int wallpin = A0;
-int treasurepin = A3;
+int treasurepin = A0;
 //Wall Selector
-int wallbit1 = 6;
-int wallbit0 = 2;
-int tbit0 = 7;
-int tbit1 = 8;
-int RED = 1;
-int GREEN = 0;
-int BLUE = 4;
+int s0 = 2;
+int s1 = 3;
+int s2 = 4;
+//int RED = 1;
+int GREEN = 8;
+int BLUE = 7;
 
 
 //Wall MUX Pins Digital 2, 6
@@ -141,7 +140,7 @@ bool detectJunction(){
   }
 }
 
-void stepPastJunction() {
+void stepPastJunction() {  
   leftWheel.write(180);
   rightWheel.write(0);
   int BR = analogRead(BRlinepin);
@@ -154,11 +153,12 @@ void stepPastJunction() {
   rightWheel.write(90);
 }
 
-bool detectLeftWall() {
-  digitalWrite(wallbit1, LOW);
-  digitalWrite(wallbit0, LOW);
+bool detectLeftWall() {  
+  digitalWrite(s2, LOW);
+  digitalWrite(s1, LOW);
+  digitalWrite(s0, LOW);
 
-  int wall = analogRead(wallpin);
+  int wall = analogRead(treasurepin);
   
   if (wall>250) {
     return true;
@@ -168,12 +168,12 @@ bool detectLeftWall() {
   }
 }
 
-bool detectFrontWall() {
-  digitalWrite(wallbit1, LOW);
-  digitalWrite(wallbit0, HIGH);
+bool detectFrontWall() {  
+  digitalWrite(s2, LOW);
+  digitalWrite(s1, LOW);
+  digitalWrite(s0, HIGH);
   
-  
-  int wall = analogRead(wallpin);
+  int wall = analogRead(treasurepin);
   
   if (wall>250) {
     return true;
@@ -184,10 +184,11 @@ bool detectFrontWall() {
 }
 
 bool detectRightWall() {
-  digitalWrite(wallbit1, HIGH);
-  digitalWrite(wallbit0, LOW);
+  digitalWrite(s2, LOW);
+  digitalWrite(s1, HIGH);
+  digitalWrite(s0, LOW);
 
-  int wall = analogRead(wallpin);
+  int wall = analogRead(treasurepin);
   
   if (wall>250) {
     return true;
@@ -197,8 +198,11 @@ bool detectRightWall() {
   }
 }
 void check(){
+  Serial.print("Front wall ");
   Serial.println(detectFrontWall());
+  Serial.print("Right wall ");
   Serial.println(detectRightWall());
+  Serial.print("Left wall ");
   Serial.println(detectLeftWall());
   if(detectFrontWall()){
     if(dir == 0){
@@ -439,25 +443,40 @@ void moveWest(){
   maze[currentRow][currentColumn] |= VISITED;
 }
 
+void checkTreasure(){
+  char treasure = detect_treasure();
+  if (treasure ==1){
+    digitalWrite(GREEN, HIGH);
+    digitalWrite(BLUE, HIGH);
+    maze[currentRow][currentColumn] |= SEVEN;
+  }
+  if(treasure==2){
+    digitalWrite(GREEN, HIGH);
+    maze[currentRow][currentColumn] |= TWELVE;
+  }
+  if (treasure ==3){
+    digitalWrite(BLUE, HIGH);
+    maze[currentRow][currentColumn] |= SEVENTEEN;
+  }
+  
+}
+
 void setup() {
   // put your setup code here, to run once:
   pinMode(FRlinepin, INPUT);
   pinMode(FLlinepin, INPUT);
   pinMode(BRlinepin, INPUT);
   pinMode(BLlinepin, INPUT);
-  pinMode(wallpin, INPUT);
   pinMode(treasurepin, INPUT);
-  pinMode(wallbit0, OUTPUT);
-  pinMode(wallbit1, OUTPUT);
-  pinMode(tbit0, OUTPUT);
-  pinMode(tbit1, OUTPUT);
-  pinMode(RED, OUTPUT);
+  pinMode(s2, OUTPUT);
+  pinMode(s1, OUTPUT);
+  pinMode(s0, OUTPUT);
+  //pinMode(RED, OUTPUT);
   pinMode(GREEN, OUTPUT);
   pinMode(BLUE, OUTPUT);
   
   Serial.begin(9600);          //  setup serial
 
-  pinMode(4, OUTPUT);
   leftWheel.attach(leftWheelpin);
   rightWheel.attach(rightWheelpin);
   leftWheel.write(90);
@@ -466,7 +485,10 @@ void setup() {
   currentColumn = 3; 
   dir = 0;
   radio_setup();
-  treasure_setup();
+  //treasure_setup();
+  //digitalWrite(RED, LOW);
+  digitalWrite(GREEN, LOW);
+  digitalWrite(BLUE, LOW);
   
   
   
@@ -482,30 +504,47 @@ void loop() {
 //  while(digitalRead(buttonpin)==0){
 //    Serial.println("Button Not Pressed");
 //  }
-  maze[4][3] |= (CURRENT) | (VISITED);
+
+
+  maze[4][3] |= VISITED;
   check();
-  Serial.print("direction ");
-  Serial.println(dir);
-  Serial.println(currentRow);
-  Serial.println(currentColumn);
-  Serial.println(maze[currentRow][currentColumn]);
+  //checkTreasure();
+  //transmit_node(maze[currentRow][currentColumn], currentRow, currentColumn);
   possibleMove();
   while(backTrackPointer != 0){
     check();
-    Serial.print("direction ");
-    Serial.println(dir);
-    Serial.print("Row, Column:");
-    Serial.print(currentRow);
-    Serial.println(currentColumn);
-    Serial.println(maze[currentRow][currentColumn]);
+    //checkTreasure();
+    //transmit_node(maze[currentRow][currentColumn], currentRow, currentColumn);
     possibleMove();
+    //digitalWrite(RED, LOW);
+    digitalWrite(GREEN, LOW);
+    digitalWrite(BLUE, LOW);
   }
   while(1){
-    digitalWrite(4, HIGH);    
+    //digitalWrite(4, HIGH);    
   }
-
-  
- 
+/*
+  char treasure = detect_treasure();
+  if (treasure == 1) {
+    Serial.println("IN HERE 1");
+    digitalWrite(GREEN, HIGH);
+    digitalWrite(BLUE, HIGH);
+    delay(2000);
+    digitalWrite(GREEN, LOW);
+    digitalWrite(BLUE, LOW);
+  }
+  if (treasure == 2) {
+    Serial.println("IN HERE 2");
+    digitalWrite(GREEN, HIGH);
+    delay(2000);
+    digitalWrite(GREEN, LOW);
+  }
+  if (treasure == 3) {
+    Serial.println("IN HERE 3");
+    digitalWrite(BLUE, HIGH);
+    delay(2000);
+    digitalWrite(BLUE, LOW);
+  }*/
    
   
   
