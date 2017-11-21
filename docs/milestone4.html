@@ -84,6 +84,375 @@
                 </div>
                 
         </div>
+          <div class="wrapper style2">
+                    <div class="title">Robot</div>
+                    <div id="main" class="container">
+                        <header class="style1">
+                            <h2>MUX</h2>
+                            </header>
+                            <p>
+                            In the previous milestone, we discussed how our mux was working improperly and not outputting the correct values. Turns out, we forgot to 
+                            initialize the pinmode of the digital pins used for the select signal and that was causing incorrect readings. With this simple fix, our muxes work properly.
+                            </p>
+                            <p>
+
+                            Another issue we came accross while working on this milestone was an inadequate number of digital pins. In our previous design, we had decided to use 
+                            two muxes, one for the wall sensors and one for the treasure sensors. This meant we needed digital pins for each select signal. Our radio already takes 
+                            up digital pins 9-12 and that cannot be changed as those pins are required for SPI communication. We also needed pins for the LEDs to show which frequency
+                            of treasure we have found. Each servo takes up a digital PWM pin as well. Due to our limited amount of digital pins (only 5 left after the radio and servos
+                            are plugged in), we decided to simply use one mux for both the treasure and wall sensors. We needed 3 digital select bits for the 8 to 1 mux and the remaining 
+                            2 digital pins are used for the LEDs. The select signal and which signal they correspond with is as follows:
+                            <style>
+		                        table {
+		                            border-collapse: collapse;
+		                            width: 50%;
+		                        }
+
+		                        td, th {
+		                            border: 1px solid #dddddd;
+		                            text-align: center;
+		                            padding: 8px;
+		                        }
+		                        </style>
+		                        <center>
+		                            <table>
+		                                <tr>
+		                                    <th>Select Bits</th>
+		                                    <th>Input Number</th>
+		                                    <th>Sensor Output</th>
+		                                </tr>
+		                                <tr>
+		                                    <td>000</td>
+		                                    <td>Y0</td>
+		                                    <td>Left Wall Sensor</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>001</td>
+		                                    <td>Y1</td>
+		                                    <td>Front Wall Sensor</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>010</td>
+		                                    <td>Y2</td>
+		                                    <td>Right Wall Sensor</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>011</td>
+		                                    <td>Y3</td>
+		                                    <td>Empty</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>100</td>
+		                                    <td>Y4</td>
+		                                    <td>Left Treasure Sensor</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>101</td>
+		                                    <td>Y5</td>
+		                                    <td>Front Treasure Sensor</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>110</td>
+		                                    <td>Y6</td>
+		                                    <td>Right Treasure Sensor</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>111</td>
+		                                    <td>Y7</td>
+		                                    <td>Empty</td>
+		                                </tr>
+		                            </table>
+		                        </center>
+
+		                        In the future, we will also add our microphone to one of the empty input slots. 
+                               
+                            </p>
+                        
+                        <header class="style1">
+                            <h2>Treasure Sensors</h2>
+                            </header>
+                            <p>
+                            We positioned 3 treasure sensors on the left, front and right sides of our robot. Below is a picture showing the configuration:
+
+                            Our treasure sensor code from lab 2 only needed minor changes when incorporating it into our main algorithm. We created two 
+                            different functions for our main code. The first is called detect_treasure() and returns a character. This character 
+                            signifies if there is no treasure (returns 0), the treasure is 7kHz (returns 1), the treasure is 12 kHz (returns 2) or 
+                            the treasure is 17 kHz (returns 3). This function also iterates through each of the select bits as follows in order to 
+                            check all 3 sensors. 
+                            <pre><code>
+                            			digitalWrite(s2, HIGH);
+							  for (int i = 0; i < 3; i++) {
+							    digitalWrite(s0, LOW);
+							    digitalWrite(s1, LOW);
+							    if (i & 1) {
+							      digitalWrite(s0, HIGH);
+							    }
+							    if (i & 2) {
+							      digitalWrite(s1, HIGH);
+							    }
+                            </code></pre><br />
+
+
+                            </p>
+                            <p>
+                            The biggest change we needed to make to our treasure sensor code was the number of bins we were using. We originally defined
+                            FFT_N as 256, but quickly realized this takes up a lot of memory on the arduino and would potentially cause issues. In order
+                            to fix this, we reduced the amount of bins from 256 to 128. Becuase the bins were now of different widths and contained different
+                            frequencies, we analyzed the bin outputs when a treasure of each frequency was present. We knew the bin numbers that we should
+                            be checking would be around half the bin number of the original bins we checked. Below is an example of a graph of the sensor
+                            output vs. the bin number when a 12 kHz treasure is present. 
+                            <center>
+                            <a href="#">
+                                <img src="assets/images/IR12khz.PNG" alt="" style="width:512px;" />
+                            </a>
+                        	</center>
+                        	Based on this graph, we chose to check if bins 40, 41 and 42 were all above 60. We repeated this process for the 7kHz and 17kHz
+                        	treasures and produced the following code for detect_treasure()
+                        	<pre><code>
+                        				int seven = fft_log_out[24] + fft_log_out[25];
+						    int twelve = fft_log_out[40] + fft_log_out[41] + fft_log_out[42];
+						    int seventeen = fft_log_out[57] + fft_log_out[58] + fft_log_out[59];
+						    
+						    if (seven > 120){
+						      treasure = 1;
+						    }
+
+						    else if (twelve > 180){
+						      treasure = 2;
+						    }
+
+						    else if (seventeen > 180){
+						      treasure = 3;
+						    }
+						    if (treasure != 0) {
+						      ADCSRA = 0xc0; //turn off free running mode
+						      return treasure;
+						    }
+						  }
+						  ADCSRA = 0xc0; // Turn off free running mode
+						  return treasure;
+
+                        	</code></pre><br />
+
+                        	You will also notice that at the end of our code, we needed to reset the ADCSRA so that we were not in free running mode and 
+                        	could use analogRead for the rest of our main code. The next function we wrote was checkTreasure(). This function turns 
+                        	on the appropriate LED and updates the current maze squre to reflect that there is a specific treasure present in that square
+                        	of the maze. Each position in the maze is represented as a single byte and bits 6 and 7 represent treasures. If those bits are 00, 
+                        	there is no treasure, if 01, there is a 7kHz treasure, if 10, there is a 12 kHz treasure and if 11, there is a 17 kHz treasure.
+                        	Below is the function checkTreasure().
+                        	<pre><code>
+                        	
+                        		   		#define SEVEN  64
+							#define TWELVE  128
+							#define SEVENTEEN 192
+                        	void checkTreasure(){
+							  char treasure = detect_treasure();
+							  if (treasure ==1){
+							    digitalWrite(GREEN, HIGH);
+							    digitalWrite(BLUE, HIGH);
+							    maze[currentRow][currentColumn] |= SEVEN;
+							  }
+							  if(treasure==2){
+							    digitalWrite(GREEN, HIGH);
+							    maze[currentRow][currentColumn] |= TWELVE;
+							  }
+							  if (treasure ==3){
+							    digitalWrite(BLUE, HIGH);
+							    maze[currentRow][currentColumn] |= SEVENTEEN;
+							  }
+							  
+							}
+							</code></pre><br />
+							Since we only had enough digital pins for 2 LEDs, we decided to, instead of turning on a red LED for 7kHz, turn on both the 
+							blue and green LEDs. This function is called at every junction we reach. 
+
+
+                               
+                            </p>
+                        
+                        <header class="style1">
+                            <h2>Radio</h2>
+                            </header>
+                            <p>
+                            Our Radio code was very similar to the radio code from lab 4, we just needed to change the data we were sending.
+                            We chose to send two bytes of information after every time we reach a junction and check for walls and treasures.
+                            The first byte characterizes the current sqaure the robot is in and is as follows:
+                            <style>
+		                        table {
+		                            border-collapse: collapse;
+		                            width: 50%;
+		                        }
+
+		                        td, th {
+		                            border: 1px solid #dddddd;
+		                            text-align: center;
+		                            padding: 8px;
+		                        }
+		                        </style>
+		                        <center>
+		                            <table>
+		                                <tr>
+		                                    <th>bit 7</th>
+		                                    <th>bit 6</th>
+		                                    <th>bit 5</th>
+		                                    <th>bit 4</th>
+		                                    <th>bit 3</th>
+		                                    <th>bit 2</th>
+		                                    <th>bit 1</th>
+		                                    <th>bit 0</th>
+		                                </tr>
+		                                <tr>
+		                                    <td>Treasure bit 1</td>
+		                                    <td>Treasure bit 0</td>
+		                                    <td>visited</td>
+		                                    <td>unreachable</td>
+		                                    <td>West wall present</td>
+		                                    <td>South wall present</td>
+		                                    <td>East wall present</td>
+		                                    <td>North wall present</td>
+		                                </tr>
+		                            </table>
+		                        </center>
+
+		                    We define the north wall as the wall in the direction the robot starts the maze. We assume the robot starts the maze in the 
+		                    bottom right corner.
+		                    The second byte is used the represent which square the robot is in and is as follows:
+		                    <style>
+		                        table {
+		                            border-collapse: collapse;
+		                            width: 50%;
+		                        }
+
+		                        td, th {
+		                            border: 1px solid #dddddd;
+		                            text-align: center;
+		                            padding: 8px;
+		                        }
+		                        </style>
+		                        <center>
+		                            <table>
+		                                <tr>
+		                                    <th>bit 7</th>
+		                                    <th>bit 6</th>
+		                                    <th>bit 5</th>
+		                                    <th>bit 4</th>
+		                                    <th>bit 3</th>
+		                                    <th>bit 2</th>
+		                                    <th>bit 1</th>
+		                                    <th>bit 0</th>
+		                                </tr>
+		                                <tr>
+		                                    <td>unused</td>
+		                                    <td>unused</td>
+		                                    <td>unused</td>
+		                                    <td>Row bit 2</td>
+		                                    <td>Row bit 1</td>
+		                                    <td>Row bit 0</td>
+		                                    <td>Column bit 1</td>
+		                                    <td>Column bit 0</td>
+		                                </tr>
+		                            </table>
+		                        </center>
+		                    In our main algorithm, each sqaure in the maze is already an 8 bit character that follows the 
+		                    structure of the first byte. We have a function that takes in that byte, the current row and 
+		                    the current column and then sends this information to the arduino at the base station. We store 
+		                    the two bytes in the variable data_buffer. That function is as 
+		                    follows:
+		                    <pre><code>
+		                    bool transmit_node(char node, int row, int column){
+							  char data_buffer[2];
+							  row = row<<3;
+							  char coords = row | column;
+							  data_buffer[0] = node;
+							  data_buffer[1] = coords;
+							 
+							  // First, stop listening so we can talk.
+							  radio.stopListening();
+
+							  // Take the time, and send it.  This will block until complete
+							    
+							  bool ok = radio.write( data_buffer, 2 );
+
+							  if (!ok){
+							    return false;
+							  }
+
+							  // Now, continue listening
+							  radio.startListening();
+
+							  // Wait here until we get a response, or timeout (250ms)
+							  unsigned long started_waiting_at = millis();
+							  bool timeout = false;
+							  while ( ! radio.available() && ! timeout )
+							    if (millis() - started_waiting_at > 200 )
+							      timeout = true;
+
+							  // Describe the results
+							  if ( timeout )
+							  {
+							    return false;
+							  }
+							  else
+							  {
+							    // Grab the response, compare, and send to debugging spew
+							    char got_data[2];
+							    radio.read( &got_data, 2 );
+							    if(got_data[0]!=data_buffer[0] | got_data[1]!=data_buffer[1]){
+							      return false;
+							    }
+
+							  }
+
+							}
+		                    </code></pre><br />
+
+		                    In the main code, if the function returns false when called, we send the data again. 
+
+
+
+                               
+                            </p>
+                        
+                        <header class="style1">
+                            <h2>Algorithm</h2>
+                            </header>
+                            <p>
+                               
+                            </p>
+                        
+                    
+                </div>
+                
+        </div>
+        <<div class="wrapper style3">
+                    <div class="title">Base Station</div>
+                    <div id="main" class="container">
+                        <header class="style1">
+                            <h2>Radio</h2>
+                            </header>
+                            <p>
+                               
+                            </p>
+                        
+                        <header class="style1">
+                            <h2>FPGA SPI</h2>
+                            </header>
+                            <p>
+                               
+                            </p>
+                        
+                        <header class="style1">
+                            <h2>FPGA Display</h2>
+                            </header>
+                            <p>
+                               
+                            </p>
+                        
+                     
+                    
+                </div>
+                
+        </div>
         
         
         
