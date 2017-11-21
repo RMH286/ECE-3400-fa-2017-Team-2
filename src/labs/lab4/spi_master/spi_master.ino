@@ -8,6 +8,9 @@
 #define speed 100
 
 void setup() {
+
+  int SS = 4;
+  pinMode( SS, OUTPUT);
   // put your setup code here, to run once:
   digitalWrite(SS, HIGH); // ensures SS stays high
   //SPI.beginTransaction(SPISettings(speed, MSBFIRST, SPI_MODE0));
@@ -16,9 +19,8 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  byte coord;
-  byte x;
-  byte y;
+                                                            
+  int value;
 
   //digitalWrite(SS, LOW); // SS pin is 4
   //x = 0x00 << 6;
@@ -29,37 +31,29 @@ void loop() {
 
   
   digitalWrite(SS, LOW); // SS pin is 4
-  x = 0x00 << 6;
-  delay(500);
-  y = 0x01 << 3;
-  coord = x | y;
-  SPI.transfer(coord);
+  value = 0001001100001110;
+  SPI.transfer(value);
   digitalWrite(SS, HIGH);
 
   delay(500);
 
-  digitalWrite(SS, LOW); // SS pin is 4
-  x = 0x01 << 6;
-  y = 0x01 << 3;
-  coord = x | y;
-  SPI.transfer(coord);
+ digitalWrite(SS, LOW); // SS pin is 4
+  value = 0000111100001100;
+  SPI.transfer(value);
   digitalWrite(SS, HIGH);
 
   delay(500);
-
-  digitalWrite(SS, LOW); // SS pin is 4
-  x = 0x02 << 6;
-  y = 0x01 << 3;
-  coord = x | y;
-  SPI.transfer(coord);
+   digitalWrite(SS, LOW); // SS pin is 4
+  value = 0000101100000101;
+  SPI.transfer(value);
   digitalWrite(SS, HIGH);
 
   delay(500);
-
-  digitalWrite(SS, LOW); // SS pin is 4
-  x = 0x03 << 6;
-  y = 0x01 << 3;
-  coord = x | y;
-  SPI.transfer(coord);
+   digitalWrite(SS, LOW); // SS pin is 4
+  value = 0000101000001011;
+  SPI.transfer(value);
   digitalWrite(SS, HIGH);
+
+  delay(500);
+  
 } // end of loop
