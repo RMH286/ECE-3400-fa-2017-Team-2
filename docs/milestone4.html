@@ -172,7 +172,7 @@
                             <h2>Treasure Sensors</h2>
                             </header>
                             <p>
-                            We positioned 3 treasure sensors on the left, front and right sides of our robot. Below is a picture showing the configuration:
+                            We positioned 3 treasure sensors on the left, front and right sides of our robot. 
 
                             Our treasure sensor code from lab 2 only needed minor changes when incorporating it into our main algorithm. We created two 
                             different functions for our main code. The first is called detect_treasure() and returns a character. This character 
@@ -316,7 +316,7 @@
 
 		                    We define the north wall as the wall in the direction the robot starts the maze. We assume the robot starts the maze in the 
 		                    bottom right corner.
-		                    The second byte is used the represent which square the robot is in and is as follows:
+		                    The second byte is used the represent which row and column the robot is in and is as follows:
 		                    <style>
 		                        table {
 		                            border-collapse: collapse;
@@ -417,6 +417,34 @@
                             <h2>Algorithm</h2>
                             </header>
                             <p>
+                            The main loop of our alrgorithm calls functions to check for walls, check for treasures and then 
+                            move to a new node in the maze. At each junction, we send information about that square to the base station. 
+                            Once the entire maze has been traversed and mapped, the blue and green LEDs alternate flashing on and off.
+                            The main loop of our algorithm is as follows:
+                            <pre><code>
+                              				maze[4][3] |= VISITED;
+								  check();
+								  checkTreasure();
+								  transmit_node(maze[currentRow][currentColumn], currentRow, currentColumn);
+								  possibleMove();
+								  while(backTrackPointer != 0){
+								    check();
+								    checkTreasure();
+								    transmit_node(maze[currentRow][currentColumn], currentRow, currentColumn);
+								    possibleMove();
+								    digitalWrite(GREEN, LOW);
+								    digitalWrite(BLUE, LOW);
+								  }
+								  while(1){
+								    digitalWrite(GREEN, HIGH);    
+								    delay(1000);
+								    digitalWrite(GREEN, LOW);
+								    digitalWrite(BLUE, HIGH);
+								    delay(1000);
+								    digitalWrite(BLUE, LOW);
+								  }
+                            </code></pre><br />
+
                                
                             </p>
                         
@@ -428,16 +456,57 @@
                     <div class="title">Base Station</div>
                     <div id="main" class="container">
                         <header class="style1">
-                            <h2>Radio</h2>
+                            <h2>Setup</h2>
                             </header>
                             <p>
+                            In order to recieve the bytes sent from the robot, we need an arduino with the radio on digital pins 9-13. 
+                            We also need to use SPI to communicate with the FPGA. To do this the FPGA has to also be hooked up to the 
+                            clock, MISO and MOSI lines that the radio is on (pins 13, 12, and 11 respectively). We also needed another 
+                            select pin for the FPGA which we chose to be digital pin 4. In order to read in SPI data from the radio,
+                            pin 10 needs to be set low and pin 4 needs to be set high. In order to transmit information to the fpga, 
+                            pin 10 needs to be high and 4 needs to be low. All the pins connected to the FPGA must also go through
+                            a voltage divider first to step the voltage down from 5V to 3.3V.
                                
                             </p>
                         
                         <header class="style1">
-                            <h2>FPGA SPI</h2>
+                            <h2>Radio</h2>
                             </header>
                             <p>
+                            The receiving radio code is also similar to that of lab 4. The following code shows how we read in the 
+                            bytes and then use SPI to transfer them to the FPGA.
+                            <pre><code>
+
+                            
+							if ( radio.available() )
+							  {
+							    unsigned char got_data[2];
+							    bool done = false;
+							    while (!done)
+							    {
+							      // Fetch the payload, and see if this was the last one.
+							      done = radio.read(&got_data, 2 );
+
+							      delay(20);
+
+							    }
+
+							    // First, stop listening so we can talk
+							    radio.stopListening();
+
+							    // Send the final one back.
+							    radio.write(&got_data, 2 );
+
+							    //switch to FPGA and send data
+
+							    digitalWrite(SS, LOW);
+							    SPI.transfer(got_data[2]);
+							    digitalWrite(SS, HIGH);
+
+							    // Now, resume listening so we catch the next packets.
+							    radio.startListening();
+							  }
+							  </code></pre><br />
                                
                             </p>
                         
