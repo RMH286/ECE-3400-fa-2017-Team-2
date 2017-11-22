@@ -486,7 +486,10 @@
                             </header>
                             <p>
                             The receiving radio code is also similar to that of lab 4. The following code shows how we read in the 
-                            bytes and then use SPI to transfer them to the FPGA.
+                            bytes and then use SPI to transfer them to the FPGA. We had to include the SPI Library for Arduino in order to
+                            make use of the function SPI.transfer() which indicates the Arduino will send the given information to the FPGA via
+                            SPI communication. We manipulate the low-enabled SS by using digitalWrite() to set SS to low to indicate the Arduino will
+                             be sending information.
                             <pre><code>
 
                             
