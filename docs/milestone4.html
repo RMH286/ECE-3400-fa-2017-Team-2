@@ -522,7 +522,10 @@
                             <h2>FPGA Display</h2>
                             </header>
                             <p>
-                               
+                            Our main objective was to devise a method to display the entire maze including walls, treasures, and the path itself. In order to acheive this goal, our 4x5 maze is
+                            defined by small 10x10 pixel squares. The 4x5 grid is mapped to a 36x46 grid by decomposing each original grid spacing into a thin 10x10 pixel boarder representing of the possible
+                            walls around the node. The conglomerate of remaining squares on the inside of the boarder represents a node where our robot is able to travel within the maze. We use red to indicate unvisited
+                            portions of the maze, green to indicate the current position of the robot, black for walls, and three different colors corresponding to the three treasures we might encounter in the maze.
                             </p>
                         
                      
