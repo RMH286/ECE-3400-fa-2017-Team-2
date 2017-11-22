@@ -96,7 +96,7 @@
                             </p>
                             <p>
 
-                            Another issue we came accross while working on this milestone was an inadequate number of digital pins. In our previous design, we had decided to use 
+                            Another issue we came across while working on this milestone was an inadequate number of digital pins. In our previous design, we had decided to use 
                             two muxes, one for the wall sensors and one for the treasure sensors. This meant we needed digital pins for each select signal. Our radio already takes 
                             up digital pins 9-12 and that cannot be changed as those pins are required for SPI communication. We also needed pins for the LEDs to show which frequency
                             of treasure we have found. Each servo takes up a digital PWM pin as well. Due to our limited amount of digital pins (only 5 left after the radio and servos
@@ -197,7 +197,7 @@
                             <p>
                             The biggest change we needed to make to our treasure sensor code was the number of bins we were using. We originally defined
                             FFT_N as 256, but quickly realized this takes up a lot of memory on the arduino and would potentially cause issues. In order
-                            to fix this, we reduced the amount of bins from 256 to 128. Becuase the bins were now of different widths and contained different
+                            to fix this, we reduced the amount of bins from 256 to 128. Because the bins were now of different widths and contained different
                             frequencies, we analyzed the bin outputs when a treasure of each frequency was present. We knew the bin numbers that we should
                             be checking would be around half the bin number of the original bins we checked. Below is an example of a graph of the sensor
                             output vs. the bin number when a 12 kHz treasure is present. 
@@ -236,7 +236,7 @@
 
                         	You will also notice that at the end of our code, we needed to reset the ADCSRA so that we were not in free running mode and 
                         	could use analogRead for the rest of our main code. The next function we wrote was checkTreasure(). This function turns 
-                        	on the appropriate LED and updates the current maze squre to reflect that there is a specific treasure present in that square
+                        	on the appropriate LED and updates the current maze square to reflect that there is a specific treasure present in that square
                         	of the maze. Each position in the maze is represented as a single byte and bits 6 and 7 represent treasures. If those bits are 00, 
                         	there is no treasure, if 01, there is a 7kHz treasure, if 10, there is a 12 kHz treasure and if 11, there is a 17 kHz treasure.
                         	Below is the function checkTreasure().
@@ -276,7 +276,7 @@
                             <p>
                             Our Radio code was very similar to the radio code from lab 4, we just needed to change the data we were sending.
                             We chose to send two bytes of information after every time we reach a junction and check for walls and treasures.
-                            The first byte characterizes the current sqaure the robot is in and is as follows:
+                            The first byte characterizes the current square the robot is in and is as follows:
                             <style>
 		                        table {
 		                            border-collapse: collapse;
@@ -353,7 +353,7 @@
 		                                </tr>
 		                            </table>
 		                        </center>
-		                    In our main algorithm, each sqaure in the maze is already an 8 bit character that follows the 
+		                    In our main algorithm, each square in the maze is already an 8 bit character that follows the 
 		                    structure of the first byte. We have a function that takes in that byte, the current row and 
 		                    the current column and then sends this information to the arduino at the base station. We store 
 		                    the two bytes in the variable data_buffer. That function is as 
@@ -461,17 +461,21 @@
                     <div id="main" class="container">
                         <header class="style1">
                             <h2>Setup</h2>
-                            </header>
+                        </header>
                             <p>
-                            In order to recieve the bytes sent from the robot, we need an arduino with the radio on digital pins 9-13. 
-                            We also need to use SPI to communicate with the FPGA. To do this the FPGA has to also be hooked up to the 
-                            clock, MISO and MOSI lines that the radio is on (pins 13, 12, and 11 respectively). We also needed another 
-                            select pin for the FPGA which we chose to be digital pin 4. In order to read in SPI data from the radio,
-                            pin 10 needs to be set low and pin 4 needs to be set high. In order to transmit information to the fpga, 
-                            pin 10 needs to be high and 4 needs to be low. All the pins connected to the FPGA must also go through
-                            a voltage divider first to step the voltage down from 5V to 3.3V by using 330 Ohm and 680 Ohm resistors.
-                            The picture below illustrates the radio receiver and pin 4 from the Arduino passing through a voltage divider
-                            into the inputs of the FPGA.
+                            In order to recieve the two bytes of maze information sent from the robot, we need an arduino with a wireless
+                            radio connected to digital pins 9-13. We also decided to use the SPI serial communication protocol to
+                            communicate between the base station's arduino and the FPGA. To do this, we needed four connection lines
+                            between the arduino and the FPGA: clock (SCK), MOSI (master-out, slave-in), MISO (master-in, slave-out), and
+                            slave-select (SS). The SCK, MISO, and MOSI lines are connected to arduino pins 13, 12, and 11, respectively.
+                            We also assigned the SS pin for SPI communication to be digital pin 4. In order to read in data from the
+                            wireless radio, pin 10 needs to be set low and pin 4 needs to be set high. In order to transmit date to the
+                            FPGA, pin 10 needs to be high and 4 needs to be low. All the pins connected to the FPGA must also go through
+                            a voltage divider first to step the voltage down from 5V (which is the output voltage of the arduino digital
+                            pins) to 3.3V (which is the input voltage of the GPIO pins on the FPGA) by using 330 Ohm and 680 Ohm
+                            resistors. The picture below shows the radio connected to the arduino (via the light blue wires), the arduino
+                            digital pins outputting to the voltage divider on the breadboard, and the outputs from the voltage divider
+                            connecting to four GPIO pins on the FPGA (via the orange, black, blue, and green wires).
                             
                             <center>
                             <a href="#">
@@ -483,16 +487,15 @@
                         
                         <header class="style1">
                             <h2>Radio</h2>
-                            </header>
+                        </header>
                             <p>
-                            The receiving radio code is also similar to that of lab 4. The following code shows how we read in the 
-                            bytes and then use SPI to transfer them to the FPGA. We had to include the SPI Library for Arduino in order to
-                            make use of the function SPI.transfer() which indicates the Arduino will send the given information to the FPGA via
-                            SPI communication. We manipulate the low-enabled SS by using digitalWrite() to set SS to low to indicate the Arduino will
-                             be sending information.
-                            <pre><code>
-
+                            The receiving radio code is also similar to that of lab 4. The following code shows how we read in the two
+                            data bytes and then use SPI to transfer them to the FPGA. We had to include the SPI Library for Arduino in
+                            order to make use of the function SPI.transfer() which indicates the Arduino will send the given information
+                            to the FPGA using the SPI protocol. We manipulate the low-enabled SS by using digitalWrite() to set SS to
+                            low to indicate the Arduino will be sending information.
                             
+                            <pre><code>
 							if ( radio.available() )
 							  {
 							    unsigned char got_data[2];
@@ -521,22 +524,22 @@
 							    // Now, resume listening so we catch the next packets.
 							    radio.startListening();
 							  }
-							  </code></pre><br />
-                               
+							</code></pre><br />
                             </p>
                         
                         <header class="style1">
                             <h2>FPGA Display</h2>
-                            </header>
+                        </header>
                             <p>
-                            Our main objective was to devise a method to display the entire maze including walls, treasures, and the path itself. In order to acheive this goal, our 4x5 maze is
-                            defined by small 10x10 pixel squares. The 4x5 grid is mapped to a 36x46 grid by decomposing each original grid spacing into a thin 10x10 pixel boarder representing of the possible
-                            walls around the node. The conglomerate of remaining squares on the inside of the boarder represents a node where our robot is able to travel within the maze. We use red to indicate unvisited
-                            portions of the maze, green to indicate the current position of the robot, black for walls, and three different colors corresponding to the three treasures we might encounter in the maze.
+                            Our main objective was to devise a method to display the entire maze including walls, treasures, and the
+                            path itself. In order to acheive this goal, our 4x5 maze is defined by small 10x10 pixel squares. The 4x5
+                            grid is mapped to a 36x46 grid by decomposing each original grid spacing into a thin 10x10 pixel boarder
+                            representing of the possible walls around the node. The conglomerate of remaining squares on the inside
+                            of the boarder represents a node where our robot is able to travel within the maze. We use red to indicate
+                            unvisited portions of the maze, green to indicate the current position of the robot, black for walls, and
+                            three different colors corresponding to the three treasures we might encounter in the maze.
                             </p>
                         
-                     
-                    
                 </div>
                 
         </div>
