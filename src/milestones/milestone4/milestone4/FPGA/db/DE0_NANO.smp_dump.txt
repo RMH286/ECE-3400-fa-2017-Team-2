@@ -1,0 +1,5 @@
+
+State Machine - |DE0_NANO|AUDIO:audio|time_counter
+Name time_counter.ONE_SEC 
+time_counter.0000000000000000000000000 0 
+time_counter.ONE_SEC 1 
