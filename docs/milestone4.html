@@ -444,11 +444,19 @@
 								    digitalWrite(BLUE, LOW);
 								  }
                             </code></pre><br />
-
                                
                             </p>
-                        
-                        
+                            
+                            <p>
+                                Here's a picture of our current robot and a video of our robot's current maze traversal capabilities.
+                            </p>
+                            
+                            <center>
+                                <a href="#">
+                                    <img src="assets/images/mil4_robot.jpg" alt="" style="width:512px;" />
+                                </a>
+                            </center>
+                            
                             <center>
                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/vsjqK9Usk3A" frameborder="0" allowfullscreen></iframe>
                             </center>
@@ -531,38 +539,99 @@
                             <h2>FPGA</h2>
                         </header>
                             <p>
-                            Using the FPGA, we needed to display all of the maze information on the VGA display, including the walls,
-                            any treasures, and the robot's current and previous locations. In order to display a 5x4 grid on the VGA
-                            monitor, we chose to subdivide the display into 10 pixel x 10 pixel squares. Using this convention, we
-                            made the wall widths 10 pixels and all the actual grid spaces 80 pixels x 80 pixels. With five wall spaces
-                            and four grid spaces in the x-direction and six wall spaces and five grid spaces in the y-direction, our
-                            entire maze takes up a 370 pixel x 460 pixel area on the monitor. We chose the following coloring
-                            convention for the maze:
-                            
-                            <center>
-                                <ul>
-                                    <li>Red = Unvisited grid space</li>
-                                    <li>Green = Robot's current position</li>
-                                    <li>Blue = Already visited grid space</li>
-                                    <li>Black = Wall</li>
-                                    <li>White = No Wall</li>
-                                    <li>Pink = 7 kHz treasure at that grid space</li>
-                                    <li>Yellow = 12 kHz treasure at that grid space</li>
-                                    <li>Orange = 17 kHz treasure at that grid space</li>
-                                </ul>
-                            </center>
-                            
-                            This picture shows our initialized maze before it has been traversed, with no interior walls and all
-                            unvisited grid spaces.
-                            
-                            <center>
-                            <a href="#">
-                                <img src="assets/images/maze_screen.jpg" alt="" style="width:512px;" />
-                            </a>
-                            </center>
-                            
+                                Using the FPGA, we needed to display all of the maze information on the VGA display, including the walls,
+                                any treasures, and the robot's current and previous locations. In order to display a 5x4 grid on the VGA
+                                monitor, we chose to subdivide the display into 10 pixel x 10 pixel squares. Using this convention, we
+                                made the wall widths 10 pixels and all the actual grid spaces 80 pixels x 80 pixels. With five wall spaces
+                                and four grid spaces in the x-direction and six wall spaces and five grid spaces in the y-direction, our
+                                entire maze takes up a 370 pixel x 460 pixel area on the monitor. We chose the following coloring
+                                convention for the maze:
+                                
+                                <center>
+                                    <ul>
+                                        <li>Red = Unvisited grid space</li>
+                                        <li>Green = Robot's current position</li>
+                                        <li>Blue = Already visited grid space</li>
+                                        <li>Black = Wall</li>
+                                        <li>White = No Wall</li>
+                                        <li>Pink = 7 kHz treasure at that grid space</li>
+                                        <li>Yellow = 12 kHz treasure at that grid space</li>
+                                        <li>Orange = 17 kHz treasure at that grid space</li>
+                                    </ul>
+                                </center>
+                                
+                                This picture shows our initialized maze before it has been traversed, with no interior walls and all
+                                unvisited grid spaces.
+                                
+                                <center>
+                                <a href="#">
+                                    <img src="assets/images/maze_screen.jpg" alt="" style="width:512px;" />
+                                </a>
+                                </center>
                             </p>
-                        
+                            
+                            <p>
+                                Following the maze initialization on the VGA monitor, we needed to develop a scheme to update the
+                                maze according to the incoming data from the robot. As discussed above, all the information needed
+                                to properly update the maze is encoded in the two bytes sent from the robot to the base station via
+                                the wireless radios. We needed to parse these two bytes and make the necessary changes to the maze
+                                on the display.
+                            </p>
+                            
+                            <p>
+                                Bits 4 through 2 in the second byte encode the row of the robot's current position, which can be from
+                                0 to 4 (000 to 100 in binary). Bits 1 and 0 in the second byte encode the column of the robot's
+                                current position, which can be from 0 to 3 (00 to 11 in binary). We can then map this position to the
+                                corresponding pixels on the display and set those pixels to green (for robot's current position). When
+                                the next data transmission is received by the base station, and the robot moves to another position, we
+                                can set these pixels to blue (for already visited).
+                            </p>
+                            
+                            <p>
+                                If bits 7 and 6 in the first byte ever indicate that a treasure has been found at a position, then we
+                                can set the pixels corresponding to that position on the display to the correct treasure color (pink,
+                                yellow, or orange). Bits 3 to 0 in the first byte indicate the walls surrounding the robot's current
+                                position. If, for example, bit 3 is a 1 (meaning there is a wall to the west), then we can set the
+                                80x10 pixel area to the left of the current grid space to black (indicating a wall). The same idea
+                                applies for walls to the east, south, and north.
+                            </p>
+                            
+                            <p>
+                                When we are done traversing the maze, any unvisited positions on the grid can remain colored red,
+                                indicating that they are unreachable. Additionally, we will signal "done" on the VGA display somehow
+                                (flashing pixels on the display, coloring the display a certain way, etc.).
+                            </p>
+                            
+                            <p>
+                                We will also play a "done" tune on the lab speakers when the robot has finished traversing the maze.
+                                By modifying the code we had from Lab 3 for generating sine waves of multiple frequencies, we were
+                                able to work out the frequencies and durations of the notes in "Jingle Bells." We then coded this
+                                tune into our AUDIO.v file and made an instantiation of AUDIO in our DE0_NANO.v file.
+                            </p>
+                            
+                            <pre><code>
+                                AUDIO audio(
+                                    .RESET(reset),
+                                    .CLK(CLOCK_25),
+                                    .SW(SW),
+                                    .SOUND({GPIO_1_D[22],GPIO_1_D[20],GPIO_1_D[18],GPIO_1_D[16],GPIO_1_D[14],GPIO_1_D[12],GPIO_1_D[10],GPIO_1_D[8]})
+                                );
+                            </code></pre><br />
+                            
+                            <p>
+                                A "done" signal from the robot can act as the enable signal for both the "Jingle Bells" tune on the
+                                speakers and the "done" signal on the VGA monitor.
+                            </p>
+                            
+                            <p>
+                                Below is our current base station circuitry, with the lab speakers connected to GPIO pins on the FPGA
+                                via the 8-bit R2R DAC.
+                                <center>
+                                <a href="#">
+                                    <img src="assets/images/mil4_base_station.jpg" alt="" style="width:512px;" />
+                                </a>
+                                </center>
+                            </p>
                 </div>
                 
         </div>
