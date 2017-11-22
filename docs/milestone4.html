@@ -528,16 +528,39 @@
                             </p>
                         
                         <header class="style1">
-                            <h2>FPGA Display</h2>
+                            <h2>FPGA</h2>
                         </header>
                             <p>
-                            Our main objective was to devise a method to display the entire maze including walls, treasures, and the
-                            path itself. In order to acheive this goal, our 4x5 maze is defined by small 10x10 pixel squares. The 4x5
-                            grid is mapped to a 36x46 grid by decomposing each original grid spacing into a thin 10x10 pixel boarder
-                            representing of the possible walls around the node. The conglomerate of remaining squares on the inside
-                            of the boarder represents a node where our robot is able to travel within the maze. We use red to indicate
-                            unvisited portions of the maze, green to indicate the current position of the robot, black for walls, and
-                            three different colors corresponding to the three treasures we might encounter in the maze.
+                            Using the FPGA, we needed to display all of the maze information on the VGA display, including the walls,
+                            any treasures, and the robot's current and previous locations. In order to display a 5x4 grid on the VGA
+                            monitor, we chose to subdivide the display into 10 pixel x 10 pixel squares. Using this convention, we
+                            made the wall widths 10 pixels and all the actual grid spaces 80 pixels x 80 pixels. With five wall spaces
+                            and four grid spaces in the x-direction and six wall spaces and five grid spaces in the y-direction, our
+                            entire maze takes up a 370 pixel x 460 pixel area on the monitor. We chose the following coloring
+                            convention for the maze:
+                            
+                            <center>
+                                <ul>
+                                    <li>Red = Unvisited grid space</li>
+                                    <li>Green = Robot's current position</li>
+                                    <li>Blue = Already visited grid space</li>
+                                    <li>Black = Wall</li>
+                                    <li>White = No Wall</li>
+                                    <li>Pink = 7 kHz treasure at that grid space</li>
+                                    <li>Yellow = 12 kHz treasure at that grid space</li>
+                                    <li>Orange = 17 kHz treasure at that grid space</li>
+                                </ul>
+                            </center>
+                            
+                            This picture shows our initialized maze before it has been traversed, with no interior walls and all
+                            unvisited grid spaces.
+                            
+                            <center>
+                            <a href="#">
+                                <img src="assets/images/maze_screen.jpg" alt="" style="width:512px;" />
+                            </a>
+                            </center>
+                            
                             </p>
                         
                 </div>
