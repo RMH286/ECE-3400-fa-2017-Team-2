@@ -465,7 +465,15 @@
                             select pin for the FPGA which we chose to be digital pin 4. In order to read in SPI data from the radio,
                             pin 10 needs to be set low and pin 4 needs to be set high. In order to transmit information to the fpga, 
                             pin 10 needs to be high and 4 needs to be low. All the pins connected to the FPGA must also go through
-                            a voltage divider first to step the voltage down from 5V to 3.3V.
+                            a voltage divider first to step the voltage down from 5V to 3.3V by using 330 Ohm and 680 Ohm resistors.
+                            The picture below illustrates the radio receiver and pin 4 from the Arduino passing through a voltage divider
+                            into the inputs of the FPGA.
+                            
+                            <center>
+                            <a href="#">
+                                <img src="assets/images/voltdiv.JPG" alt="" style="width:512px;" />
+                            </a>
+                        	</center>
                                
                             </p>
                         
