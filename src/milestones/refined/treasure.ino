@@ -12,6 +12,7 @@ port at 115.2kb.
 
 #include <FFT.h> // include the library
 
+#define s2 4
 #define s1 3
 #define s0 2
 

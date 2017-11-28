@@ -1,5 +1,5 @@
 #include <Servo.h>
-#include <StackArray.h>
+//#include <StackArray.h>
 //#include "FFT.h" // include the library
 #include "radio.h"
 #include "treasure.h"
@@ -493,7 +493,7 @@ void setup() {
   
   
   
-  StackArray<int> stack;
+  //StackArray<int> stack;
 
 
 }
@@ -508,12 +508,12 @@ void loop() {
 
   maze[4][3] |= VISITED;
   check();
-  //checkTreasure();
+  checkTreasure();
   //transmit_node(maze[currentRow][currentColumn], currentRow, currentColumn);
   possibleMove();
   while(backTrackPointer != 0){
     check();
-    //checkTreasure();
+    checkTreasure();
     //transmit_node(maze[currentRow][currentColumn], currentRow, currentColumn);
     possibleMove();
     //digitalWrite(RED, LOW);
