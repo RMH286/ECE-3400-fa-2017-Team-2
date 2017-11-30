@@ -3,17 +3,18 @@
 // SCK = 13
 // MISO = 12
 // MOSI = 11
-// SS = 4 
+// FPGASS = 4 
 
 #define speed 100
+#define FPGASS 4
 
 void setup() {
 
-  int SS = 4;
-  pinMode( SS, OUTPUT);
+  pinMode( FPGASS, OUTPUT);
   // put your setup code here, to run once:
-  digitalWrite(SS, HIGH); // ensures SS stays high
-  //SPI.beginTransaction(SPISettings(speed, MSBFIRST, SPI_MODE0));
+  digitalWrite(FPGASS, HIGH); // ensures SS stays high
+  digitalWrite(SS, HIGH);
+  //SPI.beginTransaction(SPISettings(20000000, MSBFIRST, SPI_MODE0));
   SPI.begin();
 } // end setup
 
@@ -22,37 +23,37 @@ void loop() {
                                                             
   int value;
 
-  //digitalWrite(SS, LOW); // SS pin is 4
+  //digitalWrite(FPGASS, LOW); // FPGASS pin is 4
   //x = 0x00 << 6;
   //y = 0x00 << 3;
   //coord = x | y;
   //SPI.transfer(coord);
-  //digitalWrite(SS, HIGH);
+  //digitalWrite(FPGASS, HIGH);
 
   
-  digitalWrite(SS, LOW); // SS pin is 4
-  value = 0001001100001110;
-  SPI.transfer(value);
-  digitalWrite(SS, HIGH);
+  digitalWrite(FPGASS, LOW); // FPGASS pin is 4
+  value = 0b0001001100001110;
+  SPI.transfer16(value);
+  digitalWrite(FPGASS, HIGH);
 
   delay(500);
 
- digitalWrite(SS, LOW); // SS pin is 4
-  value = 0000111100001100;
-  SPI.transfer(value);
-  digitalWrite(SS, HIGH);
+ digitalWrite(FPGASS, LOW); // FPGASS pin is 4
+  value = 0b0000111100001100;
+  SPI.transfer16(value);
+  digitalWrite(FPGASS, HIGH);
 
   delay(500);
-   digitalWrite(SS, LOW); // SS pin is 4
-  value = 0000101100000101;
-  SPI.transfer(value);
-  digitalWrite(SS, HIGH);
+   digitalWrite(FPGASS, LOW); // FPGASS pin is 4
+  value = 0b0000101100000101;
+  SPI.transfer16(value);
+  digitalWrite(FPGASS, HIGH);
 
   delay(500);
-   digitalWrite(SS, LOW); // SS pin is 4
-  value = 0000101000001011;
-  SPI.transfer(value);
-  digitalWrite(SS, HIGH);
+   digitalWrite(FPGASS, LOW); // FPGASS pin is 4
+  value = 0b0000101000001011;
+  SPI.transfer16(value);
+  digitalWrite(FPGASS, HIGH);
 
   delay(500);
   
