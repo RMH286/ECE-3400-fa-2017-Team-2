@@ -8,10 +8,12 @@
 #define speed 100
 #define FPGASS 4
 
-void setup() {
 
+void setup() {
+  Serial.begin(9600);
   pinMode( FPGASS, OUTPUT);
   // put your setup code here, to run once:
+  pinMode(SS, OUTPUT);
   digitalWrite(FPGASS, HIGH); // ensures SS stays high
   digitalWrite(SS, HIGH);
   //SPI.beginTransaction(SPISettings(20000000, MSBFIRST, SPI_MODE0));
@@ -34,27 +36,32 @@ void loop() {
   digitalWrite(FPGASS, LOW); // FPGASS pin is 4
   value = 0b0001001100001110;
   SPI.transfer16(value);
+  Serial.println(value,BIN);
   digitalWrite(FPGASS, HIGH);
 
-  delay(500);
+  delay(1000);
 
  digitalWrite(FPGASS, LOW); // FPGASS pin is 4
   value = 0b0000111100001100;
   SPI.transfer16(value);
+  Serial.println(value,BIN);
   digitalWrite(FPGASS, HIGH);
 
-  delay(500);
-   digitalWrite(FPGASS, LOW); // FPGASS pin is 4
+  delay(1000);
+
+  digitalWrite(FPGASS, LOW); // FPGASS pin is 4
   value = 0b0000101100000101;
   SPI.transfer16(value);
+  Serial.println(value,BIN);
   digitalWrite(FPGASS, HIGH);
 
-  delay(500);
+  delay(1000);
    digitalWrite(FPGASS, LOW); // FPGASS pin is 4
   value = 0b0000101000001011;
   SPI.transfer16(value);
+  Serial.println(value,BIN);
   digitalWrite(FPGASS, HIGH);
 
-  delay(500);
+  delay(1000);
   
 } // end of loop
