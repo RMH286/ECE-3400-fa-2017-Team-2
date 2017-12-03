@@ -56,12 +56,45 @@ void loop() {
   digitalWrite(FPGASS, HIGH);
 
   delay(1000);
-   digitalWrite(FPGASS, LOW); // FPGASS pin is 4
-  value = 0b0000101000001011;
+  digitalWrite(FPGASS, LOW); // FPGASS pin is 4
+  value = 0b0000101000000011;
   SPI.transfer16(value);
   Serial.println(value,BIN);
   digitalWrite(FPGASS, HIGH);
 
   delay(1000);
+  
+  digitalWrite(FPGASS, LOW); // FPGASS pin is 4
+  value = 0b0000100100001010;
+  SPI.transfer16(value);
+  Serial.println(value,BIN);
+  digitalWrite(FPGASS, HIGH);
+
+    delay(1000);
+  
+  digitalWrite(FPGASS, LOW); // FPGASS pin is 4
+  value = 0b0000010100001001;
+  SPI.transfer16(value);
+  Serial.println(value,BIN);
+  digitalWrite(FPGASS, HIGH);
+
+  delay(1000);
+  digitalWrite(FPGASS, LOW); // FPGASS pin is 4
+  value = 0b0000011000000011;
+  SPI.transfer16(value);
+  Serial.println(value,BIN);
+  digitalWrite(FPGASS, HIGH);
+
+  delay(1000);
+  digitalWrite(FPGASS, LOW); // FPGASS pin is 4
+  value = 0b0000011100000111;
+  SPI.transfer16(value);
+  Serial.println(value,BIN);
+  digitalWrite(FPGASS, HIGH);
+
+  delay(1000);
+  while(1){
+    
+  }
   
 } // end of loop
