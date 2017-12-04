@@ -1,16 +1,19 @@
 #define LOG_OUT 1 // use the log output function
-#define FFT_N 256 // set to 256 point fft
+#define FFT_N 128 // set to 256 point fft
 #include <FFT.h> // include the library
 
 void setup() {
   Serial.begin(115200); // use the serial port
   pinMode(12, OUTPUT);
+  digitalWrite(2, HIGH);
+  digitalWrite(3, HIGH);
+  digitalWrite(4, LOW);
 }
 
 void loop() {
   while(1) {
     cli();
-    for (int i = 0 ; i < 512 ; i += 2) {
+    for (int i = 0 ; i < 256 ; i += 2) {
       fft_input[i] = analogRead(A0); // <-- NOTE THIS LINE
       fft_input[i+1] = 0;
     }

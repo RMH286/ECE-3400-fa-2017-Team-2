@@ -48,7 +48,7 @@ void radio_setup(void)
   //
   radio.setPayloadSize(2);
 
-  Serial.begin(57600);
+  //Serial.begin(57600);
 
   //
   // Setup and configure rf radio
@@ -92,15 +92,17 @@ void radio_setup(void)
   //
   // Dump the configuration of the rf unit for debugging
   //
-
-  radio.printDetails();
+  Serial.println("finished setup");
 }
 bool transmit_node(char node, int row, int column){
   char data_buffer[2];
-  row = row<<3;
+  row = row<<2;
   char coords = row | column;
-  data_buffer[0] = node;
-  data_buffer[1] = coords;
+  data_buffer[1] = node;
+  data_buffer[0] = coords;
+  Serial.println("data to send");
+  Serial.println( data_buffer[0]);
+  Serial.println( data_buffer[1]);
 
 
 
@@ -115,9 +117,10 @@ bool transmit_node(char node, int row, int column){
 
   // Take the time, and send it.  This will block until complete
     
-  bool ok = radio.write( data_buffer, 2 );
+  bool ok = radio.write( &data_buffer, 2);
 
   if (!ok){
+    Serial.println("not sending");
     return false;
   }
 
@@ -134,6 +137,7 @@ bool transmit_node(char node, int row, int column){
   // Describe the results
   if ( timeout )
   {
+    Serial.println("timeout");
     return false;
   }
   else
@@ -142,6 +146,7 @@ bool transmit_node(char node, int row, int column){
     char got_data[2];
     radio.read( &got_data, 2 );
     if(got_data[0]!=data_buffer[0] | got_data[1]!=data_buffer[1]){
+      Serial.println("Not correct");
       return false;
     }
 
