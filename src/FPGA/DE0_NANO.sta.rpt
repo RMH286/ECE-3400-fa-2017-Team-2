@@ -1,5 +1,5 @@
 TimeQuest Timing Analyzer report for DE0_NANO
-Mon Dec 04 00:14:41 2017
+Mon Dec 04 09:50:09 2017
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -100,12 +100,12 @@ agreement for further details.
 ; Number detected on machine ; 8           ;
 ; Maximum allowed            ; 4           ;
 ;                            ;             ;
-; Average used               ; 1.03        ;
+; Average used               ; 1.04        ;
 ; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processors 2-4         ;   1.2%      ;
+;     Processors 2-4         ;   1.4%      ;
 +----------------------------+-------------+
 
 
@@ -114,7 +114,7 @@ agreement for further details.
 +---------------+--------+--------------------------+
 ; SDC File Path ; Status ; Read at                  ;
 +---------------+--------+--------------------------+
-; DE0_NANO.SDC  ; OK     ; Mon Dec 04 00:14:32 2017 ;
+; DE0_NANO.SDC  ; OK     ; Mon Dec 04 09:50:02 2017 ;
 +---------------+--------+--------------------------+
 
 
@@ -817,7 +817,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 ; Illegal Clocks                  ; 0     ; 0    ;
 ; Unconstrained Clocks            ; 1     ; 1    ;
 ; Unconstrained Input Ports       ; 4     ; 4    ;
-; Unconstrained Input Port Paths  ; 1357  ; 1357 ;
+; Unconstrained Input Port Paths  ; 1358  ; 1358 ;
 ; Unconstrained Output Ports      ; 20    ; 20   ;
 ; Unconstrained Output Port Paths ; 57    ; 57   ;
 +---------------------------------+-------+------+
@@ -919,7 +919,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime TimeQuest Timing Analyzer
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Mon Dec 04 00:14:29 2017
+    Info: Processing started: Mon Dec 04 09:49:59 2017
 Info: Command: quartus_sta DE0_NANO -c DE0_NANO
 Info: qsta_default_script.tcl version: #1
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
@@ -992,8 +992,8 @@ Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime TimeQuest Timing Analyzer was successful. 0 errors, 8 warnings
     Info: Peak virtual memory: 713 megabytes
-    Info: Processing ended: Mon Dec 04 00:14:41 2017
-    Info: Elapsed time: 00:00:12
+    Info: Processing ended: Mon Dec 04 09:50:09 2017
+    Info: Elapsed time: 00:00:10
     Info: Total CPU time (on all processors): 00:00:03
 
 

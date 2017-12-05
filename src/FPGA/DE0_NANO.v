@@ -218,6 +218,7 @@ module DE0_NANO(
 				state = 3'b001;
 				check = 1'b0;
 				LAST_POS = 16'bxxx10011xxxxxxxx;
+				doneaudio = 1'b0;
 		end
 		
 		else if (DONE == 1'b1 && state == 3'b001) begin
