@@ -86,10 +86,13 @@
                 <div id="intro-wrapper" class="wrapper style2">
                     <div class="title">FPGA</div>
                     <section id="intro" class="container">
+                        <header class="style1">
+                            <h2>Confronting Our Problems</h2>
+                        </header>
                         <p>
                             Following Milestone 4, we encountered several issues regarding our FPGA code resulting in random pixelation and incorrect locations
                             being colored in. We were able to initialize and color the starting maze correctly, but when we coded the Arduino to send hard-coded
-                            instruction values via SPI the problems surfaced. Our grid was coloered by having an always (*) block with combinational logic to assign
+                            instruction values via SPI the problems surfaced. Our grid was colored by having an always (*) block with combinational logic to assign
                             each small pixel segment to a color. Since our grid was being randomly colored we figured that these statements were being called out of order
                             within the body of our code. To correct this issue, we decided to implement a state machine with 8 states to help debugging with an emphasis on
                             individually separating different pixel locations where we would color. This is the reason why Treasure and Current Location coloring share the same
@@ -109,8 +112,8 @@
                         </p>
                         
                         <p>
-                            We followed the same grid mapping scheme in Milestone 4 by dividing the entire screen into 10x10 pixel grids with our maze being spanned by 37x46 of these pixel grids
-                            for a total area of 370x460 pixels. The actual maze represented by a 4x5 grid would be treated as a 9x11 grid by our FPGA to account for all of the walls in addition to
+                            We followed the same grid mapping scheme in Milestone 4 by dividing the entire screen into 10x10 pixel grids with our maze being spanned by 36x45 of these pixel grids
+                            for a total area of 360x450 pixels. The actual maze represented by a 4x5 grid would be treated as a 9x11 grid by our FPGA to account for all of the walls in addition to
                             all possible grid spaces. As the final competition neared, we realized the colors we chose to initially color the maze for Milestone 4 utilized Red, Green, and Blue to represent other
                             features of the maze instead of Treasures. Below is a list of the updated color scheme for our maze:
                             <center>
@@ -126,6 +129,63 @@
                                     </ul>
                                 </center>
                         </p>
+                        
+                        <header class="style1">
+                            <h2>State 000: Initialize/ Reset</h2>
+                        </header>
+                        
+                        <p>
+                        To incorporate a state machine effectively, we wanted to have our robot functions synced with the FPGA clock to avoid the possibility of floating values,
+                        which likely could have been the reason for the pixelation we were experiencing. State 000 is when we reset of initialize the maze, so we use nested for loops
+                        to cycle through every grid position in our entire 36x45 maze to color all node location turqoise for unvisited, the perimeter walls black to indicate the boundaries of the maze,
+                        and all interior walls white since we are unsure if there is a wall there or not. We also initialize our xy- position to be at the bottom right of the maze because this is
+                        a precondition of the competition. Our last position is then updated to have the xy- position value in binary to represent starting at the bottom right in our data representation scheme
+                        before moving onto State 001. 
+                        </p>
+                        
+                         <pre><code class="cpp">
+                        always @ (posedge CLOCK_25) begin       // Set always block to posedge CLK 
+                            if (reset) begin    // Condition for State 000
+		
+                            integer i;
+                            integer j;
+                
+                            for (i = 0; i < 37; i=i+1) begin    // Loop through pixel grid
+                                for (j = 0; j < 46; j=j+1) begin 
+                                
+                                    wall_grid[i][j] = 3'b000;   // Color all unvisited turqoise
+                                    
+                                    if (i%9 == 0) begin         // Color all walls white to start
+                                        wall_grid[i][j] = 3'b011; 
+                                    end
+                                        
+                                    if (j%9 == 0) begin         // Color all walls white to start
+                                        wall_grid[i][j] = 3'b011;
+                                    end
+                                    if (i%36 == 0) begin        // Color perimeter walls black
+                                        wall_grid[i][j] = 3'b100;
+                                    end
+                                    if (j%45 == 0) begin        // Color perimeter walls black
+                                        wall_grid[i][j] = 3'b100;
+                                    end
+                                    else begin                  // Close inferred latches
+                                        wall_grid[i][j] = wall_grid[i][j];
+                                    end
+                                end
+                            end
+                            
+                            xpos = 3;                           // Initialize starting at bottom right
+                            ypos = 4;
+                            state = 3'b001;                     // Next state
+                            check = 1'b0;
+                            LAST_POS = 16'bxxx10011xxxxxxxx;    // Save last position at bottom right
+                        end
+                        </code></pre><br />
+                        
+                        <header class="style1">
+                            <h2>State 001: Parse Incoming Data</h2>
+                        </header>
+                        
                         
                        <p>
                         <center>
