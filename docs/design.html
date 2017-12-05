@@ -143,7 +143,7 @@
                         before moving onto State 001. 
                         </p>
                         
-                         <pre><code> class="cpp">
+                         <pre><code class="cpp">
                         always @ (posedge CLOCK_25) begin       // Set always block to posedge CLK 
                             if (reset) begin    // Condition for State 000
 		
@@ -179,6 +179,7 @@
                             state = 3'b001;                     // Next state
                             check = 1'b0;
                             LAST_POS = 16'bxxx10011xxxxxxxx;    // Save last position at bottom right
+                            doneaudio = 1'b0;                   // Initialize low to not play audio tone
                         end
                         </code></pre><br />
                         
@@ -187,15 +188,38 @@
                         </header>
                         
                         <p>
+                        In this state, we first check if DONE is set to HIGH which would indicate the data is ready to be read from the SPI transfer. The actual data is stored in a 16
+                        bit long register titled DOUT. We parse the 16 bits accordingly to the code below.
+                        </p>
+                        
+                        <pre><code class="cpp">
+                        else if (DONE == 1'b1 && state == 3'b001) begin
+                            CURR_POS = DOUT;                            // Save data
+                            donecheck = (CURR_POS[15:13]);              // Signals when robot is done
+                            ypos = (CURR_POS[12:10]);
+                            xpos = (CURR_POS[9:8]);
+                            treasure = CURR_POS[7:6];
+                            visited = CURR_POS[5];
+                            unreach = CURR_POS[4];
+                            wallw = CURR_POS[3];
+                            walle = CURR_POS[2];
+                            walls = CURR_POS[1];
+                            walln = CURR_POS[0];
+                            state = 3'b010;                             // Next State
+                            
+                        end
+                        </code></pre><br />
+                        
+                        <header class="style1">
+                            <h2>State 010 = Treasure and Current Location</h2>
+                        </header>
+                        
+                        <p>
                             
                         </p>
                         
                         
                         
-                        
-                        <header class="style1">
-                            <h2>State 010 = Treasure and Current Location</h2>
-                        </header>
                         
                         
                        <p>
