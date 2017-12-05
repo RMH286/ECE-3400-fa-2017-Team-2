@@ -126,6 +126,7 @@ bool transmit_node(char node, int row, int column){
 
   // Now, continue listening
   radio.startListening();
+  return true;
 
   // Wait here until we get a response, or timeout (250ms)
   unsigned long started_waiting_at = millis();
