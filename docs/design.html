@@ -89,8 +89,42 @@
                         <p>
                             Following Milestone 4, we encountered several issues regarding our FPGA code resulting in random pixelation and incorrect locations
                             being colored in. We were able to initialize and color the starting maze correctly, but when we coded the Arduino to send hard-coded
-                            instruction values via SPI the problems surfaced. 
-                            
+                            instruction values via SPI the problems surfaced. Our grid was coloered by having an always (*) block with combinational logic to assign
+                            each small pixel segment to a color. Since our grid was being randomly colored we figured that these statements were being called out of order
+                            within the body of our code. To correct this issue, we decided to implement a state machine with 8 states to help debugging with an emphasis on
+                            individually separating different pixel locations where we would color. This is the reason why Treasure and Current Location coloring share the same
+                            state, and each wall is split up into a new state. Below indicates the states we chose to divide our FPGA's function into independent sections:
+                            <center>
+                                    <ul>
+                                        <li>State 000 = Initialize/ Reset</li>
+                                        <li>State 001 = Parse Incoming Data</li>
+                                        <li>State 010 = Treasure and Current Location Color</li>
+                                        <li>State 011 = West Wall Color</li>
+                                        <li>State 100 = East Wall Color</li>
+                                        <li>State 101 = South Wall Color</li>
+                                        <li>State 110 = North Wall Color</li>
+                                        <li>State 111 = Done and Audio</li>
+                                    </ul>
+                                </center>
+                        </p>
+                        
+                        <p>
+                            We followed the same grid mapping scheme in Milestone 4 by dividing the entire screen into 10x10 pixel grids with our maze being spanned by 37x46 of these pixel grids
+                            for a total area of 370x460 pixels. The actual maze represented by a 4x5 grid would be treated as a 9x11 grid by our FPGA to account for all of the walls in addition to
+                            all possible grid spaces. As the final competition neared, we realized the colors we chose to initially color the maze for Milestone 4 utilized Red, Green, and Blue to represent other
+                            features of the maze instead of Treasures. Below is a list of the updated color scheme for our maze:
+                            <center>
+                                    <ul>
+                                        <li>Turqoise = Unvisited/unreachable grid space</li>
+                                        <li>Yellow = Robot's current position</li>
+                                        <li>Purple = Already visited grid space</li>
+                                        <li>White = No wall</li>
+                                        <li>Black = Wall</li>
+                                        <li>Red = 7 kHz treasure at that grid space</li>
+                                        <li>Green = 12 kHz treasure at that grid space</li>
+                                        <li>Blue = 17 kHz treasure at that grid space</li>
+                                    </ul>
+                                </center>
                         </p>
                         
                        <p>
