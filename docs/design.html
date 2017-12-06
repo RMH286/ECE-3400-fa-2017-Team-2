@@ -126,7 +126,7 @@
                                 </a>
                                 </center>
 
-                                The middle two, reffered to as the "front left" and "front right" line sensors are used mainly to detect the black lines to follow throughout the maze and ensure we continue to follow them. The outer 2, reffered to as the "back left" and "back right" line sensors, are used to detect junctions within the maze.     
+                                The middle two, referred to as the "front left" and "front right" line sensors are used mainly to detect the black lines to follow throughout the maze and ensure we continue to follow them. The outer 2, reffered to as the "back left" and "back right" line sensors, are used to detect junctions within the maze.     
                             </p>
                             <p>
                                 The short range IR sensors are placed on the front and sides of the robot to detect walls in front of, to the right of, or to the left of the robot while it is traversing the maze. The 3 IR treasure sensors are also placed on the front and sides of the robot to detect treasures. Pictured below is our final version of our robot.
@@ -207,7 +207,7 @@
                             <h2>Initialization</h2>
                             </header>
                             <p>
-                                Before we begin discussing the details of our algorithm, we will first lay out the variable declarations as well as particular initializations used in the setup section of our code. We kept track of our maze using a 5 by 4 array of one byte characters, maze. Each character corresponds to the information about one square in the maze. We usee maze[current_row][current_column] to index into the array and access the information about a sqare. Each bit in the character represents a certain characteristic of that square as follows:
+                                Before we begin discussing the details of our algorithm, we will first lay out the variable declarations as well as particular initializations used in the setup section of our code. We kept track of our maze using a 5 by 4 array of one byte characters. Each character corresponds to the information about one square in the maze. We use maze[current_row][current_column] to index into the array and access the information about a square. Each bit in the character represents a certain characteristic of that square as follows:
                                 <style>
                                 table {
                                     border-collapse: collapse;
@@ -260,7 +260,7 @@
                                 In order to keep track of the current direction the robot is facing, we used an enumeration with values north, south, east and west. North corresponds to the direction we place the robot down in originally and the direction is initalized as such. 
                                 </p>
                                 <p> 
-                                    Our algorithm also needs a way to keep a backtrack que whenever the robot reaches a square with no more possible unvisited squares to move to. We use an array of size 20 to store our backtrack que which is comprised of directions to move in if we must backtrack. An int, backtrack_pointer, is ued to index into the correct value in this array. A 5 by 4 array of ints is used mark reachable squares that are still unvisited and is used to tell if when our robot has finished mapping the entire maze. This array is called possible_moves_maze. 
+                                    Our algorithm also needs a way to keep a backtrack queue whenever the robot reaches a square with no more possible unvisited squares to move to. We use an array of size 20 to store our backtrack queue which is comprised of directions to move in if we must backtrack. An int, backtrack_pointer, is used to index into the correct value in this array. A 5 by 4 array of ints is used to mark reachable squares that are still unvisited and is used to tell when our robot has finished mapping the entire maze. This array is called possible_moves_maze. 
                                 </p>
                                 <p>
                                     The setup function of our code initialzes all the pins used as well the servos. For the competition, every robot started in the bottom right corner of the maze so the current row and current column were initialzed to 4 and 3 respectively (the row and column values begin at 0). We also initialize maze[4][3] to be visited and to have a south wall, since we know our robot will be starting with a wall directly behind it.
@@ -291,7 +291,7 @@
                             }
                             </code></pre><br />
 
-                            The detect_tone() function uses the FFT library which outputs values for each bin number. In a previous lab we chose to iterate through 256 bins, but in order to save memory on the arduino, we reudced this amount to 128 bins. By printing out the values of each bin, we found that the 660Hz tone now caused a peak in bin 15. We check if this bin is produces a value over 75 to determine if the tone is being played.
+                            The detect_tone() function uses the FFT library which outputs values for each bin number. In a previous lab we chose to iterate through 256 bins, but in order to save memory on the arduino, we reduced this amount to 128 bins. By printing out the values of each bin, we found that the 660Hz tone now caused a peak in bin 15. We check if this bin contains a value over 75 to determine if the tone is being played.
 
                             <pre><code>
                             bool detect_tone() {
@@ -380,7 +380,7 @@
                             </a>
                             </center>
 
-                            The tresure function outputs an int that corresponds to the treasure frequency. Zero corresponds with no treasure, one is 7kHz, two is 12kHz, and 3 is 17kHz. Below is the full detect_treausre() function:
+                            The tresure function outputs an int that corresponds to the treasure frequency. Zero corresponds with no treasure, one is 7kHz, two is 12kHz, and three is 17kHz. Below is the full detect_treausre() function:
                             <pre><code>
                             int detect_treasure() {
                                   char TIMSK0_temp = TIMSK0;
@@ -439,7 +439,7 @@
                                       treasure = 3;
                                     }
                                   }
-                                  //TIMSK0 = TIMSK0_temp;
+                                  TIMSK0 = TIMSK0_temp;
                                   ADCSRA = ADCSRA_temp;
                                   ADMUX = ADMUX_temp;
                                   DIDR0 = DIDR0_temp;
@@ -447,7 +447,7 @@
                                 }
                             </code></pre><br />
 
-                            The transmit node function is discussed later on in the radio section. The onward() function other functions to determine if the robot is done or, if not, what the next move should be. Below is the onward() function.
+                            The transmit node function is discussed later on in the radio section. The onward() function calls other functions to determine if the robot is done or, if not, what the next move should be. Below is the onward() function.
 
                             <pre><code>
                             int onward() {
@@ -459,7 +459,7 @@
                                   return next;
                                 }
                             </code></pre><br />
-                            Each of the four possible moving functions (move_north(), move_south(), move_east(), and move_west()) determine, based on the current robot direction, how many left or right turns to make and then move the robot forward until reaching the next junction. Those functions also update the robots direction, the backtrack que, the backtrack pointer and the maze array with the correct values. Below is the function for move_north(). You will notice the opposite direction, south, is added to the backtrack que. This is so that when we are backtracking, we simply have to iterate through the array, moving in the direction that is stored in order to move backwards. 
+                            Each of the four possible moving functions (move_north(), move_south(), move_east(), and move_west()) determine, based on the current robot direction, how many left or right turns to make and then move the robot forward until reaching the next junction. Those functions also update the robots direction, the backtrack queue, the backtrack pointer and the maze array with the correct values. Below is the function for move_north(). You will notice the opposite direction, south, is added to the backtrack queue. This is so that when we are backtracking, we simply have to iterate through the array, moving in the direction that is stored in order to move backwards. 
                             <pre><code>
                             void move_north() {
                                   switch (dir) {
@@ -530,7 +530,7 @@
                                 }
                             </code></pre><br />
 
-                            To determine the best move, the best_move() function first checks if the robot is done mapping the maze. If we need to backtrack but the possible_moves array shows only zeros, then the robot is done. Otherwise, the robot iterates through the backtrack que, moving in the direction stored in the array. If the robot is not backtracking, then we always chose the best move to be in the same direction as the current robot direction if possible. If not then the robot turns right. If the robot can't turn right, it turns around (which should never actually happen since the node behind us should be already visited.) If it doesn't turn around, then it turn lefts.
+                            To determine the best move, the best_move() function first checks if the robot is done mapping the maze. If we need to backtrack but the possible_moves array shows only zeros, then the robot is done. Otherwise, the robot iterates through the backtrack queue, moving in the direction stored in the array. If the robot is not backtracking, then we always choose the best move to be in the same direction as the current robot direction if possible. If not then the robot turns right. If the robot can't turn right, it turns around (which should never actually happen since the node behind us should be already visited.) If it doesn't turn around, then it turn lefts.
 
                             <pre><code>
                             int best_move(int *possible_moves) {
@@ -583,7 +583,7 @@
                             <h2>Moving Functions</h2>
                         </header>
                         <p>
-                            While the previous functions dealt with the logic of our algorithm, the following functions we will discuss focus around the physical movement and control of the servos to ensure smooth line following and consistent junction detection. The most important function dealing with the smoothness of our robot is the move_forward() function. The fucntion reads in data from the front and left line sensors to detect whetehr they are over the black line or not. We found that any value over 800 is consistent with line sensors postioned directly above the black line. If the right one has moved off the line, then we want to adjust by turning left, so we write the right wheel to full speed and stop the left wheel. The opposited occurs if the left line sensor has moved off the line. The robot keeps correcting until both line sensors are over the black line. We stratigically placed our front right and left line sensors separated by the width of the tape so that we immediately detect any vearing off the line and correct it. The move forward function also continues the movement until a junction is detected and then proceeds to step slightly past the junction. It is important to note that, since the wheels servos are mounted in a mirrored fashion, the values written to the servos to move forward at maximum speed are oposite (0 for the right wheel and 180 for the left). Both wheels stop when written to a value of 90. Below is the move forward function.
+                            While the previous functions dealt with the logic of our algorithm, the following functions we will discuss, focus around the physical movement and control of the servos to ensure smooth line following and consistent junction detection. The most important function dealing with the smoothness of our robot is the move_forward() function. The function reads in data from the front and left line sensors to detect whether they are over the black line or not. We found that any value over 800 is consistent with line sensors positioned directly above the black line. If the right one has moved off the line, then we want to adjust by turning left, so we write the right wheel to full speed and stop the left wheel. The opposited occurs if the left line sensor has moved off the line. The robot keeps correcting until both line sensors are over the black line. We strategically placed our front right and left line sensors separated by the width of the tape so that we immediately detect any vearing off the line and correct it. The move forward function also continues the movement until a junction is detected and then proceeds to step slightly past the junction. It is important to note that, since the wheels servos are mounted in a mirrored fashion, the values written to the servos to move forward at maximum speed are oposite (0 for the right wheel and 180 for the left). Both wheels stop when written to a value of 90. Below is the move forward function.
                             <pre><code>
                             void move_forward() {
                                   while (!detect_junction()) {
@@ -607,7 +607,7 @@
                                 }
                             </code></pre><br />
 
-                            The detect_junction() function simply reads the values of the back right and back left line sensors and returns true if they ever over 800, meaning they have detected a black line. The positioning of the back right and left line sensors is also imperative. They must be far enough way from the middle as to not detect a junction if the robot vears slightly off the black line. Below is the detect_junction() function:
+                            The detect_junction() function simply reads the values of the back right and back left line sensors and returns true if they are ever over 800, meaning they have detected a black line. The positioning of the back right and left line sensors is also imperative. They must be far enough away from the middle as to not detect a junction if the robot vears slightly off the black line. Below is the detect_junction() function:
                             <pre><code>
                             bool detect_junction() {
                                   int br = analogRead(br_linepin);
@@ -661,7 +661,7 @@
                         <header class="style1">
                             <h2>Unresolved Issues and Further Optimization</h2>
                         </header>
-                        <p>Unfortately, we could not get every facet of our code working together for the final competition. Our microphone code, used to start the robot at the sound of a 660Hz tone, malfunctioned whenever used at the same time as our wall sensors. When simply running the detect_tone() function, we recieved accurate values with very little noise. However, once the wall sensors were introduced, the values would spike, introducing a lot of noise, making it impossible to detect the tone. We decided to, for the competition, simply start the robot with the push botton. Originally we planned on having an op amp combined with a band-pass filter in order to fix these issues, but, due to time constraints, were never able to. In the future, we would have liked to implement a filter similar to the one shown below:
+                        <p>Unfortately, we could not get every facet of our code working together for the final competition. Our microphone code, used to start the robot at the sound of a 660Hz tone, malfunctioned whenever used at the same time as our wall sensors. When simply running the detect_tone() function, we received accurate values with very little noise. However, once the wall sensors were introduced, the values would spike, introducing a lot of noise, making it impossible to detect the tone. We decided to, for the competition, simply start the robot with the push botton. Originally we planned on having an op amp combined with a band-pass filter in order to fix these issues, but, due to time constraints, were never able to. In the future, we would have liked to implement a filter similar to the one shown below:
                             <center>
                             <a href="#">
                                 <img src="assets/images/amplifier.png" alt="" style="width:512px;" />
@@ -670,7 +670,7 @@
                         Another portion of our code that we could not get to function properly is the treasure sensor code. Again, when just running the treasure sensor code, we received accurate values and detected all three frequencies.
                         When added to our full algorithm we started seeing some odd behavior. Whenever the treasure sensor function was called, our arduino would reset completely, returning to the while loop that required the button to be
                         pressed to start again. Our inclination was that there must be a hardware wiring issue if the arduino is resetting. An arduino reset could be due to a short in the system, although we checked all the connections and
-                        could not find any. Another possible reason for this error could be due to us resetting the ADC registers within the treasure code. Although we do not believe reassigning these values would cause a reset of the arduino, more research would need to be done to find the root of the problem. 
+                        could not find any. Another possible reason for this error could be due to us resetting the ADC registers within the treasure code. Although we do not beleive reassigning these values would cause a reset of the arduino, more research would need to be done to find the root of the problem. 
                         </p>
                         <p> In order to improve the efficiency of our alogorithm, in the future we would have adjusted the backtracking. A faster way to backtrack to any unvisited nodes is to find the direct path from the current robot location to the closest unvisited node. This would cut down a significant amount of time when mapping the full maze. Another way to optimize the algorithm is to implement something closer to Dijkstra's shortest path algorithm. All reachable nodes would be stored and the closest one to get to would be visited first. This would probably reduce the amount of nodes that we would need to revisit in order to map the entire maze.
                         </p>
