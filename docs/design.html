@@ -767,19 +767,50 @@
                         </code></pre><br />
                         
                         <p>
-                        
+                        The code below is a function we defined within our radio transmit code that is responsible for arranging our data to be transmitted. In addition
+                        this function determines if a timeout has occurred and checks with the receiving radio if the correct information was transmitted. 
                         </p>
                         
                         <pre><code class="cpp">
                         bool transmit_node(char node, int row, int column){
-                            char data_buffer[2];        // Initilize 2 bytes of data
-                            row = row<<2;               // Shift row by 2 places     
-                            char coords = row | column; // OR row and column positions
-                            data_buffer[1] = node;      
-                            data_buffer[0] = coords;
-                            Serial.println("data to send");
-                            Serial.println( data_buffer[0]);
-                            Serial.println( data_buffer[1]);
+                             char data_buffer[2];        // Initilize 2 bytes of data
+                             row = row<<2;               // Shift row by 2 places     
+                             char coords = row | column; // OR row and column positions
+                             data_buffer[1] = node;      
+                             data_buffer[0] = coords;
+                             radio.stopListening();
+                           
+                             bool ok = radio.write( &data_buffer, 2); // Check if radio is sending data
+                           
+                             if (!ok){  // Radio is not sending
+                               return false;
+                             }
+            
+                             radio.startListening();  // Continue listening
+                             return true;
+                           
+                             // Wait here until we get a response, or timeout (250ms)
+                             unsigned long started_waiting_at = millis();
+                             bool timeout = false;
+                             while ( ! radio.available() && ! timeout ) // Conditions for waiting radio
+                               if (millis() - started_waiting_at > 200 ) // Determines when timeout occurs
+                                 timeout = true;
+                           
+                             if ( timeout )     // Timeout occurs
+                             {
+                               return false;
+                             }
+                             else
+                             {
+                               // Grab the response, compare, and send to debugging spew
+                               char got_data[2];
+                               radio.read( &got_data, 2 );
+                               if(got_data[0]!=data_buffer[0] | got_data[1]!=data_buffer[1]){ // Check if data is correct
+                                 return false;
+                               }
+                           
+                             }
+                           
                         </code></pre><br />
                         
                         
@@ -790,10 +821,40 @@
                         </header>
                         
                         <p>
-                            
+                        The Arduino at our base station is responsible for receiving the data transmitted by our robot Arduino and sending the data to the FPGA via SPI.
+                        To receive, the code is very similar to the radio transmit code, but on the receive end we are only responsible for checking when data is sent and preparing
+                        it in a 16 bit format to be sent to the FPGA. The SS for the radio and FPGA SS lines are manipulated in order indicate when we are sending data.
                         </p>
                         
                         
+                        <pre><code class="cpp">
+                        void loop() {
+                             if ( radio.available() )
+                            {
+                              unsigned char got_data[2];  // Initialize 2 byte data
+                              bool done = false;
+                              while (!done)
+                              {
+                                // Fetch the payload, and see if this was the last one.
+                                done = radio.read(&got_data, 2 );
+                          
+                                delay(20);
+                              }
+                              
+                              radio.stopListening();
+                          
+                              radio.write(&got_data, 2 );   // Send the final data back.
+                              int node = got_data[1];       
+                              int coords = got_data[0] <<8; // Bit shift by 8
+                              int value = node | coords;    // Form 2 byte data packet by OR
+                              
+                              digitalWrite(SS, HIGH);       // Set Radio SS line High
+                              digitalWrite(FPGASS, LOW);    // Set FPGA SS line low to send info
+                              SPI.transfer16(value);        // Transfer 16 bit data
+                              digitalWrite(FPGASS, HIGH);   // Set back
+                              digitalWrite(SS, LOW);        // Set back
+                              
+                        </code></pre><br />
                     </section>
                 </div>
                 
