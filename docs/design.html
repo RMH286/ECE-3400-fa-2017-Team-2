@@ -72,22 +72,22 @@
                     <section id="intro" class="container">
                         <header class="style1">
                             <h2>Goal</h2>
-                            
                         </header>
                         <p>
-                        We were asked to design and build a robot capable of solving and mapping a maze autonomously, starting after a sound signal is given. This information needs to be sent back to our base station to be displayed on a monitor, and once done play a done signal through the speakers.
-                        </p>
-                        <p>
-
-                        The maze consisted of a 4x5 grid marked with black tape lines which the robot must follow, for which we used line sensors. The grid is surrounded by wooden walls, as well as some inside to form the maze, for which we used short range wall sensors for the robot to detect them and avoid running into them. And lastly treasures, which each emit a frequency of either 7kHz, 12kHz, or 17kHz. To detect these, we used IR sensors.
-                        </p>
-                        <p>
-
-                        The base station needs to receive the signals, and display the proper image on the monitor. It should display where the robot is currently at, where it has been, where there is a wall, where there is a treasure (Frequency of the treasure must also be distinguishable), and some sort of done signal, as well as  playing the done signal as aforementioned.
-                        </p>
-                        <p>
-
-                        Our robot will compete with other robots to complete the task. Which means we not only need to make it accurate, but also fast. To achieve this, we need to optimize the physical design of the robot as well as the code and maze solving algorithm  as much as we can. 
+                        We were asked to design and build a robot capable of traversing and mapping a maze autonomously, starting after a 660 Hz
+                        audible tone is played. The robot also needed to communicate maze information back to a base station, which displayed
+                        the maze on a VGA display. When the robot finished traversing the maze, we needed to display a done signal on the VGA
+                        display and play a done signal through a set of lab speakers. The maze consisted of a 4x5 grid marked with black tape
+                        lines which the robot needed to follow, using line sensors. The grid was surrounded by wooden walls and had some interior
+                        walls to form the maze. All walls needed to be detected using short range wall sensors so that the robot could collect
+                        data about the walls and avoid running into them. Lastly, there could be various IR treasures placed throughout the maze, 
+                        which each emit a frequency of either 7kHz, 12kHz, or 17kHz. To detect these, the robot used IR sensors. The base
+                        station needed to receive information from the robot wirelessly and display the proper image on the monitor. The proper
+                        image needed to include: the robot's current position, unvisited positions, already visited positions, walls, locations
+                        of IR treasures (frequency of the treasures needed to be distinguishable), and the visual done signal when ready. Our
+                        robot competed with other robots to complete the task. With this in mind, we wanted to not only make it accurate, but
+                        also fast. To achieve this, we needed to optimize the physical design of the robot, as well as the code and maze traversing
+                        algorithm, as much as we could. 
                         </p>
                     </section>
                     </div>
@@ -667,7 +667,10 @@
                                 <img src="assets/images/amplifier.png" alt="" style="width:512px;" />
                             </a>
                             </center>
-                        Another portion of our code that we could not get to function properly is the treasure sensor code. Again, when just running the treasure sensor code, we recieved accurate values and detected all three frequencies. When added to our full algorithm we started seeing some odd behavior. Whenever the treasure sensor function was called, our arduino would reset completely, returning to the while loop that required the button to be pressed to start again. Our inclination was that there must be a hardware wiring issue if the arduino is resetting. An arduino reset could be due to a short in the system, although we checked all the connections and could not find any. Another possible reason for this error could be due to us resetting the ADC registers within the treasure code. Although we do not believe reassinging these values would cause a reset of the arduino, more research would need to be done to find the root of the problem. 
+                        Another portion of our code that we could not get to function properly is the treasure sensor code. Again, when just running the treasure sensor code, we received accurate values and detected all three frequencies.
+                        When added to our full algorithm we started seeing some odd behavior. Whenever the treasure sensor function was called, our arduino would reset completely, returning to the while loop that required the button to be
+                        pressed to start again. Our inclination was that there must be a hardware wiring issue if the arduino is resetting. An arduino reset could be due to a short in the system, although we checked all the connections and
+                        could not find any. Another possible reason for this error could be due to us resetting the ADC registers within the treasure code. Although we do not believe reassigning these values would cause a reset of the arduino, more research would need to be done to find the root of the problem. 
                         </p>
                         <p> In order to improve the efficiency of our alogorithm, in the future we would have adjusted the backtracking. A faster way to backtrack to any unvisited nodes is to find the direct path from the current robot location to the closest unvisited node. This would cut down a significant amount of time when mapping the full maze. Another way to optimize the algorithm is to implement something closer to Dijkstra's shortest path algorithm. All reachable nodes would be stored and the closest one to get to would be visited first. This would probably reduce the amount of nodes that we would need to revisit in order to map the entire maze.
                         </p>
@@ -677,7 +680,7 @@
                         
                         
                         <p>
-                        Here is a video of our robot traversing a maze and sending the information to the FPGA.
+                        Here is a video of our robot traversing a maze and sending the information to the FPGA!
                         <center>
                             <iframe width="560" height="315" src="https://www.youtube.com/embed/1ABYLtSU5fY" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
                         </center>
@@ -691,9 +694,33 @@
                     <div class="title">FPGA</div>
                     <section id="intro" class="container">
                         <header class="style1">
-                            <h2>Overview of Functionality</h2>
+                            <h2>Components of Final Base Station</h2>
                         </header>
+                        <p>
+                            For the final competition, our base station consisted of the following components:
+                            <center>
+                                    <ul>
+                                        <li>1 Arduino Uno</li>
+                                        <li>1 Radio</li>
+                                        <li>1 FPGA DE0-Nano</li>
+                                        <li>2 8-bit DACs</li>
+                                        <li>2 Breadboards</li>
+                                        <li>1 Stereo Jack</li>
+                                        <li>Various Wires and Resistors</li>
+                                    </ul>
+                            </center>
+                        </p>
+                        <p>
+                            <center>
+                                <a href="#">
+                                    <img src="assets/images/Final_Base_Station.jpg" alt="" style="width:512px;" />
+                                </a>
+                            </center>
+                        </p>
                         
+                        <header class="style1">
+                            <h2>Overview of FPGA Functionality</h2>
+                        </header>
                         <p>
                             The FPGA was the single most important component of our base station. First, it needed to be able to communicate with
                             our base station's Arduino, which would be receiving maze information from our robot via the wireless radios. Second,
@@ -701,11 +728,9 @@
                             platform upon which our logic to update the VGA display in real-time was stored. Additionally, the FPGA needed to
                             output an audio tune to the speakers to play when the robot finished mapping the maze.
                         </p>
-                        
                         <header class="style1">
                             <h2>Communication with Base Station Arduino</h2>
                         </header>
-                        
                         <p>
                             As we discussed for Milestone 4, we decided to use the SPI serial communication protocol to facilitate communication
                             between the Base Station Arduino and the FPGA. To recap what was mentioned then, we needed four connection lines
@@ -871,8 +896,10 @@
                         end
                         </code></pre><br />
                         <p>
-                            Upon start-up or reset, wall_grid is initialized using the following code, which generates the initialize maze in
-                            the picture below:
+                            Notice that everything outside the 370x460 pixel range is set to color 3, which is white. Upon start-up or reset,
+                            wall_grid is initialized using the following code, which colors everything turqoise and then overlays white for
+                            the interior wall positions and black for the perimeter wall positions. This process generates the initialize maze
+                            in the picture below:
                         </p>
                         <pre><code class="cpp">
                         integer i;
@@ -907,26 +934,33 @@
                                 <a href="#">
                                     <img src="assets/images/final_maze_screen.jpg" alt="" style="width:512px;" />
                                 </a>
-                                </center>
+                            </center>
                         </p>
                         
                         <header class="style1">
                             <h2>Confronting Our Problems</h2>
                         </header>
                         <p>
-                            Following Milestone 4, we encountered several issues regarding our FPGA code resulting in random pixelation on the
+                            Following Milestone 4, we encountered several issues with the logic in our FPGA code resulting in random pixelation on the
                             VGA display and incorrect locations being colored in. We were able to initialize and color the starting maze correctly,
                             but when we coded the Arduino to send hard-coded instruction values via SPI the problems surfaced. Our grid was colored
                             by having an always @ (*) block with combinational logic assign colors to many small pixel segments. After consulting a
-                            TA, we speculated that our problems were caused by accidentally assigning colors to certain pixels multiple times in
-                            the always block. To correct this issue, we decided to implement a state machine in order to separate multiple locations
-                            in the code where colors were assigned to pixels. Our state machine had 8 states, and the following list indicates the
-                            purpose of each state:
+                            TA, we speculated that our problems were caused by unintentionally assigning colors to certain pixels multiple times in
+                            the always block.
+                        </p>
+                        
+                        <header class="style1">
+                            <h2>State Machine and Logic</h2>
+                        </header>
+                        <p>
+                            To fix our problems, we decided to implement a state machine in order to isolate multiple locations in the code where
+                            colors were assigned to pixels. Our state machine had 8 states, and the following list indicates the purpose of each
+                            state:
                             <center>
                                     <ul>
                                         <li>State 000 = Done Mapping/Play Audio</li>
                                         <li>State 001 = Parse Incoming Data from Arduino</li>
-                                        <li>State 010 = Assign Color to Current Location/Mark Treasure</li>
+                                        <li>State 010 = Color Current Location/Mark Treasure</li>
                                         <li>State 011 = Color West Wall</li>
                                         <li>State 100 = Color East Wall</li>
                                         <li>State 101 = Color South Wall</li>
@@ -938,71 +972,75 @@
                         
                         
                         <header class="style1">
-                            <h2>State 000: Initialize/ Reset</h2>
+                            <h2>Initialization</h2>
                         </header>
                         
                         <p>
-                        To incorporate a state machine effectively, we wanted to have our robot functions synced with the FPGA clock to avoid the possibility of floating values,
-                        which likely could have been the reason for the pixelation we were experiencing. State 000 is when we reset of initialize the maze, so we use nested for loops
-                        to cycle through every grid position in our entire 36x45 maze to color all node location turqoise for unvisited, the perimeter walls black to indicate the boundaries of the maze,
-                        and all interior walls white since we are unsure if there is a wall there or not. We also initialize our xy- position to be at the bottom right of the maze because this is
-                        a precondition of the competition. Our last position is then updated to have the xy- position value in binary to represent starting at the bottom right in our data representation scheme
-                        before moving onto State 001. 
+                        To incorporate a state machine effectively, we used sequential logic inside an always block triggered by the positive
+                        edge of the 25 MHz clock on the FPGA. Prior to entering the state machine, we needed to initialize the system. We used
+                        the following code to do this:
                         </p>
                         
                         <pre><code class="cpp">
                         always @ (posedge CLOCK_25) begin       // Set always block to posedge CLK 
-                            if (reset) begin    // Condition for State 000
+                            if (reset) begin    // Condition for initialization
 		
-                            integer i;
-                            integer j;
-                
-                            for (i = 0; i < 37; i=i+1) begin    // Loop through pixel grid
-                                for (j = 0; j < 46; j=j+1) begin 
-                                
-                                    wall_grid[i][j] = 3'b000;   // Color all unvisited turqoise
+                                integer i;
+                                integer j;
+                    
+                                for (i = 0; i < 37; i=i+1) begin    // Loop through pixel grid
+                                    for (j = 0; j < 46; j=j+1) begin 
                                     
-                                    if (i%9 == 0) begin         // Color all walls white to start
-                                        wall_grid[i][j] = 3'b011; 
-                                    end
+                                        wall_grid[i][j] = 3'b000;   // Color all unvisited turqoise
                                         
-                                    if (j%9 == 0) begin         // Color all walls white to start
-                                        wall_grid[i][j] = 3'b011;
-                                    end
-                                    if (i%36 == 0) begin        // Color perimeter walls black
-                                        wall_grid[i][j] = 3'b100;
-                                    end
-                                    if (j%45 == 0) begin        // Color perimeter walls black
-                                        wall_grid[i][j] = 3'b100;
-                                    end
-                                    else begin                  // Close inferred latches
-                                        wall_grid[i][j] = wall_grid[i][j];
+                                        if (i%9 == 0) begin         // Color all walls white to start
+                                            wall_grid[i][j] = 3'b011; 
+                                        end
+                                            
+                                        if (j%9 == 0) begin         // Color all walls white to start
+                                            wall_grid[i][j] = 3'b011;
+                                        end
+                                        if (i%36 == 0) begin        // Color perimeter walls black
+                                            wall_grid[i][j] = 3'b100;
+                                        end
+                                        if (j%45 == 0) begin        // Color perimeter walls black
+                                            wall_grid[i][j] = 3'b100;
+                                        end
+                                        else begin                  // To help prevent inferred latches
+                                            wall_grid[i][j] = wall_grid[i][j];
+                                        end
                                     end
                                 end
+                                
+                                xpos = 3;                           // Initialize starting at bottom right
+                                ypos = 4;
+                                state = 3'b001;                     // Next state
+                                check = 1'b0;
+                                LAST_POS = 16'bxxx10011xxxxxxxx;    // Save last position at bottom right
+                                doneaudio = 1'b0;                   // Initialize low to not play audio tone
                             end
-                            
-                            xpos = 3;                           // Initialize starting at bottom right
-                            ypos = 4;
-                            state = 3'b001;                     // Next state
-                            check = 1'b0;
-                            LAST_POS = 16'bxxx10011xxxxxxxx;    // Save last position at bottom right
-                            doneaudio = 1'b0;                   // Initialize low to not play audio tone
-                        end
                         </code></pre><br />
+                        <p>
+                            Notice that the nested for loops are the same ones that we discussed above. In addition to the for loops, we set the
+                            robot's current position to the correct starting position in the bottom right corner of the maze, set doneaudio to
+                            disabled (to be discussed later), save the current position as the last or previous position for the next cycle, and
+                            move to the first state (to be done at the next cycle).
+                        </p>
                         
                         <header class="style1">
                             <h2>State 001: Parse Incoming Data</h2>
                         </header>
                         
                         <p>
-                        In this state, we first check if DONE is set to HIGH which would indicate the data is ready to be read from the SPI transfer. The actual data is stored in a 16
-                        bit long register titled DOUT. We parse the 16 bits accordingly to the code below.
+                        In this state, we first check if the DONE signal is set to HIGH, which would indicate the data is ready to be read
+                        from the SPI transfer. The actual data is stored in a 16-bit long register titled DOUT. We parse the 16 bits according
+                        to the code below.
                         </p>
                         
                         <pre><code class="cpp">
                         else if (DONE == 1'b1 && state == 3'b001) begin
                             CURR_POS = DOUT;                            // Save data
-                            donecheck = (CURR_POS[15:13]);              // Signals when robot is done
+                            donecheck = (CURR_POS[15:13]);              // Signals when robot is done traversing maze
                             ypos = (CURR_POS[12:10]);
                             xpos = (CURR_POS[9:8]);
                             treasure = CURR_POS[7:6];
@@ -1016,16 +1054,34 @@
                             
                         end
                         </code></pre><br />
+                        <p>
+                            If DONE is not set to HIGH, we will wait in this state until it is. Finally, we move to the second state.
+                        </p>
                         
                         <header class="style1">
-                            <h2>State 010 = Treasure and Current Location</h2>
+                            <h2>State 010: Color Treasure and/or Current Location</h2>
                         </header>
                         
                         <p>
-                        For this state, we need to convert the 4x5 positions of the maze into a 9x11 format, which we accomplish by using the formula y' = 2y +1.
-                        We then check the treasure variable we parsed before to see if there was a treasure in that grid location. Depending on the treasure variable we
-                        set the current grid position in the 9x11 data_struc register to the correct color. To color to the grid, we do a series of assign statements to set the
-                        corresponding positions in the 36x45 grid to the color mapped by the 9x11 grid by using the formula y' = 9(y-1)/2 + n, where n is an offset for the grid positions.
+                            Before discussing this state, we should mention that we also maintained a secondary data structure in our logic,
+                            called data_struc. This structure was a 9x11 array of 3-bit values, which encoded the color of the corresponding
+                            grid space or wall. There were 9 horizontal positions because there were 4 grid spaces and up to 5 walls in that
+                            direction. Similarly, there were 11 vertical positions because there were 5 grid spaces and up to 6 walls in that
+                            direction. We opted to use this data structure because it seemed easier to update correctly when receiving
+                            incoming data from the robot. Then, we just needed to create a mapping between the positions in data_struc and
+                            the corresponding positions in wall_grid, which is the data structure actually displayed on the VGA monitor.
+                            Note that a single position in data_struc always maps to several positions in wall_grid. Each wall position in
+                            data_struc maps to 8 positions in wall_grid, while each grid space in data_struc maps to 64 positions in
+                            wall_grid. This allowed us to create a more accurate display, with grid spaces appearing larger than walls. The
+                            equations to map from a grid space in data_struc to 64 positions in wall_grid were (x' = 9(x-1)/2 + n) and
+                            (y' = 9(y-1)/2 + n), where x' and y' are coordinates in wall_grid, x and y are coordinates in data_struc, and n
+                            is an offset that sweeps from 1 to 8. This mapping was essential for updating the grid positions correctly.
+                        </p>
+                        <p>
+                            Now, in this state, we first convert the coordinates for the 4x5 grid received from the robot into coordinates for
+                            the 9x11 data_struc. Using the equations shown in the code below, positions 0 through 4 in terms of the robot's
+                            4x5 coordinates would map to positions 1, 3, 5, 7, and 9 in data_struc. This is important because now gaps are left
+                            for the wall information to occupy. The code for this state is:
                         </p>
                         
                         <pre><code class="cpp">
@@ -1035,17 +1091,17 @@
                             bigx = (xpos << 1) + 1;
                             
                             //Treasure & Current Position
-                            if (treasure == 2'b01) begin    // Check if there are treasures
-                                data_struc[bigx][bigy] = 3'b101;
+                            if (treasure == 2'b01) begin            //if 7 kHz treasure
+                                data_struc[bigx][bigy] = 3'b101;    //Color Red
                             end
-                            else if (treasure == 2'b10) begin
-                                data_struc[bigx][bigy] = 3'b110;
+                            else if (treasure == 2'b10) begin       //if 12 kHz treasure
+                                data_struc[bigx][bigy] = 3'b110;    //Color Green
                             end
-                            else if (treasure == 2'b11) begin
-                                data_struc[bigx][bigy] = 3'b111;
+                            else if (treasure == 2'b11) begin       //if 17 kHz treasure
+                                data_struc[bigx][bigy] = 3'b111;    //Color Blue
                             end
-                            else begin
-                                data_struc[bigx][bigy] = 3'b001;
+                            else begin                              //if no treasure
+                                data_struc[bigx][bigy] = 3'b001;    //color normal yellow for current position
                             end
                             
                             //Grid Space!
@@ -1059,31 +1115,164 @@
                             wall_grid[(9*((bigx-1)>> 1))+1][(9*((bigy-1)>> 1))+8] = data_struc[bigx][bigy];
                             
                             // etc...
+                            state = 3'b011;                     //Next State
+                        end
+                        </code></pre><br />
+                        <p>
+                            Notice that we always assign the correct color to data_struc and then map from data_struc to wall_grid. Also, note
+                            that we actually have 7 more blocks of 8 assignments to wall_grid where we increment the offset of the first index
+                            into wall_grid from 2 to 8. Finally, we move to the third state.
+                        </p>
+                        
+                        <header class="style1">
+                            <h2>States 011, 100, 101, and 110: Color Walls</h2>
+                        </header>
+                        <p>
+                            In these four consecutive states, we set the wall positions around the robot's current location to the correct colors.
+                            States 011, 100, 101, and 110 color the west, east, south, and north walls, respectively. Our code for the west wall
+                            state is:
+                        </p>
+                        <pre><code class="cpp">
+                        else if (state == 3'b011) begin
+                            //West Wall
+                            if (wallw == 1'b1) begin                    //if wall detected
+                                data_struc[bigx-1][bigy] = 3'b100;      //color wall black
+                            end
+                            else begin                                  //if no wall
+                                data_struc[bigx-1][bigy] = 3'b011;      //color position white
+                            end
+                            
+                            wall_grid[9*((bigx-1)>> 1)][(9*((bigy-1)>> 1))+1] = data_struc[bigx-1][bigy];
+                            wall_grid[9*((bigx-1)>> 1)][(9*((bigy-1)>> 1))+2] = data_struc[bigx-1][bigy];
+                            wall_grid[9*((bigx-1)>> 1)][(9*((bigy-1)>> 1))+3] = data_struc[bigx-1][bigy];
+                            wall_grid[9*((bigx-1)>> 1)][(9*((bigy-1)>> 1))+4] = data_struc[bigx-1][bigy];
+                            wall_grid[9*((bigx-1)>> 1)][(9*((bigy-1)>> 1))+5] = data_struc[bigx-1][bigy];
+                            wall_grid[9*((bigx-1)>> 1)][(9*((bigy-1)>> 1))+6] = data_struc[bigx-1][bigy];
+                            wall_grid[9*((bigx-1)>> 1)][(9*((bigy-1)>> 1))+7] = data_struc[bigx-1][bigy];
+                            wall_grid[9*((bigx-1)>> 1)][(9*((bigy-1)>> 1))+8] = data_struc[bigx-1][bigy];
+                            
+                            state = 3'b100;                             //Next State
+                            
+                        end
+                        </code></pre><br />
+                        <p>
+                            Just like when coloring grid spaces, we assign the correct color to the correct position in data_struc first. Then,
+                            we assign that color to the corresponding 8 positions in wall_grid that make up one wall. We end by moving to the
+                            next state. Note that the next three states for the other walls are implemented in almost the exact same way as
+                            this state, and, therefore, we will not discuss them here.
+                        </p>
+                        
+                        <header class="style1">
+                            <h2>State 111: Color Last Position</h2>
+                        </header>
+                        <p>
+                            After coloring the walls, state 111 colors the robot's previous location, which we originally saved during
+                            initialization. The code to accomplish this is:
+                        </p>
+                        <pre><code class="cpp">
+                        else if (state == 3'b111) begin
+                            if (check == 1'b1) begin
+                                ylast = (LAST_POS[12:10]);      //coordinates of last position
+                                xlast = (LAST_POS[9:8]);
+                                
+                                lastbigx = (2*xlast) + 1;       //convert to 9x11 format
+                                lastbigy = (2*ylast) + 1;
+                                data_struc[lastbigx][lastbigy] = 3'b010;    //color Magenta 
+                                
+                                wall_grid[9*((lastbigx-1)/2)+1][9*((lastbigy-1)/2)+1] = data_struc[lastbigx][lastbigy];
+                                wall_grid[9*((lastbigx-1)/2)+1][9*((lastbigy-1)/2)+2] = data_struc[lastbigx][lastbigy];
+                                wall_grid[9*((lastbigx-1)/2)+1][9*((lastbigy-1)/2)+3] = data_struc[lastbigx][lastbigy];
+                                wall_grid[9*((lastbigx-1)/2)+1][9*((lastbigy-1)/2)+4] = data_struc[lastbigx][lastbigy];
+                                wall_grid[9*((lastbigx-1)/2)+1][9*((lastbigy-1)/2)+5] = data_struc[lastbigx][lastbigy];
+                                wall_grid[9*((lastbigx-1)/2)+1][9*((lastbigy-1)/2)+6] = data_struc[lastbigx][lastbigy];
+                                wall_grid[9*((lastbigx-1)/2)+1][9*((lastbigy-1)/2)+7] = data_struc[lastbigx][lastbigy];
+                                wall_grid[9*((lastbigx-1)/2)+1][9*((lastbigy-1)/2)+8] = data_struc[lastbigx][lastbigy];
+                                
+                                //etc...
+                                LAST_POS = CURR_POS;            //Save current position to be last position at next cycle
+                            end
+                            check = 1'b1;
+                            if (donecheck == 3'b111) begin      //if robot has sent the done signal
+                                state = 3'b000;                 //move to state 000
+                            end
+                            else begin                          //if robot has not yet finished
+                                state = 3'b001;                 //go back to the first state and repeat
+                            end
+                        end
+                        </code></pre><br />
+                        <p>
+                            Note that check is a reg that we initialize to be 0. Hence we do not color the previous location during the first
+                            cycle, which makes sense because the robot would still be at the first position. After the first cycle, check is
+                            always 1, so we always color the previous location when in this state. Once again, there are actually 7 more blocks
+                            of 8 assignments to wall_grid in order to color a complete grid space on the VGA display. We also always save the
+                            robot's current position to be the last position at the next cycle. Finally, if the robot has sent the done signal,
+                            we move to the final state 000. If not, we move back to state 001 and cycle through all the states again.
+                        </p>
+                        
+                        <header class="style1">
+                            <h2>State 000: Done and Audio</h2>
+                        </header>
+                        <p>
+                            Once we reach the final state, meaning that the robot has just completed its maze traversal, we first set the outer
+                            perimeter of the maze on the display to green, which is our visual done signal. Then, we set doneaudio to 1, which
+                            will cause our audible done tune to play. Finally, we set state to 000, so we just stay in this final state.
+                        </p>
+                        <pre><code class="cpp">
+                        else if (state == 3'b000) begin
+                            integer i;
+                            integer j;
+                            
+                            for (i = 0; i < 37; i=i+1) begin
+                                for (j = 0; j < 46; j=j+1) begin
+                            
+                                    if (i%36 == 0) begin
+                                            wall_grid[i][j] = 3'b110;       //color outer perimeter Green
+                                    end
+                                    if (j%45 == 0) begin
+                                            wall_grid[i][j] = 3'b110;       //color outer perimeter Green
+                                    end
+                                end
+                            end
+                            doneaudio = 1'b1;                               //set audio enable to HIGH
+                            state = 3'b000;                                 //stay in this state
+                        end
                         </code></pre><br />
                         
-                        <header class="style1">
-                            <h2>State 011, 100, 101, 110 = Wall Color</h2>
-                        </header>
-                        
                         <p>
-                            
+                            The following video shows how our logic works, by displaying a simulation of a maze traversal, sent as a small set
+                            of hard-coded values from the base station Arduino. To see its full functionality, look back at the video at the
+                            end of the Movement section.
+                        </p>
+                        <p>
+                            <center>
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/urRlNmFFwDs" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+                            </center>
                         </p>
                         
                         <header class="style1">
-                            <h2>State 111 = Done and Audio</h2>
+                            <h2>Audio Tune</h2>
                         </header>
-                        
                         <p>
-                            
+                            As we discussed in Milestone 4, we needed to play an audible "done" tune on a set of lab speakers when the robot
+                            finished traversing the maze. By modifying the code we had from Lab 3 for generating sine waves of multiple frequencies,
+                            we were able to work out the frequencies and durations of the notes in "Jingle Bells." We then coded this tune into
+                            our AUDIO.v file and made the following instantiation of AUDIO in our DE0_NANO.v file:
+                        </p>
+                        <pre><code class="cpp">
+                        AUDIO audio(
+                                .RESET(reset),
+                                .CLK(CLOCK_25),
+                                .SW(doneaudio),
+                                .SOUND({GPIO_1_D[8],GPIO_1_D[10],GPIO_1_D[12],GPIO_1_D[14],GPIO_1_D[16],GPIO_1_D[18],GPIO_1_D[20],GPIO_1_D[22]})
+                        );
+                        </code></pre><br />
+                        <p>
+                            As discussed above, the doneaudio signal is only set to 1 when the final/done state is reached in the state machine.
+                            When doneaudio goes to 1, the "Jingle Bells" tune becomes enabled, meaning that the outputs on the 8 adjacent GPIO
+                            pins on the FPGA become enabled. These pins are connected, via an 8-bit R2R DAC, to a stereo jack, which the speakers
+                            plug in to.
                         </p>
                         
-                       <p>
-                        <center>
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/urRlNmFFwDs" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-                        </center>
-                       </p>
-                       
-                       
                     </section>
                 </div>
                 
@@ -1283,29 +1472,20 @@
                     </section>
                 </div>
                 
-                <div id="intro-wrapper" class="wrapper style1">
-                    <div class="title">Base Station Arduino</div>
-                    <section id="intro" class="container">
-                        <p>
-                            Text here
-                        </p>
-                        
-                    </section>
-                </div>
-                
                 <div id="intro-wrapper" class="wrapper style2">
                     <div class="title">Final Competition</div>
                     <section id="intro" class="container">
                         <p>
-                            The robot was tested the night before the competition and worked well. Unfortunately, we dropped it and broke some parts, such as the chasis, so they needed to be replaced. Upon testing it again that night after fixing it and the morning of the competition, it was still working as well.
-                            </p>
-                            <p>
+                            The robot was tested the night before the competition and worked well. Unfortunately, we dropped it and broke some parts, such as the chasis, so they needed to be replaced. Upon testing it again that night after fixing it
+                            and the morning of the competition, it was still working as well.
 
-                          After we moved downstairs, we calibrated the servos and then reuploaded the same code we used to test the robot minutes prior and it wasn’t moving at all. The bot would begin running the algorithm and reset before running through the code. After commenting out our radio transmission code we found that it was causing issues, even though it hadn’t been in the past. We ultimately commented out the portion that recieved information back from the FPGA to ensure the payload was sent properly. Once that part was commented out, our robot would function properly again. Since there was not a lot of time to fix this issue, we could not fully diagnose the problem, but a reset of the arduino typically means there is a short somewhere in the system. Even so, we are unsure of why the code would run properly with just a few lines of code commented out that previously proved no issue.
-                          </p>
-                          <p>
+                            After we moved downstairs, we calibrated the servos and then reuploaded the same code we used to test the robot minutes prior and it wasn’t moving at all. The bot would begin running the algorithm and reset before running
+                            through the code. After commenting out our radio transmission code we found that it was causing issues, even though it hadn’t been in the past. We ultimately commented out the portion that recieved information back from the
+                            FPGA to ensure the payload was sent properly. Once that part was commented out, our robot would function properly again. Since there was not a lot of time to fix this issue, we could not fully diagnose the problem, but a
+                            reset of the arduino typically means there is a short somewhere in the system. Even so, we are unsure of why the code would run properly with just a few lines of code commented out that previously proved no issue.
 
-                          During the competition, our robot was off to a good start but stopped running in the middle of the maze. We continued to reset it and tried again a few times, but it would always stop running at a different part of the maze. This led us to believe it was a problem with the battery. It Seemed like it didn’t have enough charge and was continuing to turn on and off. After charging it for a little in between rounds we ran into the same problem. We believe that perhaps our battery was damaged by shorting it or some other reason. Perhaps upon dropping it the night before something else was damage that we didn’t notice, despite it working well right up until the competition. Due to the drop, many portions of the robot had to be rewired and perhaps the wiring was not as clean as it had been in the past. Moving the robot around in the morning could have caused wires to short due to the less robust wiring done the night before. 
+                            During the competition, our robot was off to a good start but stopped running in the middle of the maze. We continued to reset it and tried again a few times, but it would always stop running at a different part of the maze.
+                            This led us to believe it was a problem with the battery. It seemed like it didn’t have enough charge and was continuing to turn on and off. After charging it for a little in between rounds we ran into the same problem. We believe that perhaps our battery was damaged by shorting it or some other reason. Perhaps upon dropping it the night before something else was damage that we didn’t notice, despite it working well right up until the competition. Due to the drop, many portions of the robot had to be rewired and perhaps the wiring was not as clean as it had been in the past. Moving the robot around in the morning could have caused wires to short due to the less robust wiring done the night before. 
                         </p>
 
                         <p>
