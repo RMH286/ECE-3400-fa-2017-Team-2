@@ -218,7 +218,7 @@
                         For this state, we need to convert the 4x5 positions of the maze into a 9x11 format, which we accomplish by using the formula y' = 2y +1.
                         We then check the treasure variable we parsed before to see if there was a treasure in that grid location. Depending on the treasure variable we
                         set the current grid position in the 9x11 data_struc register to the correct color. To color to the grid, we do a series of assign statements to set the
-                        corresponding positions in the 36x45 grid to the color mapped by the 9x11 grid by using the formula y' = 9y/2 + n, where n is an offset for the grid positions.
+                        corresponding positions in the 36x45 grid to the color mapped by the 9x11 grid by using the formula y' = 9(y-1)/2 + n, where n is an offset for the grid positions.
                         </p>
                         
                         <pre><code class="cpp">
