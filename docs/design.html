@@ -930,7 +930,7 @@
                         
                         <p>
                         In order for the robot to communicate with the base station Arduino, we utilized two Nordic nRF24L01 along with the RF24 Arduino library and "Getting Started" sketch within the library.
-                        We initialize the Arduino pins 9 and 10 with 9 being the data line between the Arduino and FPGA, while pin 10 is the SS for the SPI transfer bus. Our radios were set to transmit and receive
+                        We initialize the Arduino pins 9 and 10 with 9 being the radio enable, while pin 10 is the SS for the SPI transfer bus. Our radios were set to transmit and receive
                         on channels 4 and 5 by use of the formula 2(3D + N) + X where D is our lab data (Monday = 0), N is our team number (Team 2 = 2), and X is either 0 or 1 to identify the two radios. Since our radio
                         transmission involves sending two bytes of data, we set the payload size to 2. There are two pipes set to allow for reading and writing with respect to the transmitting and receiving radios. 
                         
