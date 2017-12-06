@@ -396,26 +396,43 @@
                         </p>
                         
                         <header class="style1">
+                            <h2>Communication with Base Station Arduino</h2>
+                        </header>
+                        
+                        <p>
+                            
+                        </p>
+                        
+                        <header class="style1">
+                            <h2>Driving VGA Monitor</h2>
+                        </header>
+                        
+                        <p>
+                            
+                        </p>
+                        
+                        <header class="style1">
                             <h2>Confronting Our Problems</h2>
                         </header>
                         <p>
-                            Following Milestone 4, we encountered several issues regarding our FPGA code resulting in random pixelation and incorrect locations
-                            being colored in. We were able to initialize and color the starting maze correctly, but when we coded the Arduino to send hard-coded
-                            instruction values via SPI the problems surfaced. Our grid was colored by having an always (*) block with combinational logic to assign
-                            each small pixel segment to a color. Since our grid was being randomly colored we figured that these statements were being called out of order
-                            within the body of our code. To correct this issue, we decided to implement a state machine with 8 states to help debugging with an emphasis on
-                            individually separating different pixel locations where we would color. This is the reason why Treasure and Current Location coloring share the same
-                            state, and each wall is split up into a new state. Below indicates the states we chose to divide our FPGA's function into independent sections:
+                            Following Milestone 4, we encountered several issues regarding our FPGA code resulting in random pixelation on the
+                            VGA display and incorrect locations being colored in. We were able to initialize and color the starting maze correctly,
+                            but when we coded the Arduino to send hard-coded instruction values via SPI the problems surfaced. Our grid was colored
+                            by having an always @ (*) block with combinational logic assign colors to many small pixel segments. After consulting a
+                            TA, we speculated that our problems were caused by accidentally assigning colors to certain pixels multiple times in
+                            the always block. To correct this issue, we decided to implement a state machine in order to separate multiple locations
+                            in the code where colors were assigned to pixels. Our state machine had 8 states, and the following list indicates the
+                            purpose of each state:
                             <center>
                                     <ul>
-                                        <li>State 000 = Initialize/ Reset</li>
-                                        <li>State 001 = Parse Incoming Data</li>
-                                        <li>State 010 = Treasure and Current Location Color</li>
-                                        <li>State 011 = West Wall Color</li>
-                                        <li>State 100 = East Wall Color</li>
-                                        <li>State 101 = South Wall Color</li>
-                                        <li>State 110 = North Wall Color</li>
-                                        <li>State 111 = Done and Audio</li>
+                                        <li>State 000 = Done Mapping/Play Audio</li>
+                                        <li>State 001 = Parse Incoming Data from Arduino</li>
+                                        <li>State 010 = Assign Color to Current Location/Mark Treasure</li>
+                                        <li>State 011 = Color West Wall</li>
+                                        <li>State 100 = Color East Wall</li>
+                                        <li>State 101 = Color South Wall</li>
+                                        <li>State 110 = Color North Wall</li>
+                                        <li>State 111 = Color Previous Location</li>
                                     </ul>
                             </center>
                         </p>
@@ -596,7 +613,16 @@
                             Text here
                         </p>
                         
-                       
+                    </section>
+                </div>
+                
+                <div id="intro-wrapper" class="wrapper style1">
+                    <div class="title">Base Station Arduino</div>
+                    <section id="intro" class="container">
+                        <p>
+                            Text here
+                        </p>
+                        
                     </section>
                 </div>
                 
@@ -607,7 +633,6 @@
                             Text here
                         </p>
                         
-                       
                     </section>
                 </div>
         
