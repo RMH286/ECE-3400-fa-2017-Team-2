@@ -262,16 +262,7 @@ int next_move() {
   if (num_moves == 0) {
     possible_moves[4] = 1;
   }
-  Serial.print("Possible Moves: ");
-  Serial.print(possible_moves[4]);
-  Serial.print(possible_moves[3]);
-  Serial.print(possible_moves[2]);
-  Serial.print(possible_moves[1]);
-  Serial.print(possible_moves[0]);
-  Serial.print("\n");
-  Serial.println(dir);
   int next_move = best_move(possible_moves);
-  Serial.println(next_move);
   return next_move;
 }
 
@@ -287,14 +278,7 @@ int best_move(int *possible_moves) {
       }
     }
     if (done) { return -1; }
-    Serial.print("backtracking");
-    Serial.println(backtrack_pointer);
-    Serial.println(backtrack[backtrack_pointer]);
-    Serial.println(backtrack[backtrack_pointer-1]);
-    Serial.println(backtrack[backtrack_pointer-2]);
     int next_move = backtrack[backtrack_pointer];
-    Serial.print("NEXT move: ");
-    Serial.println(next_move);
     return next_move;
   }
   switch (dir) {
@@ -326,7 +310,6 @@ int best_move(int *possible_moves) {
 }
 
 int onward() {
-  Serial.println("onward");
   int next = next_move();
   if (next == north) { move_north(); }
   else if (next == south) { move_south(); }
