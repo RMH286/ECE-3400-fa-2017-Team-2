@@ -610,7 +610,62 @@
                     <div class="title">Radio Transmission</div>
                     <section id="intro" class="container">
                         <p>
-                            Text here
+                        Our radio transmission followed the same data structure with the first byte characterizing the features regarding the grid space, and the second byte describing the robot location.
+                        The only addition to our Milestone 4 scheme was to change the three previusly unused bits in the second byte to indicate when the robot has finished completing the maze via DFS.
+                        When the robot completes the maze, these bits will be set to 3'b111.
+                        </p>
+                        
+                        <center>
+		                            <table>
+		                                <tr>
+		                                    <th>bit 7</th>
+		                                    <th>bit 6</th>
+		                                    <th>bit 5</th>
+		                                    <th>bit 4</th>
+		                                    <th>bit 3</th>
+		                                    <th>bit 2</th>
+		                                    <th>bit 1</th>
+		                                    <th>bit 0</th>
+		                                </tr>
+		                                <tr>
+		                                    <td>Treasure bit 1</td>
+		                                    <td>Treasure bit 0</td>
+		                                    <td>visited</td>
+		                                    <td>unreachable</td>
+		                                    <td>West wall present</td>
+		                                    <td>South wall present</td>
+		                                    <td>East wall present</td>
+		                                    <td>North wall present</td>
+		                                </tr>
+		                            </table>
+		                        </center>
+                        <center>
+		                            <table>
+		                                <tr>
+		                                    <th>bit 7</th>
+		                                    <th>bit 6</th>
+		                                    <th>bit 5</th>
+		                                    <th>bit 4</th>
+		                                    <th>bit 3</th>
+		                                    <th>bit 2</th>
+		                                    <th>bit 1</th>
+		                                    <th>bit 0</th>
+		                                </tr>
+		                                <tr>
+		                                    <td>Done bit 1</td>
+		                                    <td>Done bit 2</td>
+		                                    <td>Done bit 3</td>
+		                                    <td>Row bit 2 </td>
+		                                    <td>Row bit 1</td>
+		                                    <td>Row bit 0</td>
+		                                    <td>Column bit 1</td>
+		                                    <td>Column bit 0</td>
+		                                </tr>
+		                            </table>
+		                        </center>
+                        
+                        <p>
+                            
                         </p>
                         
                     </section>
@@ -626,7 +681,7 @@
                     </section>
                 </div>
                 
-                <div id="intro-wrapper" class="wrapper style1">
+                <div id="intro-wrapper" class="wrapper style2">
                     <div class="title">Final Competition</div>
                     <section id="intro" class="container">
                         <p>
