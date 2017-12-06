@@ -646,11 +646,25 @@
                             </code></pre><br />
                         </p>
                         <header class="style1">
-                            <h2>Unresolved Issues</h2>
+                            <h2>Unresolved Issues and Further Optimization</h2>
+                        </header>
+                        <p>Unfortately, we could not get every facet of our code working together for the final competition. Our microphone code, used to start the robot at the sound of a 660Hz tone, malfunctioned whenever used at the same time as our wall sensors. When simply running the detect_tone() function, we recieved accurate values with very little noise. However, once the wall sensors were introduced, the values would spike, introducing a lot of noise, making it impossible to detect the tone. We decided to, for the competition, simply start the robot with the push botton. Originally we planned on having an op amp combined with a band-pass filter in order to fix these issues, but, due to time constraints, were never able to. In the future, we would have liked to implement a filter similar to the one shown below:
+                            <center>
+                            <a href="#">
+                                <img src="assets/images/amplifier.png" alt="" style="width:512px;" />
+                            </a>
+                            </center>
+                        Another portion of our code that we could not get to function properly is the treasure sensor code. Again, when just running the treasure sensor code, we recieved accurate values and detected all three frequencies. When added to our full algorithm we started seeing some odd behavior. Whenever the treasure sensor function was called, our arduino would reset completely, returning to the while loop that required the button to be pressed to start again. Our inclination was that there must be a hardware wiring issue if the arduino is resetting. An arduino reset could be due to a short in the system, although we checked all the connections and could not find any. Another possible reason for this error could be due to us resetting the ADC registers within the treasure code. Although we do not believe reassinging these values would cause a reset of the arduino, more research would need to be done to find the root of the problem. 
+                        </p>
+                        <p> In order to improve the efficiency of our alogorithm, in the future we would have adjusted the backtracking. A faster way to backtrack to any unvisited nodes is to find the direct path from the current robot location to the closest unvisited node. This would cut down a significant amount of time when mapping the full maze. Another way to optimize the algorithm is to implement something closer to Dijkstra's shortest path algorithm. All reachable nodes would be stored and the closest one to get to would be visited first. This would probably reduce the amount of nodes that we would need to revisit in order to map the entire maze.
+                        </p>
+                        <header class="style1">
+                            <h2>In Action</h2>
                         </header>
                         
                         
                         <p>
+                        Here is a video of our robot traversing a maze and sending the information to the FPGA.
                         <center>
                             <iframe width="560" height="315" src="https://www.youtube.com/embed/1ABYLtSU5fY" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
                         </center>
