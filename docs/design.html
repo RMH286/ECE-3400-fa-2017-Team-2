@@ -652,9 +652,9 @@
 		                                    <th>bit 0</th>
 		                                </tr>
 		                                <tr>
-		                                    <td>Done bit 1</td>
 		                                    <td>Done bit 2</td>
-		                                    <td>Done bit 3</td>
+		                                    <td>Done bit 1</td>
+		                                    <td>Done bit 0</td>
 		                                    <td>Row bit 2 </td>
 		                                    <td>Row bit 1</td>
 		                                    <td>Row bit 0</td>
@@ -664,9 +664,79 @@
 		                            </table>
 		                        </center>
                         
+                        <header class="style1">
+                            <h2>Robot Transmission</h2>
+                        </header>
+                        
+                        <p>
+                        In order for the robot to communicate with the base station Arduino, we utilized two Nordic nRF24L01 along with the RF24 Arduino library and "Getting Started" sketch within the library.
+                        We initialize the Arduino pins 9 and 10 with 9 being the data line between the Arduino and FPGA, while pin 10 is the SS for the SPI transfer bus. Our radios were set to transmit and receive
+                        on channels 4 and 5 by use of the formula 2(3D + N) + X where D is our lab data (Monday = 0), N is our team number (Team 2 = 2), and X is either 0 or 1 to identify the two radios. Since our radio
+                        transmission involves sending two bytes of data, we set the payload size to 2. There are two pipes set to allow for reading and writing with respect to the transmitting and receiving radios. 
+                        
+                        
+                        </p>
+                        
+                        <pre><code class="cpp">
+                        #include "radio.h"                      
+                        // Hardware configuration
+                        
+                        RF24 radio(9,10);               // Set up nRF24L01 radio on SPI bus plus pins 9 & 10
+            
+                        // Radio pipe addresses for the 2 nodes to communicate.
+                        const uint64_t pipes[2] = { 0x0000000004LL, 0x0000000005LL }; // Team #2 Address is 4 and 5
+                    
+                        void radio_setup(void)
+                        {
+                          radio.setPayloadSize(2);          // 2 byte payload
+                        
+                          radio.begin();                    // Setup and configure rf radio
+                        
+                          // optionally, increase the delay between retries & # of retries
+                          radio.setRetries(15,15);
+                          radio.setAutoAck(true);
+                          radio.setChannel(0x50);           // Set the channel
+                          // RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_MED=-6dBM, and RF24_PA_HIGH=0dBm.
+                          radio.setPALevel(RF24_PA_MIN);    // Set the power
+                          //RF24_250KBPS for 250kbs, RF24_1MBPS for 1Mbps, or RF24_2MBPS for 2Mbps
+                          radio.setDataRate(RF24_250KBPS);
+            
+                          // Open 'our' pipe for writing
+                          // Open the 'other' pipe for reading, in position #1 (we can have up to 5 pipes open for reading)
+                          radio.openWritingPipe(pipes[0]);
+                          radio.openReadingPipe(1,pipes[1]);
+              
+                          radio.startListening();           // Start listening
+
+                        </code></pre><br />
+                        
+                        <p>
+                        
+                        </p>
+                        
+                        <pre><code class="cpp">
+                        bool transmit_node(char node, int row, int column){
+                            char data_buffer[2];        // Initilize 2 bytes of data
+                            row = row<<2;               // Shift row by 2 places     
+                            char coords = row | column; // OR row and column positions
+                            data_buffer[1] = node;      
+                            data_buffer[0] = coords;
+                            Serial.println("data to send");
+                            Serial.println( data_buffer[0]);
+                            Serial.println( data_buffer[1]);
+                        </code></pre><br />
+                        
+                        
+                        
+                        
+                        <header class="style1">
+                            <h2>Base Station Receive</h2>
+                        </header>
+                        
                         <p>
                             
                         </p>
+                        
                         
                     </section>
                 </div>
