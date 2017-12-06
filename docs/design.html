@@ -569,6 +569,82 @@
                         <header class="style1">
                             <h2>Moving Functions</h2>
                         </header>
+                        <p>
+                            While the previous functions dealt with the logic of our algorithm, the following functions we will discuss focus around the physical movement and control of the servos to ensure smooth line following and consistent junction detection. The most important function dealing with the smoothness of our robot is the move_forward() function. The fucntion reads in data from the front and left line sensors to detect whetehr they are over the black line or not. We found that any value over 800 is consistent with line sensors postioned directly above the black line. If the right one has moved off the line, then we want to adjust by turning left, so we write the right wheel to full speed and stop the left wheel. The opposited occurs if the left line sensor has moved off the line. The robot keeps correcting until both line sensors are over the black line. We stratigically placed our front right and left line sensors separated by the width of the tape so that we immediately detect any vearing off the line and correct it. The move forward function also continues the movement until a junction is detected and then proceeds to step slightly past the junction. It is important to note that, since the wheels servos are mounted in a mirrored fashion, the values written to the servos to move forward at maximum speed are oposite (0 for the right wheel and 180 for the left). Both wheels stop when written to a value of 90. Below is the move forward function.
+                            <pre><code>
+                            void move_forward() {
+                                  while (!detect_junction()) {
+                                    int fr = analogRead(fr_linepin);
+                                    int fl = analogRead(fl_linepin);
+
+                                    if (fr > 800 && fl < 800) {
+                                      right_pwm = 90;
+                                    }
+                                    else if (fr < 800 && fl > 800) {
+                                      left_pwm = 90;
+                                    }
+                                    else {
+                                      right_pwm = 0;
+                                      left_pwm = 180;
+                                    }
+                                    right_wheel.write(right_pwm);
+                                    left_wheel.write(left_pwm);
+                                  }
+                                  step_past_junction();
+                                }
+                            </code></pre><br />
+
+                            The detect_junction() function simply reads the values of the back right and back left line sensors and returns true if they ever over 800, meaning they have detected a black line. The positioning of the back right and left line sensors is also imperative. They must be far enough way from the middle as to not detect a junction if the robot vears slightly off the black line. Below is the detect_junction() function:
+                            <pre><code>
+                            bool detect_junction() {
+                                  int br = analogRead(br_linepin);
+                                  int bl = analogRead(bl_linepin);
+                                  if (br > 800 && bl > 800) {
+                                    Serial.println("detect junction");
+                                    return true;
+                                  }
+                                  return false;
+                                }
+                            </code></pre><br />
+
+                            The step_past_junction() function moves the robot forward past a junction until the back right and left line sensors are no longer over the black line. The purpose of this function is to improve the accuracy of our turning. By stepping past, the robots center of rotation more closely matches the center of the junction, allowing to turn directly over the junction and continue onto the next line more smoothly. The stepping_past_junction() is as follows:
+                            <pre><code>
+                            void step_past_junction() {
+                                  right_wheel.write(0);
+                                  left_wheel.write(180);
+                                  int br = analogRead(br_linepin);
+                                  int bl = analogRead(bl_linepin);
+                                  while (br > 800 || bl > 800) {
+                                    br = analogRead(br_linepin);
+                                    bl = analogRead(bl_linepin);
+                                  }
+                                  right_wheel.write(90);
+                                  left_wheel.write(90);
+                                }
+                            </code></pre><br />
+
+                            The turning functions, turn_left() and turn_right() simply write values to the wheels to make them move in opposite directions. For example, to turn left, the right wheel is written to 0 in order to move forward and the left wheel is written to 0 in order to move backwards. This allows the robot to turn quickly and in place over the junction. The turn ends when both the front right and left line sensors are over the black line again. Below is the turn_left() function:
+                            <pre><code>
+                            void turn_left() {
+                                  Serial.println("turning left");
+                                  left_wheel.write(0);
+                                  right_wheel.write(0);
+                                  int fr = analogRead(fr_linepin);
+                                  int fl = analogRead(fl_linepin);
+                                  while (fr > 800 || fl > 800) {
+                                    fr = analogRead(fr_linepin);
+                                    fl = analogRead(fl_linepin);
+                                  }
+                                  while (fr < 800 || fl < 800) {
+                                    fr = analogRead(fr_linepin);
+                                    fl = analogRead(fl_linepin);
+                                  }
+                                  left_wheel.write(90);
+                                  right_wheel.write(90);
+                                }
+
+                            </code></pre><br />
+                        </p>
                         <header class="style1">
                             <h2>Unresolved Issues</h2>
                         </header>
