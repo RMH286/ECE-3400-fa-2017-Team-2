@@ -15,11 +15,11 @@ enum DIRECTION {
   north,
   south,
   east,
+  west,
 };
 
 unsigned char maze[5][4] =
-      { {0, 0, 0, 0},  west
-
+      { {0, 0, 0, 0}, 
         {0, 0, 0, 0},
         {0, 0, 0, 0},
         {0, 0, 0, 0},
@@ -211,11 +211,9 @@ void update_node() {
       if (right_wall()) { maze[current_row][current_column] |= NORTHWALL; }
       break;
   }
-  //int treasure = detect_treasure();
-  //Serial.println(treasure);
-  //treasure = treasure << 6;
-//  maze[current_row][current_column] |= treasure;
-    Serial.println(maze[current_row][current_column]);
+    int treasure = detect_treasure();
+    treasure = treasure << 6;
+    maze[current_row][current_column] |= treasure;
     transmit_node(maze[current_row][current_column], current_row, current_column);
 //  if(treasure!=0){
 //    digitalWrite(LED, HIGH);
@@ -502,7 +500,9 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   while (1) {
-    Serial.println("in while");
+    if(detect_tone()){
+      break;
+    }
     if (digitalRead(BUTTON) == HIGH) {
       break;
     }

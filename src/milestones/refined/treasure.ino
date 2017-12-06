@@ -16,33 +16,33 @@ port at 115.2kb.
 #define s1 3
 #define s0 2
 
-//bool detect_tone() {
-//  digitalWrite(s0, HIGH);
-//  digitalWrite(s1, HIGH);
-//  digitalWrite(s2, LOW);
-//  cli();
-//    for (int i = 0 ; i < 256 ; i += 2) {
-//      fft_input[i] = analogRead(A0); // <-- NOTE THIS LINE
-//      fft_input[i+1] = 0;
-//    }
-//    fft_window();
-//    fft_reorder();
-//    fft_run();
-//    fft_mag_log();
-//    sei();
-//    Serial.println("start");
-//    
-//    for (byte i = 0 ; i < FFT_N/2 ; i++) {
-//      Serial.println(fft_log_out[i]);
-//    }
-//  
-//  Serial.println(fft_log_out[15]);
-//  if (fft_log_out[15]>75) {
-//    Serial.println(fft_log_out[15]);
-//    return true;
-//  }
-//  return false;
-//}
+bool detect_tone() {
+  digitalWrite(s0, HIGH);
+  digitalWrite(s1, HIGH);
+  digitalWrite(s2, LOW);
+  cli();
+    for (int i = 0 ; i < 256 ; i += 2) {
+      fft_input[i] = analogRead(A0); // <-- NOTE THIS LINE
+      fft_input[i+1] = 0;
+    }
+    fft_window();
+    fft_reorder();
+    fft_run();
+    fft_mag_log();
+    sei();
+    Serial.println("start");
+    
+    for (byte i = 0 ; i < FFT_N/2 ; i++) {
+      Serial.println(fft_log_out[i]);
+    }
+  
+  Serial.println(fft_log_out[15]);
+  if (fft_log_out[15]>75) {
+    Serial.println(fft_log_out[15]);
+    return true;
+  }
+  return false;
+}
 
 int detect_treasure() {
   return 0;

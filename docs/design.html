@@ -12,6 +12,9 @@
         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
         <link rel="stylesheet" href="assets/css/main.css" />
         <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+        <link rel="stylesheet" href="assets/highlight/styles/monokai-sublime.css">
+        <script src="assets/highlight/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
     </head>
     <body class="homepage">
         <div id="page-wrapper">
@@ -64,13 +67,307 @@
                     </div>
                 </div>
                 
+                <div id="intro-wrapper" class="wrapper style3">
+                    <div class="title">Introduction</div>
+                    <section id="intro" class="container">
+                        <header class="style1">
+                            <h2>Goal</h2>
+                            <p>
+                                
+                            </p>
+                        </header>
+                    </section>
+                    </div>
+                
                 <div id="intro-wrapper" class="wrapper style1">
                     <div class="title">Movement</div>
                     <section id="intro" class="container">
-                        <p>
-                            Text here
-                            
-                        </p>
+                        <header class="style1">
+                                <h2>Robot Setup</h2>
+                            </header>
+                            <p>
+                                The final version of our robot included the following components:
+                                <center>
+                                <ul> 
+                                    <li>2 Continous Rotation Servos attached to the two wheels</li>
+                                    <li>4 line Sensors </li>
+                                    <li>3 short range IR Wall Sensors</li>
+                                    <li>3 IR Treasure Sensors</li>
+                                    <li>1 Arduino Uno</li>
+                                    <li>1 Microphone</li>
+                                    <li>1 Eight to One Multiplexer</li>
+                                    <li>1 Push Button</li>
+                                    <li>1 Radio</li>
+                                    <li>1 5V Power Bank</li>
+
+                                </ul>
+                                </center>
+                                The Arduino is the microcontroller that takes in data from all of the sensors, processes our algorithm and controls the servos that move our robot. The microphone and push button are used to start the robot. Either a specific tone is heard by the microphone or the button is pressed to begin the maze mapping. The multiplexer is used to select between 7 different signals: the 3 wall sensors, the 3 treasure sensors or the microphone. The radio is used to communicate the maze information to the base station which displays the maze. Every sensor, servo and the microcontroller is powered by the power bank.
+                                </p>
+                                <p>
+
+                                The four line sensors, used to line follow, were placed just a few centimeters above the ground in the front of our robot. Below is a picture of the labeling each of the line sensors.
+                                <center>
+                                <a href="#" class="image featured">
+                                    <img src="assets/images/milestone1_line_sensors.jpg" alt="" style="width:512px;"/>
+                                </a>
+                                </center>
+
+                                The middle two, reffered to as the "front left" and "front right" line sensors are used mainly to detect the black lines to follow throughout the maze and ensure we continue to follow them. The outer 2, reffered to as the "back left" and "back right" line sensors, are used to detect junctions within the maze.     
+                            </p>
+                            <p>
+                                The short range IR sensors are placed on the front and sides of the robot to detect walls in front of, to the right of, or to the left of the robot while it is traversing the maze. The 3 IR treasure sensors are also placed on the front and sides of the robot to detect treasures. Pictured below is our final version of our robot.
+
+                                <center>
+                                <a href="#" class="image featured">
+                                    <img src="assets/images/final_robot.jpg" alt="" style="width:512px;"/>
+                                </a>
+                                </center>
+
+                                The inputs to the multiplexer on our robot, as well as the corresponding select signal bits are shown in the table below.
+
+                                <style>
+                                table {
+                                    border-collapse: collapse;
+                                    width: 50%;
+                                }
+
+                                td, th {
+                                    border: 1px solid #dddddd;
+                                    text-align: center;
+                                    padding: 8px;
+                                }
+                                </style>
+                                <center>
+                                    <table>
+                                        <tr>
+                                            <th>Select Bits</th>
+                                            <th>Input Number</th>
+                                            <th>Sensor Output</th>
+                                        </tr>
+                                        <tr>
+                                            <td>000</td>
+                                            <td>Y0</td>
+                                            <td>Left Wall Sensor</td>
+                                        </tr>
+                                        <tr>
+                                            <td>001</td>
+                                            <td>Y1</td>
+                                            <td>Front Wall Sensor</td>
+                                        </tr>
+                                        <tr>
+                                            <td>010</td>
+                                            <td>Y2</td>
+                                            <td>Right Wall Sensor</td>
+                                        </tr>
+                                        <tr>
+                                            <td>011</td>
+                                            <td>Y3</td>
+                                            <td>Empty</td>
+                                        </tr>
+                                        <tr>
+                                            <td>100</td>
+                                            <td>Y4</td>
+                                            <td>Left Treasure Sensor</td>
+                                        </tr>
+                                        <tr>
+                                            <td>101</td>
+                                            <td>Y5</td>
+                                            <td>Front Treasure Sensor</td>
+                                        </tr>
+                                        <tr>
+                                            <td>110</td>
+                                            <td>Y6</td>
+                                            <td>Right Treasure Sensor</td>
+                                        </tr>
+                                        <tr>
+                                            <td>111</td>
+                                            <td>Y7</td>
+                                            <td>Empty</td>
+                                        </tr>
+                                    </table>
+                                </center>
+                            </p>
+                            <p>
+                                Towards the end of the semster, as more and more boards and sensors were placed on our robot, we realized we had a weight issue. Our robot's weight was concentrated too far back and would cause the front of our robot to pop up every time it accelerated from a stop. To counteract this, we added washers the front of our robot. In the future we would have liked to clean up this design. If given more time, we would have designed a printed circuit board (PCB) to clean up wiring. This would have allowed us to use just a single level chasis, also taking care of our weight distrubution issue.
+                        <header class="style1">
+                            <h2>Initialization</h2>
+                            </header>
+                            <p>
+                                Before we begin discussing the details of our algorithm, we will first lay out the variable declarations as well as particular initializations used in the setup section of our code. We kept track of our maze using a 5 by 4 array of one byte characters, maze. Each character corresponds to the information about one square in the maze. We usee maze[current_row][current_column] to index into the array and access the information about a sqare. Each bit in the character represents a certain characteristic of that square as follows:
+                                <style>
+                                table {
+                                    border-collapse: collapse;
+                                    width: 50%;
+                                }
+
+                                td, th {
+                                    border: 1px solid #dddddd;
+                                    text-align: center;
+                                    padding: 8px;
+                                }
+                                </style>
+                                <center>
+                                    <table>
+                                        <tr>
+                                            <th>bit 7</th>
+                                            <th>bit 6</th>
+                                            <th>bit 5</th>
+                                            <th>bit 4</th>
+                                            <th>bit 3</th>
+                                            <th>bit 2</th>
+                                            <th>bit 1</th>
+                                            <th>bit 0</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Treasure bit 1</td>
+                                            <td>Treasure bit 0</td>
+                                            <td>visited</td>
+                                            <td>unreachable</td>
+                                            <td>West wall present</td>
+                                            <td>South wall present</td>
+                                            <td>East wall present</td>
+                                            <td>North wall present</td>
+                                        </tr>
+                                    </table>
+                                </center>
+                                We defined certain constants so that updating each maze square simply requires bitwise OR-ing with these constants. Those define statements are as follows:
+                                <pre><code>
+                                #define NORTHWALL 0x01
+                                #define SOUTHWALL 0X02
+                                #define EASTWALL 0x04
+                                #define WESTWALL 0x08
+                                #define UNREACHABLE 0x10
+                                #define VISITED 0x20
+                                #define SEVEN_TREASURE 0x40
+                                #define TWELVE_TREASURE 0x80
+                                #define SEVENTEEN_TREASURE 0xc0
+
+                                </code></pre><br />
+                                In order to keep track of the current direction the robot is facing, we used an enumeration with values north, south, east and west. North corresponds to the direction we place the robot down in originally and the direction is initalized as such. 
+                                </p>
+                                <p> 
+                                    Our algorithm also needs a way to keep a backtrack que whenever the robot reaches a square with no more possible unvisited squares to move to. We use an array of size 20 to store our backtrack que which is comprised of directions to move in if we must backtrack. An int, backtrack_pointer, is ued to index into the correct value in this array. A 5 by 4 array of ints is used mark reachable squares that are still unvisited and is used to tell if when our robot has finished mapping the entire maze. This array is called possible_moves_maze. 
+                                </p>
+                                <p>
+                                    The setup function of our code initialzes all the pins used as well the servos. For the competition, every robot started in the bottom right corner of the maze so the current row and current column were initialzed to 4 and 3 respectively (the row and column values begin at 0). We also initialize maze[4][3] to be visited and to have a south wall, since we know our robot will be starting with a wall directly behind it.
+                        <header class="style1">
+                            <h2>Algorithm</h2>
+                            </header>
+                            The main loop of our code begins with a while loop that is only broken out of if a 660 Hz tone is detected by the microphone or the button is pressed. We then update our current node and then move into a while loop that continues to update each node as long as there is a possible move towards an unvisited node or there are still unvisted and reachable nodes in the possible_moves_maze array. Once we've traveled to every reachable node, we transmit a done signal to the base station. The main loop is as follows:
+                            <pre><code>
+                            void loop() {
+                                  // Don't start until tone or button
+                                  while (1) {
+                                    if(detect_tone()){
+                                      break;
+                                    }
+                                    if (digitalRead(BUTTON) == HIGH) {
+                                      break;
+                                    }
+                                  }
+                                  update_node();
+                                  //keep updating until done
+                                  while (onward() != -1) {
+                                    update_node();
+                                  }
+                                  //Done
+                                  while(1){
+                                    transmit_node(maze[current_row][current_column], 255,255);
+                                  }
+                            }
+                            </code></pre><br />
+
+                            The detect_tone() function uses the FFT library which outputs values for each bin number. In a previous lab we chose to iterate through 256 bins, but in order to save memory on the arduino, we reudced this amount to 128 bins. By printing out the values of each bin, we found that the 660Hz tone now caused a peak in bin 15. We check if this bin is produces a value over 75 to determine if the tone is being played.
+
+                            <pre><code>
+                            bool detect_tone() {
+                              //Set the MUX select bits
+                              digitalWrite(s0, HIGH);
+                              digitalWrite(s1, HIGH);
+                              digitalWrite(s2, LOW);
+                              cli();
+                              //Run the FFT
+                                for (int i = 0 ; i < 256 ; i += 2) {
+                                  fft_input[i] = analogRead(A0); 
+                                  fft_input[i+1] = 0;
+                                }
+                                fft_window();
+                                fft_reorder();
+                                fft_run();
+                                fft_mag_log();
+                                sei();
+                              //Check bin 15
+                              if (fft_log_out[15]>75) {
+                                return true;
+                              }
+                              return false;
+                            }
+                            </code></pre><br />
+
+
+                            The update_node() function checks all the walls around the robot when it is at a junction and updates the corresponding bits in the maze array. The function also checks for treasures and then transmits the fully updated byte of information along with the current row and current column of the robot to the base station.
+
+                            <pre><code>
+
+                            void update_node() {
+                            //Update all walls
+                              switch(dir) {
+                                case(north):
+                                  if (left_wall()) { maze[current_row][current_column] |= WESTWALL; }
+                                  if (front_wall()) { maze[current_row][current_column] |= NORTHWALL; }
+                                  if (right_wall()) { maze[current_row][current_column] |= EASTWALL; }
+                                  break;
+                                case(south):
+                                  if (left_wall()) { maze[current_row][current_column] |= EASTWALL; }
+                                  if (front_wall()) { maze[current_row][current_column] |= SOUTHWALL; }
+                                  if (right_wall()) { maze[current_row][current_column] |= WESTWALL; }
+                                  break;
+                                case(east):
+                                  if (left_wall()) { maze[current_row][current_column] |= NORTHWALL; }
+                                  if (front_wall()) { maze[current_row][current_column] |= EASTWALL; }
+                                  if (right_wall()) { maze[current_row][current_column] |= SOUTHWALL; }
+                                  break;
+                                case(west):
+                                  if (left_wall()) { maze[current_row][current_column] |= SOUTHWALL; }
+                                  if (front_wall()) { maze[current_row][current_column] |= WESTWALL; }
+                                  if (right_wall()) { maze[current_row][current_column] |= NORTHWALL; }
+                                  break;
+                              }
+                                //Check for treasures
+                                int treasure = detect_treasure();
+                                treasure = treasure << 6;
+                                maze[current_row][current_column] |= treasure;
+                                //Send the data to the base station
+                                transmit_node(maze[current_row][current_column], current_row, current_column);
+                            </code></pre><br />
+
+                            The functions used to detect walls (left_wall(), front_wall(), and right_wall()), all follow the same structure with the only difference being which mux select signals to set high or low. The wall sensors work by sending values betweeon 0 and 1023 with higher numbers corresponding to closer objects being detected. We found that a threshold of 250 worked well for determining if a wall was detected or not. Below is one of the three wall detection functions:
+                            <pre><code>
+                            bool left_wall() {
+                                  digitalWrite(mux_s2, LOW);
+                                  digitalWrite(mux_s1, LOW);
+                                  digitalWrite(mux_s0, LOW);
+
+                                  int wall = analogRead(mux_pin);
+                                  
+                                  if (wall>250) {
+                                    return true;
+                                  }
+                                  else {
+                                    return false;
+                                  }
+                                }
+                            </code></pre><br />
+
+                            <pre><code>
+                            </code></pre><br />
+                        <header class="style1">
+                            <h2>Moving Functions</h2>
+                        </header>
+                        <header class="style1">
+                            <h2>Unresolved Issues</h2>
+                        </header>
                         
                         
                         <p>
