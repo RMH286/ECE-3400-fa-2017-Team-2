@@ -87,6 +87,18 @@
                     <div class="title">FPGA</div>
                     <section id="intro" class="container">
                         <header class="style1">
+                            <h2>Overview of Functionality</h2>
+                        </header>
+                        
+                        <p>
+                            The FPGA was the single most important component of our base station. First, it needed to be able to communicate with
+                            our base station's Arduino, which would be receiving maze information from our robot via the wireless radios. Second,
+                            it needed to act as the driver for the VGA monitor that we needed to display the maze on. The FPGA also acted as the
+                            platform upon which our logic to update the VGA display in real-time was stored. Additionally, the FPGA needed to
+                            output an audio tune to the speakers to play when the robot finished mapping the maze.
+                        </p>
+                        
+                        <header class="style1">
                             <h2>Confronting Our Problems</h2>
                         </header>
                         <p>
@@ -108,7 +120,7 @@
                                         <li>State 110 = North Wall Color</li>
                                         <li>State 111 = Done and Audio</li>
                                     </ul>
-                                </center>
+                            </center>
                         </p>
                         
                         <p>
@@ -127,7 +139,7 @@
                                         <li>Green = 12 kHz treasure at that grid space</li>
                                         <li>Blue = 17 kHz treasure at that grid space</li>
                                     </ul>
-                                </center>
+                            </center>
                         </p>
                         
                         <header class="style1">
