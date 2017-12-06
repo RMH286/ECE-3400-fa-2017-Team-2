@@ -400,7 +400,63 @@
                         </header>
                         
                         <p>
-                            
+                            As we discussed for Milestone 4, we decided to use the SPI serial communication protocol to facilitate communication
+                            between the Base Station Arduino and the FPGA. To recap what was mentioned then, we needed four connection lines
+                            between the Arduino and the FPGA: clock (SCK), MOSI (master-out, slave-in), MISO (master-in, slave-out), and
+                            slave-select (SS). The SCK, MISO, and MOSI lines were connected to Arduino pins 13, 12, and 11, respectively.
+                            We also assigned the SS pin for SPI communication to be digital pin 4 on the Arduino. In order for the Arduino to
+                            send data to the FPGA, the SS line needed to be set to low and kept low for the duration of the communication period.
+                            Data was sent from the Arduino to the FPGA on the MOSI line. Hence, the Arduino was the master and the FPGA was the
+                            slave. Three of the four Arduino pins connected to the FPGA needed to go through a voltage divider first to step the voltage
+                            down from 5V (the output voltage of the arduino digital pins) to 3.3V (the input voltage of the GPIO pins on the FPGA)
+                            by using 330 Ohm and 680 Ohm resistors. The only line that did not need to go through a voltage divider was the MISO
+                            line because its voltage was determined by the GPIO pin on the FPGA that was acting as the output.
+                        </p>
+                        
+                        <p>
+                            An important discovery that we made during testing was that the MISO line was disrupting our radio communication
+                            between Arduinos. However, the MISO line was technically never used because we only communicated from Arduino to FPGA,
+                            never the other way. Therefore, we ended up disconnecting our MISO line altogether, and its interference with the
+                            radio communication ended.
+                        </p>
+                        
+                        <p>
+                            Below is our sequential logic block from our spi_slave.v module on the FPGA:
+                        </p>
+                        <pre><code class="cpp">
+                        always @(*) begin
+                            ss_d = ss;
+                            mosi_d = mosi;
+                            miso_d = miso_q;
+                            sck_d = sck;
+                            sck_old_d = sck_q;
+                            data_d = data_q;
+                            done_d = 1'b0;
+                            bit_ct_d = bit_ct_q;
+                            dout_d = dout_q;
+                             
+                            if (ss_q) begin                           // if slave select is high (deselcted)
+                              bit_ct_d = 4'b0;                        // reset bit counter
+                              data_d = din;                           // read in data
+                              miso_d = data_q[15];                     // output MSB
+                            end else begin                            // else slave select is low (selected)
+                              if (!sck_old_q && sck_q) begin          // rising edge
+                                data_d = {data_q[14:0], mosi_q};       // read data in and shift
+                                bit_ct_d = bit_ct_q + 1'b1;           // increment the bit counter
+                                if (bit_ct_q == 4'b1111) begin         // if we are on the last bit
+                                  dout_d = {data_q[14:0], mosi_q};     // output the byte
+                                  done_d = 1'b1;                      // set transfer done flag
+                                  data_d = din;                       // read in new byte
+                                end
+                              end else if (sck_old_q && !sck_q) begin // falling edge
+                                miso_d = data_q[15];                   // output MSB
+                              end
+                            end
+                        end
+                        </code></pre><br />
+                        
+                        <p>
+                            As you can see, new information is only read in when the slave select line is low.
                         </p>
                         
                         <header class="style1">
@@ -469,7 +525,7 @@
                         before moving onto State 001. 
                         </p>
                         
-                         <pre><code class="cpp">
+                        <pre><code class="cpp">
                         always @ (posedge CLOCK_25) begin       // Set always block to posedge CLK 
                             if (reset) begin    // Condition for State 000
 		
