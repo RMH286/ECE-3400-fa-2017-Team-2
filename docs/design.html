@@ -734,9 +734,29 @@
                             end
                         end
                         </code></pre><br />
-                        
                         <p>
                             As you can see, new information is only read in when the slave select line is low.
+                        </p>
+                        <p>
+                            The following is our instantiation of spi_slave in our main DE0_NANO.v module that was loaded onto the FPGA for
+                            the competition:
+                        </p>
+                        <pre><code class="cpp">
+                        spi_slave slave(
+                            .clk(CLOCK_25),
+                            .rst(reset),
+                            .ss(GPIO_1_D[32]),
+                            .mosi(GPIO_1_D[30]),
+                            .miso(GPIO_1_D[28]),
+                            .sck(GPIO_1_D[26]),
+                            .done(DONE),
+                            .din(DIN),
+                            .dout(DOUT),
+                        );
+                        </code></pre><br />
+                        <p>
+                            Our four communication lines were connected to four adjacent GPIO pins, pins 26, 28, 30, and 32 on the GPIO_1 or
+                            JP2 side.
                         </p>
                         
                         <header class="style1">
@@ -744,7 +764,123 @@
                         </header>
                         
                         <p>
+                            Like we mentioned in Milestone 4, we chose to subdivide the display into 10 pixel x 10 pixel squares, in order to
+                            display a 5x4 maze on the screen. Using this convention, we made the wall widths 10 pixels and all the actual grid
+                            spaces 80 pixels x 80 pixels. With five wall spaces and four grid spaces in the x-direction and six wall spaces and
+                            five grid spaces in the y-direction, our entire maze takes up a 370 pixel x 460 pixel area on the monitor. The
+                            following is the instantiation of our VGA_DRIVER module that we made in DE0_NANO:
+                        </p>
+                        <pre><code class="cpp">
+                        // Module outputs coordinates of next pixel to be written onto screen
+                        VGA_DRIVER driver(
+                            .RESET(reset),
+                            .CLOCK(CLOCK_25),
+                            .PIXEL_COLOR_IN(PIXEL_COLOR),
+                            .PIXEL_X(PIXEL_COORD_X),
+                            .PIXEL_Y(PIXEL_COORD_Y),
+                            .PIXEL_COLOR_OUT({GPIO_0_D[9],GPIO_0_D[11],GPIO_0_D[13],GPIO_0_D[15],GPIO_0_D[17],GPIO_0_D[19],GPIO_0_D[21],GPIO_0_D[23]}),
+                            .H_SYNC_NEG(GPIO_0_D[7]),
+                            .V_SYNC_NEG(GPIO_0_D[5])
+                        );
+                        </code></pre><br />
+                        <p>
+                            This VGA_DRIVER module outputs to the VGA monitor like we discussed in Labs 3 and 4. The adjacent GPIO pins between
+                            pins 9 and 23 on the GPIO_0 side first connect to the 8-bit DAC that we discussed for Lab 3. The DAC is then connected
+                            to the VGA switch via a VGA cable.
+                        </p>
+                        <p>
+                            The data structure that we used to store the pixel color data for the full 370 pixel x 460 pixel maze was a 37x46 array
+                            that we called wall_grid. This data structure stores 3-bit values, which encode what color to assign to each 10 pixel x
+                            10 pixel square. We needed 3-bits because there were 8 possible colors that could be assigned. Our final color scheme
+                            was:
+                            <center>
+                                    <ul>
+                                        <li>Turqoise = Unvisited/unreachable grid space</li>
+                                        <li>Yellow = Robot's current position</li>
+                                        <li>Magenta = Already visited grid space</li>
+                                        <li>White = No wall</li>
+                                        <li>Black = Wall</li>
+                                        <li>Red = 7 kHz treasure at that grid space</li>
+                                        <li>Green = 12 kHz treasure at that grid space</li>
+                                        <li>Blue = 17 kHz treasure at that grid space</li>
+                                    </ul>
+                            </center>
+                        </p>
+                        <p>
+                            These two blocks in DE0_NANO encode each color to a number between 0 and 7 and store the color data in a vector
+                            called colors:
+                        </p>
+                        <pre><code class="cpp">
+                        reg[7:0] red = 8'b111_000_00;
+                        reg[7:0] white = 8'b111_111_11;
+                        reg[7:0] blue = 8'b000_000_11;
+                        reg[7:0] green = 8'b000_111_00;
+                        reg[7:0] black = 8'b000_000_00;
+                        reg[7:0] turqoise = 8'b000_111_11;
+                        reg[7:0] yellow = 8'b111_111_00;
+                        reg[7:0] purple = 8'b111_000_11;
+                        
+                        assign colors[0] = turqoise; //unvisited or unreachable
+                        assign colors[1] = yellow; //current position
+                        assign colors[2] = purple; //already visited
+                        assign colors[3] = white; //no wall
+                        assign colors[4] = black; //wall
+                        assign colors[5] = red; //7 kHz treasure
+                        assign colors[6] = green; //12 kHz treasure
+                        assign colors[7] = blue; //17 kHz treasure
+                        </code></pre><br />
+                        <p>
+                            After executing our logic to assign the correct colors to wall_grid, the following lines actually assign the correct
+                            colors to the correct pixels on the screen via our instantiation of VGA_DRIVER:
+                        </p>
+                        <pre><code class="cpp">
+                        newx = PIXEL_COORD_X/10'd10;
+                        newy = PIXEL_COORD_Y/10'd10;
+                        if (PIXEL_COORD_X > 369 || PIXEL_COORD_Y > 459) begin
+                            PIXEL_COLOR = colors[3];
+                        end
+                        else begin
+                            PIXEL_COLOR = colors[wall_grid[newx][newy]];
+                        end
+                        </code></pre><br />
+                        <p>
+                            Upon start-up or reset, wall_grid is initialized using the following code, which generates the initialize maze in
+                            the picture below:
+                        </p>
+                        <pre><code class="cpp">
+                        integer i;
+                        integer j;
+            
+                        for (i = 0; i < 37; i=i+1) begin
+                            for (j = 0; j < 46; j=j+1) begin 
                             
+                                wall_grid[i][j] = 3'b000;
+                                
+                                if (i%9 == 0) begin
+                                    wall_grid[i][j] = 3'b011;
+                                end
+                                    
+                                if (j%9 == 0) begin
+                                    wall_grid[i][j] = 3'b011;
+                                end
+                                if (i%36 == 0) begin
+                                    wall_grid[i][j] = 3'b100;
+                                end
+                                if (j%45 == 0) begin
+                                    wall_grid[i][j] = 3'b100;
+                                end
+                                else begin
+                                    wall_grid[i][j] = wall_grid[i][j];
+                                end
+                            end
+                        end
+                        </code></pre><br />
+                        <p>
+                            <center>
+                                <a href="#">
+                                    <img src="assets/images/final_maze_screen.jpg" alt="" style="width:512px;" />
+                                </a>
+                                </center>
                         </p>
                         
                         <header class="style1">
@@ -773,24 +909,6 @@
                             </center>
                         </p>
                         
-                        <p>
-                            We followed the same grid mapping scheme in Milestone 4 by dividing the entire screen into 10x10 pixel grids with our maze being spanned by 36x45 of these pixel grids
-                            for a total area of 360x450 pixels. The actual maze represented by a 4x5 grid would be treated as a 9x11 grid by our FPGA to account for all of the walls in addition to
-                            all possible grid spaces. As the final competition neared, we realized the colors we chose to initially color the maze for Milestone 4 utilized Red, Green, and Blue to represent other
-                            features of the maze instead of Treasures. Below is a list of the updated color scheme for our maze:
-                            <center>
-                                    <ul>
-                                        <li>Turqoise = Unvisited/unreachable grid space</li>
-                                        <li>Yellow = Robot's current position</li>
-                                        <li>Purple = Already visited grid space</li>
-                                        <li>White = No wall</li>
-                                        <li>Black = Wall</li>
-                                        <li>Red = 7 kHz treasure at that grid space</li>
-                                        <li>Green = 12 kHz treasure at that grid space</li>
-                                        <li>Blue = 17 kHz treasure at that grid space</li>
-                                    </ul>
-                            </center>
-                        </p>
                         
                         <header class="style1">
                             <h2>State 000: Initialize/ Reset</h2>
