@@ -72,10 +72,17 @@
                     <section id="intro" class="container">
                         <header class="style1">
                             <h2>Goal</h2>
-                            <p>
-                                
-                            </p>
+                            
                         </header>
+                        <p>
+                        We were asked to design and build a robot capable of solving and mapping a maze autonomously, starting after a sound signal is given. This information needs to be sent back to our base station to be displayed on a monitor, and once done play a done signal through the speakers.
+
+                        The maze consisted of a 4x5 grid marked with black tape lines which the robot must follow, for which we used line sensors. The grid is surrounded by wooden walls, as well as some inside to form the maze, for which we used short range wall sensors for the robot to detect them and avoid running into them. And lastly treasures, which each emit a frequency of either 7kHz, 12kHz, or 17kHz. To detect these, we used IR sensors.
+
+                        The base station needs to receive the signals, and display the proper image on the monitor. It should display where the robot is currently at, where it has been, where there is a wall, where there is a treasure (Frequency of the treasure must also be distinguishable), and some sort of done signal, as well as  playing the done signal as aforementioned.
+
+                        Our robot will compete with other robots to complete the task. Which means we not only need to make it accurate, but also fast. To achieve this, we need to optimize the physical design of the robot as well as the code and maze solving algorithm  as much as we can. 
+                        </p>
                     </section>
                     </div>
                 
@@ -1284,8 +1291,17 @@
                     <div class="title">Final Competition</div>
                     <section id="intro" class="container">
                         <p>
-                            Text here
+                            The robot was tested the night before the competition and worked well. Unfortunately, we dropped it and broke some parts, such as the chasis, so they needed to be replaced. Upon testing it again that night after fixing it and the morning of the competition, it was still working as well.
+
+                          After we moved downstairs, we calibrated the servos and then reuploaded the same code we used to test the robot minutes prior and it wasn’t moving at all. The bot would begin running the algorithm and reset before running through the code. After commenting out our radio transmission code we found that it was causing issues, even though it hadn’t been in the past. We ultimately commented out the portion that recieved information back from the FPGA to ensure the payload was sent properly. Once that part was commented out, our robot would function properly again. Since there was not a lot of time to fix this issue, we could not fully diagnose the problem, but a reset of the arduino typically means there is a short somewhere in the system. Even so, we are unsure of why the code would run properly with just a few lines of code commented out that previously proved no issue.
+
+                          During the competition, our robot was off to a good start but stopped running in the middle of the maze. We continued to reset it and tried again a few times, but it would always stop running at a different part of the maze. This led us to believe it was a problem with the battery. It Seemed like it didn’t have enough charge and was continuing to turn on and off. After charging it for a little in between rounds we ran into the same problem. We believe that perhaps our battery was damaged by shorting it or some other reason. Perhaps upon dropping it the night before something else was damage that we didn’t notice, despite it working well right up until the competition. Due to the drop, many portions of the robot had to be rewired and perhaps the wiring was not as clean as it had been in the past. Moving the robot around in the morning could have caused wires to short due to the less robust wiring done the night before. 
                         </p>
+
+                        <p>
+                        Below is a short video of our robot running during the second round up until the first time it reset. 
+                        </p>
+
                         
                         <center>
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/Lgc5FaCjiLQ" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
